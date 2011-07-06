@@ -1,0 +1,247 @@
+% **************************************************************************************************************
+% A Classic Thesis Style
+% An Homage to The Elements of Typographic Style
+%
+% Copyright (C) 2010 André Miede http://www.miede.de
+% **************************************************************************************************************
+% Note:
+%    * You must not use "u etc. in strings/commands that will be spaced out (use \"u or real umlauts instead)
+%    * New enumeration (small caps): \begin{aenumerate} \end{aenumerate}
+%    * For margin notes: \graffito{}
+%    * Do not use bold fonts in this style, it is designed around them
+%    * Use tables as in the examples
+%    * See classicthesis-ldpkg.sty for useful commands
+% **************************************************************************************************************
+% To Do:
+%		 * [high] Check this out: http://www.golatex.de/koma-script-warnung-in-verbindung-mit-listings-package-t2058.html
+%    * [medium] mathbb in section-titles/chapter-titles => disappears somehow in headlines!!!
+%    * [low] Calculate text block size for Libertine font
+%    * [low] Think about processing a4paper, a5paper, 10pt, 11pt, 12pt etc. options for typearea layout
+%            (store values in internal variables and handle by \AtEndOfPackage{\areaset...})
+% **************************************************************************************************************
+\documentclass[ twoside,
+		%openright,
+		titlepage,fleqn,numbers=noenddot,headinclude,%1headlines,% 
+		bibliography=totoc,
+                11pt,a4paper,BCOR5mm,footinclude,cleardoublepage=empty,abstractoff % <--- obsolete, remove (todo)
+       ]{scrreprt}
+
+% ********************************************************************
+% Development Stuff
+% ********************************************************************
+\listfiles
+%\usepackage[l2tabu, orthodox, abort]{nag}
+%\usepackage[warning, all]{onlyamsmath}
+% ********************************************************************
+% Re-usable information
+% ********************************************************************
+\newcommand{\myTitle}{Schreiben wir unsere Geschichte selbst?\xspace}
+\newcommand{\myDegree}{Diplomarbeit\xspace}
+\newcommand{\myName}{David Kaltschmidt\xspace}
+\newcommand{\myProf}{Betreuer: Dr. Claudia M\"uller-Birn\xspace}
+\newcommand{\myOtherProf}{2. Pr\"ufer: Prof. Dr. Robert Tolksdorf\xspace}
+\newcommand{\mySupervisor}{\xspace}
+\newcommand{\myFaculty}{Institut f\"ur Informatik\xspace}
+\newcommand{\myDepartment}{\xspace}
+\newcommand{\myUni}{\protect{Freie Universit\"at Berlin}\xspace}
+\newcommand{\myLocation}{Berlin, Germany\xspace}
+\newcommand{\myTime}{2011\xspace}
+\newcommand{\myVersion}{Version 1.0\xspace}
+%*******************************************************
+% Packages with options that might require adjustments
+%*******************************************************
+\usepackage[utf8]{inputenc}
+\usepackage[sorting=none]{biblatex}
+
+\usepackage{csquotes}
+\usepackage[american,german,ngerman]{babel}           
+%\usepackage[square,numbers]{natbib} 
+\usepackage[fleqn]{amsmath} % math environments and more by the AMS 
+
+%*******************************************************
+\usepackage{classicthesis-ldpkg} % [backref]
+%*******************************************************
+% Options for classicthesis.sty:
+% tocaligned eulerchapternumbers drafting linedheaders listsseparated 
+% subfig nochapters beramono eulermath parts minionpro pdfspacing 
+% listings dottedtoc minionprospacing manychapters
+\usepackage[eulerchapternumbers,
+		drafting,listsseparated,pdfspacing,%listings,
+		subfig,beramono,eulermath,parts]{classicthesis}
+
+%*******************************************************
+% Some font experiments
+%*******************************************************
+%\usepackage[osf]{libertine}
+%\usepackage{hfoldsty}
+%\usepackage[light,condensed,math]{iwona}
+%\renewcommand{\sfdefault}{iwona}
+%\usepackage{lmodern} % <-- no osf support :-(
+%\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
+
+%*******************************************************
+% Fine-tuning for the text area
+%*******************************************************
+%\linespread{1.05} % a bit more for Palatino
+%\areaset[5mm]{312pt}{761pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip
+%\setlength{\marginparwidth}{7em}%
+%\setlength{\marginparsep}{2em}%
+
+%*******************************************************
+% hack to use citations in float environments 
+% will be fixed with caption package version 3.2
+%*******************************************************
+\usepackage{makerobust} 
+\makeatletter 
+\MakeRobustCommand\caption@xref 
+\makeatother 
+
+%*******************************************************            
+%\usepackage[section,below]{placeins} <--- not everybody wants this
+%\usepackage[all]{hypcap} <--- does not work with MiKTeX 2.6
+% ********************************************************************
+% Language/strings for backrefs (change here, thanks, Lorenzo)
+%*******************************************************
+%\renewcommand{\backrefnotcitedstring}{\relax}%(Not cited.)
+%\renewcommand{\backrefcitedsinglestring}[1]{(Citato a pagina~#1.)}
+%\renewcommand{\backrefcitedmultistring}[1]{(Citato alle pagine~#1.)}
+%\renewcommand{\backreftwosep}{ e~}
+%\renewcommand{\backreflastsep}{ e~}
+% ********************************************************************
+% Setup and Finetuning
+%*******************************************************
+\newlength{\abcd} % for ab..z string length calculation
+\newcommand{\myfloatalign}{\centering} % how all the floats will be aligned
+\setlength{\extrarowheight}{3pt} % increase table row height
+
+% draft state: make TODO stuff  italics
+\renewcommand{\cleardoublepage}{\clearpage}
+\usepackage{color}
+\newcommand{\todo}[1]{{\it \color{gray} #1}}
+\newenvironment{todos}{%
+    \it \color{gray}%
+    \begin{itemize}%
+  }%
+  {%
+    \end{itemize}%
+  }
+
+% ********************************************************************
+% Captions look and feel
+%*******************************************************
+\captionsetup{format=hang,font=small}
+% ********************************************************************
+% Listings setup
+% ********************************************************************
+%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+% ********************************************************************
+%\lstset{language=[LaTeX]Tex,%C++,
+%    keywordstyle=\color{RoyalBlue},%\bfseries,
+%    basicstyle=\small\ttfamily,
+%    %identifierstyle=\color{NavyBlue},
+%    commentstyle=\color{Green}\ttfamily,
+%    stringstyle=\rmfamily,
+%    numbers=none,%left,%
+%    numberstyle=\scriptsize,%\tiny
+%    stepnumber=5,
+%    numbersep=8pt,
+%    showstringspaces=false,
+%    breaklines=true,
+%    frameround=ftff,
+%    frame=single,
+%    belowcaptionskip=.75\baselineskip,
+%    numberbychapter=false
+%    %frame=L
+%} 
+
+% ********************************************************************
+% Where to look for graphics
+%*******************************************************
+%\graphicspath{{gfx/}{misc/}} % considered harmful according to l2tabu
+% ********************************************************************
+% Hyperreferences
+%*******************************************************
+\hypersetup{%
+    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
+    % uncomment the following line if you want to have black links (e.g., for printing)
+    %colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,% 
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+    hypertexnames=true, pdfhighlight=/O,%hyperfootnotes=true,%nesting=true,%frenchlinks,%
+    urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+    pdftitle={\myTitle},%
+    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},%
+    pdfsubject={},%
+    pdfkeywords={},%
+    pdfcreator={pdfLaTeX},%
+    pdfproducer={LaTeX with hyperref and classicthesis}%
+}
+
+%********************************************************************
+% Hyphenation
+%*******************************************************
+%\hyphenation{put special hyphenation here}
+% ********************************************************************
+
+%********************************************************************
+% Bibliography
+%*******************************************************
+\bibliography{wikipedia}
+
+
+% GO!GO!GO! MOVE IT!
+%*******************************************************
+\begin{document}
+\frenchspacing
+\raggedbottom
+\selectlanguage{ngerman} % american ngerman
+%\renewcommand*{\bibname}{new name}
+%\setbibpreamble{}
+\pagenumbering{roman}
+\pagestyle{plain}
+%********************************************************************
+% Frontmatter
+%*******************************************************
+%\include{DirtyTitlepage}
+\include{Titlepage}
+\include{Titleback}
+%\cleardoublepage\include{Dedication}
+\cleardoublepage\include{Abstract}
+%\cleardoublepage\include{Publication}
+%\cleardoublepage\include{Acknowledgments}
+\pagestyle{scrheadings}
+\cleardoublepage\include{Contents}
+%********************************************************************
+% Mainmatter
+%*******************************************************
+\pagenumbering{arabic}
+% use \cleardoublepage here to avoid problems with pdfbookmark
+\cleardoublepage\part{Überlegungen}
+\include{Introduction}
+\include{Foundation}
+\cleardoublepage\part{Experimentelles}
+\include{Apparatus}
+\include{Experiment}
+%\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
+\cleardoublepage\part{Ergebnisse}
+\include{Results}
+\include{Conclusion}
+%\include{multiToC} % <--- just debug stuff, ignore for your documents
+% ********************************************************************
+% Backmatter
+%*******************************************************
+\appendix
+\cleardoublepage\part{Appendix}
+%\include{Appendix}
+%********************************************************************
+% Other Stuff in the Back
+%*******************************************************
+
+\cleardoublepage\include{Bibliography}
+%\cleardoublepage\include{Colophon}
+%\cleardoublepage\include{Declaration}
+% ********************************************************************
+%*******************************************************
+\end{document}
+% ********************************************************************

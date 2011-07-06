@@ -1,0 +1,91 @@
+diff -r d9e062215f4e content.tex
+--- a/content.tex	Tue Mar 22 00:35:02 2011 +0100
++++ b/content.tex	Thu Apr 21 15:35:35 2011 +0200
+@@ -16,8 +16,9 @@
+ Einen Internetzugang vorausgesetzt, kann jede Person die Entwicklungen von aktuellen Ereignissen im zugehörigen Artikel zeitnah beschreiben und innerhalb von Sekunden publizieren.
+ 
+ Diese Form der Mitarbeit erweitert das Nachschlagewerk zu einem Nachrichtenmedium, das ständig korrigiert und aktualisiert wird. 
+-Das Resultat ist eine einzigartige Quelle des Wissens, aus der sowohl die lokal vom Ereignis betroffene als auch eine global verteilte Leserschaft politische Informationen beziehen kann.
+-In einer Zeit, in der das Internet als effizientes Mittel und zur Informationsgewinnung und -verbreitung angesehen wird,\cite[S. 424-427]{chadwick2009routledge} könnte die Autorschaft einer solchen Online-Referenz von erheblicher strategischer Bedeutung sein. 
++Das Resultat ist eine einzigartige Quelle des Wissens, in dem sich jedoch die Möglichkeit einer Berichterstattung für jedermann mit der Autorität eines Lexikons vermischt. 
++Eine technologieversierte Öffentlichkeit, die das Internet als effizientes Mittel zur Informationsgewinnung und -verbreitung ansieht, kann Wikipedia zum \emph{fact checking} nutzen und auf dieser Basis handeln.\cite[S. 424-427]{chadwick2009routledge}
++Die Autorschaft eines solchen Mediums würde damit unmittelbaren Einfluss auf den politischen Entscheidungsprozess ausüben.
+ 
+ Politische Ereignisse sind häufig auf ein Land oder eine Region begrenzt.
+ Dies spiegelt sich auch in den Artikeln über die Proteste in der arabischen Welt wider: es gibt sowohl einen zusammenfassenden \glqq Mutter-Artikel\grqq\footnote{\url{http://en.wikipedia.org/wiki/2010-2011_Middle_East_and_North_Africa_protests}} als auch einzelne Artikel über die Revolution in Ägypten\footnote{\url{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}} oder den Aufstand in Libyen\footnote{\url{http://en.wikipedia.org/wiki/2011_Libyan_uprising}}.
+@@ -52,7 +53,7 @@
+ \item[A1] Ursprungsländer der Autoren und deren Anteil am Artikel
+ \item[A2] Zeitliche Entwicklung der Ursprünge der Autorschaft
+ \item[A3] Hauptstreitpunkte des Artikels
+-\item[A4] Vergleich der Sprachvarianten eines Artikels
++\item[A4] Vergleich der Sprachvarianten eines Artikels anhand einfacher Metriken wie Artikellänge, Anzahl der Autoren und Aktivitätslevel (Anzahl der Revisionen in einem festen Zeitintervall).
+ \end{labeling}
+ 
+ Unter Einsatz der Software soll anhand einer Auswahl von Artikeln über politische Ereignisse eine solche Analyse durchgeführt werden, um die Kernfrage, ob ein Land seine Geschichte selbst schreibt, beispielhaft zu beantworten. 
+@@ -63,7 +64,7 @@
+ 
+ Die Online-Enzyklopädie Wikipedia gibt es in über 260 Sprachvarianten, von denen die englische mit derzeit 3,6 Millionen Artikeln mit Abstand die größte ist.
+ Die Anzahl der Artikel in den anderen Sprachen sowie die Nutzung der jeweiligen Sprachvariante unterscheiden sich jedoch erheblich.\cite{wikistats}
+-Wenn ein Artikel auch in anderen Sprachen vorhanden ist, sind diese Varianten untereinander verlinkt.
++Wenn ein Artikel zum selben Thema in Wikipedias unterschiedlicher Sprachen vorhanden ist, sind diese Varianten in der Regel über sogenannte Interwiki-Links untereinander verlinkt.
+ 
+ Die Artikel dieser Lexika werden von Freiwilligen auf der ganzen Welt geschrieben, gemeinschaftlich korrigiert und aktualisiert.
+ Jede Änderung eines Artikels erzeugt eine neue Version, die der Versionsgeschichte des Artikels hinzugefügt wird und danach für alle Benutzer einsehbar ist.
+@@ -96,7 +97,7 @@
+ 
+ \section{Vorgehensweise}
+ 
+-Im Theorieteil der Arbeit sollen diese Ansätze und deren Anwendbarkeit auf die Frage, wer die Geschichte eines Landes schreibt, untersucht werden.
++Im Theorieteil der Arbeit sollen die im vorherigen Abschnitt vorgestellten und weitere Ansätze sowie deren Anwendbarkeit auf die Frage, wer die Geschichte eines Landes schreibt, untersucht werden.
+ Ebenfalls wird der aktuelle Forschungsstand daraufhin überprüft, ob es weitere Methoden zur Analyse und Visualisierung der geographischen Ursprünge eines Beitrags gibt.
+ Die im theoretischen Teil gefundenen und gegebenenfalls weiterentwickelten Methoden werden anschließend in einer Software implementiert.
+ Im Schlussteil der Arbeit werden die Visualisierungen der fertigen Anwendung beispielhaft für eine Reihe von Artikeln über politische Ereignisse als Analyse-Werkzeug verwendet.
+@@ -167,34 +168,35 @@
+ 
+ \section{Zeitplan}
+ 
+-Der ungefähre zeitliche Ablauf lässt sich in folgende Phasen einteilen (24 Kalenderwochen):
++Der zeitliche Rahmen umfasst 25 Kalenderwochen mit den folgenden Phasen und Meilensteinen:
+ 
+ \vspace{5 mm}
+ \noindent\makebox[\textwidth]{
+ \sf
+-\begin{gantt}[xunitlength=0.4cm,fontsize= \scriptsize,titlefontsize=\scriptsize]{9}{24}
++\begin{gantt}[xunitlength=0.4cm,fontsize= \scriptsize,titlefontsize=\scriptsize]{13}{25}
+     \begin{ganttitle}
+-	    \titleelement{}{1}
+-	    \titleelement{April}{4}
+ 	    \titleelement{Mai}{4}
+ 	    \titleelement{Juni}{5}
+ 	    \titleelement{Juli}{4}
+-	    \titleelement{August}{4}
+-	    \titleelement{}{2}
++	    \titleelement{August}{5}
++	    \titleelement{September}{4}
++	    \titleelement{Oktober}{3}
+     \end{ganttitle}
+     
+     \begin{ganttitle}
+-    	\numtitle{13}{1}{36}{1}
++    	\numtitle{18}{1}{42}{1}
+     \end{ganttitle}
+     
+     \ganttbar{Recherche}{0}{4}
+     \ganttbar{Theoretische Basis}{2}{2}
+-    \ganttbarcon{Analysemethoden}{4}{4}
+-    \ganttcon{4}{3}{6}{5}
+-    \ganttbar{Visualisierung und Integration}{6}{4}
+-    \ganttcon{8}{4}{10}{6}
+-    \ganttbarcon{Implementierung}{10}{6}
++    \ganttbarcon{Methoden zur Datengewinnung}{4}{2}
++    \ganttmilestonecon{\textbf{Datenbasis fertig} (10.6.)}{6}
++    \ganttbarcon{Datenaufbereitung und Visualisierung}{6}{6}
++    \ganttmilestonecon{\textbf{Visualierungsideen fertig} (22.7.)}{12}
++    \ganttbarcon{Implementierung}{12}{4}
++    \ganttmilestonecon{\textbf{Prototyp fertig} (19.8.)}{16}
+     \ganttbarcon{Auswertung und Statistik}{16}{4}
+-    \ganttbarcon[color=Maroon]{Abschlussphase}{20}{4}
++    \ganttbarcon[color=Maroon]{\color{Maroon}Abschlussphase}{20}{5}
++    \ganttmilestone[color=Maroon]{\color{Maroon}\textbf{Abgabe} (21.10.)}{25}
+   \end{gantt}
+ }

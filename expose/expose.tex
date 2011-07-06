@@ -1,0 +1,71 @@
+% article example for classicthesis.sty
+\documentclass[a4paper,footinclude,headinclude,bibliography=totoc]{scrartcl} % KOMA-Script article 
+\usepackage[utf8]{inputenc} 
+\usepackage[sorting=none]{biblatex}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage[american,german,ngerman]{babel} 
+\usepackage{color}          
+%\usepackage{classicthesis-ldpkg}
+\usepackage[
+	nochapters,
+	drafting,
+	%minionprospacing
+	]{classicthesis} % nochapters
+
+\usepackage{tikz}
+\usepackage{gantt}
+
+\newcommand{\person}[1]{\spacedlowsmallcaps{#1}}
+\newcommand{\term}[1]{\spacedlowsmallcaps{#1}}
+\newcommand{\RA}{\ensuremath{\Rightarrow\,}}
+\newcommand{\ra}{\ensuremath{\rightarrow\,}}
+\renewcommand{\dot}{\ensuremath{\cdot\,}}
+
+\newcommand{\todo}[1]{{\it \color{gray} #1}}
+\newenvironment{todos}{%
+    \it \color{gray}%
+    \begin{itemize}%
+  }%
+  {%
+    \end{itemize}%
+}
+\newcommand{\myVersion}{1.4}
+\if\boolean{@drafting}{
+\renewcommand{\PrelimText}{\footnotesize[\,\today\  \thistime\,-- v\myVersion\,]}
+}
+\bibliography{wikipedia}
+
+\begin{document}
+
+\titlehead{\scriptsize Freie Universit"at Berlin -- Fachbereich Informatik -- David Kaltschmidt (Mat. 3782360) }
+\subject{\normalsize\rmfamily\normalfont \spacedlowsmallcaps{Expos\'e f"ur eine Diplomarbeit:} \\ \spacedlowsmallcaps{Wer schreibt Wikipedia?}}
+    \title{\color{Maroon}\Large\rmfamily\normalfont\spacedallcaps{Schreiben wir unsere Geschichte selbst?}}
+    \author{\large\rmfamily\normalfont\spacedlowsmallcaps{David Kaltschmidt}}
+    \date{}
+%\date{\rmfamily\normalfont\spacedlowsmallcaps{\today}} 
+\publishers{\small betreut durch Dr. Claudia M"uller-Birn\\ Freie Universit"at Berlin -- Fachbereich Informatik}
+    
+    
+    \maketitle
+    
+    \begin{abstract}
+    	\noindent
+	Als Online-Enzyklopädie ist Wikipedia nicht nur Nachschlagewerk sondern auch 
+	ein sich stetig wandelndes Geschichtsbuch. Eine global verteilte Nutzerschaft liest 
+	und schreibt über lokale Ereignisse noch während sie passieren. Diese Arbeit soll
+	Möglichkeiten untersuchen, inwiefern man die Herkunft der Autoren bestimmen
+	und damit Einflusssphären auf politische Ereignisse sichtbar machen kann. 
+	Vorhandene Analysemethoden und Visualisierungen sollen auf Eignung untersucht, 
+	gegebenenfalls weiterentwickelt und als Proof of Concept in einer Software umgesetzt werden.
+    \end{abstract}
+    
+    \tableofcontents
+
+    \include{content}
+
+% bib stuff
+%\nocite{*}
+    %\bibliographystyle{plain}
+    \printbibliography
+\end{document}

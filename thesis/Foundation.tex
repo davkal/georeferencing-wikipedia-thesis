@@ -1,0 +1,82 @@
+%************************************************
+\chapter{Grundlagen}\label{ch:foundation}
+%************************************************
+
+\todo{weave together important concepts for this thesis and split prior research in areas:}
+\begin{todos}
+    \item wikipedia production
+    \item contribution
+    \item geoanalysis
+    \item visualization
+\end{todos}
+
+\section{Wikipedia}
+
+\todo{this section should cover the basics to understand components of wikipedia}
+
+\begin{todos}
+    \item Artikel
+    \item Sprachen
+    \item Versionshistorie
+\end{todos}
+
+Die Online-Enzyklopädie Wikipedia gibt es in über 260 Sprachvarianten, von denen die englische mit derzeit 3,6 Millionen Artikeln mit Abstand die größte ist.
+Die Anzahl der Artikel in den anderen Sprachen sowie die Nutzung der jeweiligen Sprachvariante unterscheiden sich jedoch erheblich.\cite{wikistats}
+Wenn ein Artikel zum selben Thema in Wikipedias unterschiedlicher Sprachen vorhanden ist, sind diese Varianten in der Regel über sogenannte Interwiki-Links untereinander verlinkt.
+
+Die Artikel dieser Lexika werden von Freiwilligen auf der ganzen Welt geschrieben, gemeinschaftlich korrigiert und aktualisiert.
+Jede Änderung eines Artikels erzeugt eine neue Version, die der Versionsgeschichte des Artikels hinzugefügt wird und danach für alle Benutzer einsehbar ist.
+Jeder Eintrag in der Versionsgeschichte besteht dabei aus der Textänderung, dem Datum der Version, dem Benutzer sowie einem optionalen Kommentar über den Grund der Änderung.
+Jede Änderung kann mit Hilfe dieser Historie ausführlich begutachtet und bei Missfallen wieder revidiert werden. 
+Dies kann mitunter sogenannte \emph{edit wars} hervorrufen, in denen neue Beiträge von Nutzern mit entgegengesetzten Standpunkten sofort wieder revidiert werden.\cite{suh2007us} 
+
+Die Mitarbeit an den Artikeln kann mit oder ohne vorherige Registrierung erfolgen.
+Autoren, die sich registrieren, erlangen sowohl bestimmte Privilegien wie zum Beispiel das Recht, neue Einträge zu erstellen, als auch den Zugang zu Wikipedias sozialem Netzwerk:
+Jeder Benutzer erhält nach der Registrierung eine \emph{user page} auf der er Informationen über sich veröffentlichen und über die er mit anderen Nutzern Kontakt aufnehmen kann.\cite{wikiwhyaccount}
+
+
+\section{Autorenanalyse}\label{sec:contribution}
+
+\todo{introduce collective authorship and name some important concepts. prior research in:}
+
+\begin{todos}
+    \item text-longevity
+    \item attribution
+\end{todos}
+
+Eine Analyse der Autorschaft bis auf Satzebene innerhalb eines Artikels wird von Kramer in \cite{kramer2008wiki} erforscht.
+Durch Auswertung der Versionsgeschichte lässt sich zu jedem Satz der Autor bestimmen, der dessen Hauptteil geschrieben hat.
+Eine automatische Auswertung eines Artikels bis auf Wortebene wird von Adler in \cite{adler2008assigning} vorgestellt.
+Sie basiert auf dem von Adler selbst entwickelten Reputationssystem \cite{adler2007content}, das Textstellen eine hohe Vertrauenswürdigkeit zuweist, die von einem vertrauenswürdigen Autor geschrieben oder mindestens einmal bearbeitet worden sind.\footnote{Basierend auf diesen beiden Arbeiten wurde die Software WikiTrust implementiert, welches die Vertrauenswürdigkeit als weiß-orange \emph{Heatmap} darstellt: zweifelhafte Textstellen werden orange hinterlegt und damit leicht erkennbar. Über ein API ist eine mit Vertrauenspunkten annotierte Version eines Artikels abrufbar: \url{http://www.wikitrust.net/vandalism-api}\label{wikitrust}}
+
+Für eine Analyse der Artikel bis auf Satzebene werden Algorithmen wie in \cite{kramer2008wiki} auf ihre Anwendbarkeit untersucht.
+
+
+\section{Georeferenzierung}\label{sec:georeference}
+
+\todo{explain this intermediate step to assign a location to a contribution}
+
+\begin{todos}
+    \item pick up where he left off: \fullcite{hardy2011volunteered}
+    \item WikiScanner
+    \item Erik Zachte's: Wikipedia edits visualized\footnote{\url{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}}
+    \item Indirect approach \fullcite{lieberman2009you}
+\end{todos}
+
+Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
+Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
+Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
+
+Ein zusätzlicher, indirekter Ansatz für die Bestimmung der Herkunft eines Nutzers wird von Lieberman in \emph{You are where you edit: Locating Wikipedia users through edit histories}\cite{lieberman2009you} beschrieben.
+Er basiert auf der Annahme, dass ein Nutzer mit Vorliebe an Artikeln über Orte in seiner geographischen Nähe mitarbeitet. 
+Diese Artikel sind in der Regel mit geographischen Koordinaten versehen und erlauben so eine sehr grobe Bestimmung des Aufenthaltsortes und dessen Visualisierung auf einer Landkarte.
+
+
+\section{Visualisierung}\label{sec:visualization}
+
+\todo{Write about prior works of visualizing the aspects of attribution and georeference}
+
+\begin{todos}
+    \item Erik Zachte's: Wikipedia edits visualized\footnote{\url{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}}
+    \item Wikitrust \ref{wikitrust}
+\end{todos}

@@ -1,0 +1,210 @@
+diff -r 426f9fcdc945 content.tex
+--- a/content.tex	Fri Mar 04 16:52:56 2011 +0100
++++ b/content.tex	Tue Mar 22 00:28:26 2011 +0100
+@@ -1,9 +1,9 @@
+     
+ \section{Motivation}
+ 
+-Als Ende Januar 2011 die Welle des öffentlichen Protestes von Tunesien nach Ägypten überschwappte, rief eine kleine Gruppe von Oppositionsparteien und politischer Aktivisten über die Website Facebook zu einem \emph{Tag des Zornes} auf.
++Als Ende Januar 2011 die Welle des öffentlichen Protestes von Tunesien nach Ägypten überschwappte, rief eine kleine Gruppe von Oppositionsparteien und politischer Aktivisten über die Website Facebook zu einem \glqq Tag des Zornes\grqq auf.
+ Am 25. Januar hatte die Facebook-Gruppe über 80.000 Unterstützer. 
+-In den landesweit organisierten Protesten gingen zehntausende auf die Straße.
++In den landesweit organisierten Protesten gingen Zehntausende auf die Straße.
+ Aufgrund der andauernden Proteste schränkte die Regierung erst den Zugang zu sozialen Netzwerken wie Twitter ein, bevor sie am 28. Januar Ägypten vollständig vom Internet trennte.\cite{econ18013760, szegypt}
+  
+ Die Nutzung dieser Informationsnetzwerke hatte direkten Einfluss auf die politischen Entwicklungen. 
+@@ -11,44 +11,52 @@
+ Parallel dazu wurden auf der Online-Enzyklopädie Wikipedia die Ereignisse minutiös festgehalten\cite{wikiegypt}, so dass diese Website als Sammelbecken für Informationen genutzt werden konnte. 
+ In der Diplomarbeit soll die Herkunft dieser Informationsbeiträge untersucht werden, um mithilfe der Ergebnisse eine Aussage über die Nutzung von Wikipedia als politisches Werkzeug machen zu können. 
+ 
+-Das freie Online-Lexikon, an dem jeder mitschreiben kann, zeichnet sich nicht nur durch eine hohe Qualität aus,\cite{giles2005internet} sondern erfreut sich auch an stetiger Popularität\cite{wikipv}. 
+-Gleichzeitig ist, Dank der von Wikipedia eingesetzten Software MediaWiki\footnote{\url{http://www.mediawiki.org}}, der Aufwand sehr niedrig, an einem Artikel mitzuarbeiten.
++Das freie Online-Lexikon, an dem jeder mitschreiben kann, zeichnet sich nicht nur durch eine hohe Qualität aus \cite{giles2005internet}, sondern erfreut sich auch an stetiger Popularität \cite{wikipv}. 
++Dank der von Wikipedia eingesetzten Software MediaWiki\footnote{\url{http://www.mediawiki.org}} ist der Aufwand, an einem Artikel mitzuarbeiten, sehr gering.
+ Einen Internetzugang vorausgesetzt, kann jede Person die Entwicklungen von aktuellen Ereignissen im zugehörigen Artikel zeitnah beschreiben und innerhalb von Sekunden publizieren.
+-Für die globale Leserschaft der Wikipedia werden diese Artikel dann zu einer Quelle für Hintergrundinformationen.
+-Im Gegensatz zum globalen Zugang zu Wikipedia, beginnt ein politisches Ereignis häufig lokal. 
+-Gebunden an einen bestimmten Ort, ist es ersteinmal auf ein Land begrenzt.
+-Dies spiegelt sich auch in den Artikeln wider: es gibt einen Artikel über die Revolution in Ägypten\footnote{\url{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}} und einen über die Revolution in Tunesien\footnote{\url{http://en.wikipedia.org/wiki/Tunisian_Revolution}}.
+ 
+-In einer Welt, in der Wissen mit Macht gleichgesetzt wird, könnte die Autorschaft einer solchen Online-Referenz von erheblicher strategischer Bedeutung sein. 
+-Politische Umbrüche sind sehr empfindliche Prozesse, die leicht durch die gefühlte Einflussnahme von \emph{äußeren} Kräften beeinflusst werden können, zum Beispiel wenn die politische Opposition als Handlanger einer ausländischen Macht diskreditiert wird. 
+-Gleichzeitig können durch Beiträge von \emph{innen} die tatsächlichen Zustände ohne Zensur publik gemacht werden.
+-Das kontinuierliche und zeitnahe Mitschreiben an einem Artikel über das entsprechende Ereignis erweitertet das Nachschlagewerk zu einem Nachrichtenmedium, das ständig sowohl korrigiert als auch aktualisiert wird. 
+-Die Geschichte eines Landes wird also nicht mehr nur in der Retrospektive von den Gewinnern, d.h. den aktuellen Herrschern, geschrieben, sondern täglich, sogar stündlich, von seinen Bürgern.
++Diese Form der Mitarbeit erweitert das Nachschlagewerk zu einem Nachrichtenmedium, das ständig korrigiert und aktualisiert wird. 
++Das Resultat ist eine einzigartige Quelle des Wissens, aus der sowohl die lokal vom Ereignis betroffene als auch eine global verteilte Leserschaft politische Informationen beziehen kann.
++In einer Zeit, in der das Internet als effizientes Mittel und zur Informationsgewinnung und -verbreitung angesehen wird,\cite[S. 424-427]{chadwick2009routledge} könnte die Autorschaft einer solchen Online-Referenz von erheblicher strategischer Bedeutung sein. 
+ 
+-Die zentrale Frage der Arbeit ist, inwieweit die kollektive Autorschaft eines gegebenen Wikipedia-Artikels über ein politisches Ereignis das Ereignis selbst widerspiegelt. 
++Politische Ereignisse sind häufig auf ein Land oder eine Region begrenzt.
++Dies spiegelt sich auch in den Artikeln über die Proteste in der arabischen Welt wider: es gibt sowohl einen zusammenfassenden \glqq Mutter-Artikel\grqq\footnote{\url{http://en.wikipedia.org/wiki/2010-2011_Middle_East_and_North_Africa_protests}} als auch einzelne Artikel über die Revolution in Ägypten\footnote{\url{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}} oder den Aufstand in Libyen\footnote{\url{http://en.wikipedia.org/wiki/2011_Libyan_uprising}}.
++
++Am libyschen Beispiel ist auch erkennbar, dass solch ein politischer Umbruch ein äußerst empfindlicher Prozess ist.
++Anfang März 2011 war die Gruppe der Aufständischen klar gespalten in Liberale und Islamisten.
++Während beide Lager eine Flugverbotszone über Libyen forderten, war sich die Gemeinschaft über einen Einsatz von Bodentruppen uneinig.
++Durch die Befürwortung eines Bodeneinsatzes liefen die Liberalen Gefahr, sowohl vom Regime als auch von den Islamisten als Handlanger ausländischer Mächte diskreditiert zu werden.\cite{econ18290470}
++
++Die kollektive Autorschaft eines Wikipedia-Artikels könnte ähnlich geteilt aussehen und würde damit erste Fragestellungen liefern, deren Analyse am Ende der Diplomarbeit ermöglicht werden soll:
+ Kommen zum Beispiel die Verfasser eines Artikels über eine Revolution aus dem Land, das Schauplatz des Umbruches ist? 
++Werden die Zustände vor Ort tatsächlich von \emph{innen} geschildert?
++Lassen sich innerhalb eines Artikels Kontroversen und deren geographischer Ursprung identifizieren?
+ Ändert sich die Verteilung der Herkunft der Beiträge mit der Zeit? 
+-Lassen sich innerhalb eines Artikels Kontroversen und deren geographischer Ursprung identifizieren?
++Wie verändert sich der Artikel nachdem ein Ereignis vorüber ist?
+ 
+-Während sich bisherige Studien eher auf das Editierverhalten und Qualitätsmetriken konzentrierten, steht in der Diplomarbeit der geographische Aspekt im Vordergrund.
++Geschichte wird von Siegern geschrieben. 
++Ob dieser Aphorismus ausgedient hat, wird die Diplomarbeit nicht beantworten können.
++Ob die Bürgern eines Landes täglich oder sogar stündlich auf Wikipedia an ihrer Geschichte mitarbeiten, hingegen schon.
++
++
++\section{Zielstellung}
++
++Während sich bisherige Studien eher auf das Kollaborationsverhalten und Qualitätsmetriken konzentrierten, steht in der Diplomarbeit der geographische Aspekt im Vordergrund.
+ In diesem Rahmen sollen Möglichkeiten untersucht werden, inwieweit der geographische Ursprung der Artikelbeiträge erfasst und aufbereitet werden kann, um etwa Dritte bei einer politischen Analyse eines Artikels zu unterstützen.
+ Eine Reihe von Visualisierungen soll dabei helfen, Aussagen über politische Zusammenhänge ableiten zu können, wie zum Beispiel die Identifikation der Einflussnehmerstaaten oder auch der Streitpunkte. 
+ 
+-
+-\section{Zielstellung}
+-
+-Basierend auf diesen Überlegungen sollen bisherige Analysemethoden und Visualisierungen auf Eignung untersucht, gegebenenfalls weiterentwickelt und als Proof of Concept in eine Software integriert werden.
++Entlang dieser Überlegungen sollen bisherige Analysemethoden und Visualisierungen auf Eignung untersucht, gegebenenfalls weiterentwickelt und als Proof of Concept in einer Software umgesetzt werden.
+ Die Nutzung dieser Software soll für einen gegebenen Artikel eine automatische, quantitative Auswertung durchführen und deren Ergebnisse geeignet darstellen, so dass zum Beispiel folgende Informationen erkennbar werden:
+ 
+ \begin{labeling}{A2}
+ \item[A1] Ursprungsländer der Autoren und deren Anteil am Artikel
+ \item[A2] Zeitliche Entwicklung der Ursprünge der Autorschaft
+ \item[A3] Hauptstreitpunkte des Artikels
+-\item[A4] Vergleich der Ursprünge von dem gleichen Artikel in unterschiedlichen Sprachen, zum Beispiel im englischen und im deutschen Wikipedia
++\item[A4] Vergleich der Sprachvarianten eines Artikels
+ \end{labeling}
+ 
+ Unter Einsatz der Software soll anhand einer Auswahl von Artikeln über politische Ereignisse eine solche Analyse durchgeführt werden, um die Kernfrage, ob ein Land seine Geschichte selbst schreibt, beispielhaft zu beantworten. 
+-Eine statistische Analyse, die eine allgemeine Aussage für die gesamte Wikipedia erlaubt, schließt die Arbeit ab. 
++Eine deskriptive statistische Analyse einer Gruppe von politischen Artikeln schließt die Arbeit ab. 
+ 
+ 
+ \section{Theoretischer Hintergrund}
+@@ -68,8 +76,8 @@
+ Jeder Benutzer erhält nach der Registrierung eine \emph{user page} auf der er Informationen über sich veröffentlichen und über die er mit anderen Nutzern Kontakt aufnehmen kann.\cite{wikiwhyaccount}
+ 
+ Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
+-Für die Beiträge von nicht registrierten Benutzern wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
+-Für einen Großteil der IPs lässt sich daraufhin das Herkunftsland bestimmen.
++Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
++Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
+ Der zweite Ansatz betrifft die registrierten Benutzer.
+ Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
+ Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
+@@ -83,14 +91,15 @@
+ Eine Analyse der Autorschaft bis auf Satzebene innerhalb eines Artikels wird von Kramer in \cite{kramer2008wiki} erforscht.
+ Durch Auswertung der Versionsgeschichte lässt sich zu jedem Satz der Autor bestimmen, der dessen Hauptteil geschrieben hat.
+ Eine automatische Auswertung eines Artikels bis auf Wortebene wird von Adler in \cite{adler2008assigning} vorgestellt.
+-Sie basiert auf dem von Adler selbst entwickelten Reputationssystem \cite{adler2007content}, das Textstellen eine hohe Vertrauenswürdigkeit zuweist, die von einem vertrauenswürdigen Autor geschrieben oder mindestens einmal bearbeitet worden sind.
+-Basierend auf diesen beiden Arbeiten wurde die Software WikiTrust\footnote{\url{http://www.wikitrust.net}} implementiert, welches die Vertrauenswürdigkeit als weiß-orange \emph{Heatmap} darstellt: zweifelhafte Textstellen werden orange hinterlegt und damit leicht erkennbar.
++Sie basiert auf dem von Adler selbst entwickelten Reputationssystem \cite{adler2007content}, das Textstellen eine hohe Vertrauenswürdigkeit zuweist, die von einem vertrauenswürdigen Autor geschrieben oder mindestens einmal bearbeitet worden sind.\footnote{Basierend auf diesen beiden Arbeiten wurde die Software WikiTrust implementiert, welches die Vertrauenswürdigkeit als weiß-orange \emph{Heatmap} darstellt: zweifelhafte Textstellen werden orange hinterlegt und damit leicht erkennbar. Über ein API ist eine mit Vertrauenspunkten annotierte Version eines Artikels abrufbar: \url{http://www.wikitrust.net/vandalism-api}\label{wikitrust}}
+ 
+ 
+ \section{Vorgehensweise}
+ 
+ Im Theorieteil der Arbeit sollen diese Ansätze und deren Anwendbarkeit auf die Frage, wer die Geschichte eines Landes schreibt, untersucht werden.
+-Ebenfalls wird der aktuelle Forschungsstand daraufhin überprüft, ob es weitere Methoden zur Analyse und Visualisierung gibt und wie diese angepasst beziehungsweise weiterentwickelt und schließlich in eine Software integriert werden können.
++Ebenfalls wird der aktuelle Forschungsstand daraufhin überprüft, ob es weitere Methoden zur Analyse und Visualisierung der geographischen Ursprünge eines Beitrags gibt.
++Die im theoretischen Teil gefundenen und gegebenenfalls weiterentwickelten Methoden werden anschließend in einer Software implementiert.
++Im Schlussteil der Arbeit werden die Visualisierungen der fertigen Anwendung beispielhaft für eine Reihe von Artikeln über politische Ereignisse als Analyse-Werkzeug verwendet.
+ 
+ \subsection{Theoretischer Teil}
+ 
+@@ -100,7 +109,7 @@
+ \item[Artikel] Ein Artikel hat mindestens einen Autor und ist gegebenenfalls in mehreren Sprachen vorhanden.
+ \item[Versionsgeschichte] Diese Historie liefert Informationen wie Benutzername oder IP-Adresse, Datum der Version sowie die inkrementelle Textänderung.
+ \item[user pages \& user boxes] Auf den \emph{user pages} kann ein registrierter Benutzer Informationen über sich veröffentlichen, die Aufschluss über seine Herkunft geben könnten.
+-\item[Externe Quellen] Webservices wie WikiTrust bieten Schnittstellen an, die Informationen über Nutzer und deren Beiträge bereithalten. 
++\item[Externe Quellen] Im Internet existieren zahlreiche Dienste, die Schnittstellen anbieten, um Informationen über Nutzer und deren Beiträge zu erhalten, z.B.: WikiTrust\footref{wikitrust} oder WikiWatcher\footnote{Das WikiWatcher-Teilprojekt \emph{Poor Man's Check User} erlaubt eine Auflösung des Benutzernamens in eine IP-Adresse, wenn dieser Nutzer in der Vergangenheit beim Ändern eines Artikels das Session-Limit überschritten hatte. Inzwischen wurde diese Sicherheitslücke in der WikiMedia-Software jedoch behoben. \url{http://wikiwatcher.virgil.gr/pmcu}}
+ \end{description}
+ 
+ Daraufhin werden Wege gesucht, die Extraktion der relevanten Daten zu automatisieren und deren Speicherung zur weiteren Verarbeitung zu vereinheitlichen.
+@@ -108,7 +117,7 @@
+ Basierend auf der Versionsgeschichte würde für nicht registrierte Benutzer eine Gewinnung von Daten dann beispielsweise folgende Schritte durchlaufen:
+ 
+ \begin{quotation}
+-IP \RA Geo-Location-Service \RA Koordinaten \RA Land
++IP \RA Geolocation-Dienst \RA Koordinaten und Land
+ \end{quotation}
+ 
+ Für eine Analyse der Artikel bis auf Satzebene werden Algorithmen wie in \cite{kramer2008wiki} auf ihre Anwendbarkeit untersucht.
+@@ -117,10 +126,11 @@
+ 
+ \begin{labeling}{V2}
+ \item[V1] Revisionshistogramm à la Google Finance 
+-\item[V2] Heatmap einer Landkarte mit Ursprüngen der Revisionen 
+-\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt 
+-\item[V4] Heatmap des Artikels mit Stellen höchster Aktivität 
+-\item[V5] Landeskürzel für eine gegebene Textstelle 
++\item[V2] \emph{Heatmap} einer Landkarte mit Ursprüngen der Revisionen 
++\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt
++\item[V4] Dynamisches Blasendiagramm\footnote{\url{http://en.wikipedia.org/wiki/Motion_chart}} über die Entwicklung unterschiedlicher Sprachvarianten
++\item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
++\item[V6] Landeskürzel für eine gegebene Textstelle
+ \end{labeling}
+ 
+ 
+@@ -147,24 +157,44 @@
+ 
+ \subsection{Auswertung}
+ 
+-Im Schlussteil der Arbeit werden die Visualisierungen der Anwendung beispielhaft für eine Reihe von Artikeln über politische Ereignisse als Analyse-Werkzeug gebraucht.
++Im letzten Teil der Diplomarbeit wird die Software dann zur Analyse einiger ausgewählter Artikel beispielhaft eingesetzt.
+ Dabei könnte zum Beispiel sichtbar werden, dass sich ein bestimmter Artikel in verschiedenen Sprachvarianten unterschiedlich entwickelt. 
+ Falls ein Land mehrere offizielle Sprachen hat, könnte man diese entweder gruppiert oder einzeln im direkten Vergleich betrachten.
+ Ebenso könnten sich in Anlehnung an die \emph{edit wars} Streitpunkte anhand von Textstellen herauskristallisieren, die besonders umkämpft sind. 
+-Anhand eines ausgewählten Datensatzes von politischen Ereignissen soll eine statistische Auswertung erfolgen, um die Frage zu beantworten, wer die Geschichte eines Landes schreibt.
+-Als Ausblick werden Ansätze zur Erweiterung aufgezeigt, etwa eine Mustererkennung, die anhand der Herkunfts- und Streitmuster Vorhersagen über politische Unruhen erlauben könnte.
++
++Anhand eines ausgewählten Datensatzes von politischen Ereignissen wie \emph{Revolutions by country} soll eine statistische Auswertung erfolgen, um die Frage zu beantworten, wer die Geschichte eines Landes schreibt.
+ 
+ 
+ \section{Zeitplan}
+ 
+-Der ungefähre zeitliche Ablauf lässt sich in folgende Phasen einteilen (Umfang in Wochen, insgesamt  22 Wochen):
++Der ungefähre zeitliche Ablauf lässt sich in folgende Phasen einteilen (24 Kalenderwochen):
+ 
+-\begin{labeling}{XX}
+-\item[2] Recherche, Literatur, Forschungsstand
+-\item[2] Theoretische Basis
+-\item[6] Ansätze zur Analyse und Visualisierung
+-\item[6] Implementierung der Konzepte
+-\item[2] Auswertung mit Beispielen und Statistik
+-\item[4] Abschlussphase
+-\end{labeling}
+-
++\vspace{5 mm}
++\noindent\makebox[\textwidth]{
++\sf
++\begin{gantt}[xunitlength=0.4cm,fontsize= \scriptsize,titlefontsize=\scriptsize]{9}{24}
++    \begin{ganttitle}
++	    \titleelement{}{1}
++	    \titleelement{April}{4}
++	    \titleelement{Mai}{4}
++	    \titleelement{Juni}{5}
++	    \titleelement{Juli}{4}
++	    \titleelement{August}{4}
++	    \titleelement{}{2}
++    \end{ganttitle}
++    
++    \begin{ganttitle}
++    	\numtitle{13}{1}{36}{1}
++    \end{ganttitle}
++    
++    \ganttbar{Recherche}{0}{4}
++    \ganttbar{Theoretische Basis}{2}{2}
++    \ganttbarcon{Analysemethoden}{4}{4}
++    \ganttcon{4}{3}{6}{5}
++    \ganttbar{Visualisierung und Integration}{6}{4}
++    \ganttcon{8}{4}{10}{6}
++    \ganttbarcon{Implementierung}{10}{6}
++    \ganttbarcon{Auswertung und Statistik}{16}{4}
++    \ganttbarcon[color=Maroon]{Abschlussphase}{20}{4}
++  \end{gantt}
++}

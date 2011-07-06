@@ -1,0 +1,104 @@
+%************************************************
+\chapter{Apparatus}\label{ch:apparatus}
+%************************************************
+
+\todo{Welche Instrumente stehen zur Verfügung und wie können diese weiterentwickelt werden?}
+
+
+
+\section{Wikipedias Datenstrukturen}
+
+\begin{description}
+\item[Artikel] Ein Artikel hat mindestens einen Autor und ist gegebenenfalls in mehreren Sprachen vorhanden.
+\item[Versionsgeschichte] Diese Historie liefert Informationen wie Benutzername oder IP-Adresse, Datum der Version sowie die inkrementelle Textänderung.
+\item[user pages \& user boxes] Auf den \emph{user pages} kann ein registrierter Benutzer Informationen über sich veröffentlichen, die Aufschluss über seine Herkunft geben könnten.
+\item[Externe Quellen] Im Internet existieren zahlreiche Dienste, die Schnittstellen anbieten, um Informationen über Nutzer und deren Beiträge zu erhalten, z.B.: WikiTrust\footref{wikitrust} oder WikiWatcher\footnote{Das WikiWatcher-Teilprojekt \emph{Poor Man's Check User} erlaubt eine Auflösung des Benutzernamens in eine IP-Adresse, wenn dieser Nutzer in der Vergangenheit beim Ändern eines Artikels das Session-Limit überschritten hatte. Inzwischen wurde diese Sicherheitslücke in der WikiMedia-Software jedoch behoben. \url{http://wikiwatcher.virgil.gr/pmcu}}
+\end{description}
+
+Die Methoden zur Datenextraktion und Visualisierung werden anschließend in eine Software integriert.
+Die Gewinnung der von dieser Anwendung zu verarbeitenden Daten kann aus einer der folgenden Quellen erfolgen:
+
+\begin{description}
+\item[DB-Kopie] Monatlich angefertigte Moment-Aufnahmen der gesamten Wikipedia-Datenbank sind öffentlich verfügbar\footnote{\url{http://dumps.wikimedia.org}}. Eine solche Kopie enthält alle Artikel inklusive Versionsgeschichte und ist damit jedoch sehr groß\footnote{Eine Kopie der englischen Wikipedia-Datenbank umfasst derzeit 5,4 Terabyte.}.
+\item[Artikelexport] Jeder einzelne oder mehrere Artikel der Wikipedia kann auch separat exportiert werden. Diese Daten umfassen ebenfalls die Versionsgeschichte und sind im Umfang bedeutend kleiner.
+\item[Toolserver] Die Wikimedia Deutschland e.V. stellt Server bereit,\footnote{\url{http://toolserver.org}} welche einen direkten Zugang zu einer replizierten, schreibgeschützten Wikipedia-Datenbank ermöglichen. Die Nutzung eines solchen Servers vermeidet es zwar, eine eigene komplette Kopie der gesamten Wikipedia-Datenbank halten zu müssen, bedarf jedoch einer Anmeldung.
+\end{description}
+
+
+
+\section{Autorenschaft}
+
+\todo{Introduce types of authors (roles) as well as methods to determine contribution/attribution}
+
+\begin{todos}
+    \item Autoren
+    \item Bots
+    \item Wer überlebt?
+    \item Algorithmen, welche Unterschiede?
+\end{todos}
+
+
+
+\section{Georeferenzierung}
+
+\begin{todos}
+    \item registered vs. unregistered vs. bots vs. admins
+    \item IPs of unregistered users: Geo lookup
+    \item Autoren-Profile: Information Extraction
+    \item Geographische Zuordnung vom user profile
+\end{todos}
+
+Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
+Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
+Der zweite Ansatz betrifft die registrierten Benutzer.
+Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
+Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
+Letztere sind definierte Einheiten mit denen der Nutzer persönliche Eigenschaften wie Herkunftsland, gesprochene Sprachen oder wissenschaftliche Interessen kodifizieren kann.
+Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden Nutzerschaft ab.
+
+
+\subsection{IP lookup}
+
+\begin{todos}
+    \item Dienste
+    \item Genauigkeit
+\end{todos}
+
+Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
+
+Im Bezug auf die Herkunft sind sowohl das Land als auch die Geo-Koordinaten interessant.  
+Basierend auf der Versionsgeschichte würde für nicht registrierte Benutzer eine Gewinnung von Daten dann beispielsweise folgende Schritte durchlaufen:
+
+\begin{quotation}
+IP \RA Geolocation-Dienst \RA Koordinaten und Land
+\end{quotation}
+
+
+\subsection{Information Extraction}
+
+\begin{todos}
+    \item IE approach with Machine Learning \fullcite{xiao2004information}
+    \item unsupervised IE: \fullcite{etzioni2005unsupervised}
+\end{todos}
+
+
+
+\section{Visualisierung}
+
+\begin{todos}
+    \item Darstellung der geographischen Analyse
+    \item per Wort, Satz, Artikel, Wort
+\end{todos}
+
+Auf Basis der strukturierten Daten in Form von Artikeln, Sätzen, Ländern, Koordinaten und Sprachen sollen nun Visualisierungen gefunden werden, welche die Fülle an Informationen zugänglich machen.
+Mögliche Visualisierungen wären etwa:
+
+\begin{labeling}{V2}
+\item[V1] Revisionshistogramm à la Google Finance 
+\item[V2] \emph{Heatmap} einer Landkarte mit Ursprüngen der Revisionen 
+\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt
+\item[V4] Dynamisches Blasendiagramm\footnote{\url{http://en.wikipedia.org/wiki/Motion_chart}} über die Entwicklung unterschiedlicher Sprachvarianten
+\item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
+\item[V6] Landeskürzel für eine gegebene Textstelle
+\end{labeling}
+
