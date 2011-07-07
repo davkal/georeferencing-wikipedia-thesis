@@ -43,6 +43,7 @@ Die Gewinnung der von dieser Anwendung zu verarbeitenden Daten kann aus einer de
 
 \begin{todos}
     \item registered vs. unregistered vs. bots vs. admins
+    \item incorporate key findings of \cite{hardy2011volunteered} as laid out in chapter \ref{sec:georeference}
     \item IPs of unregistered users: Geo lookup
     \item Autoren-Profile: Information Extraction
     \item Geographische Zuordnung vom user profile
@@ -60,8 +61,12 @@ Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden 
 \subsection{IP lookup}
 
 \begin{todos}
-    \item Dienste
-    \item Genauigkeit
+    \item Services
+    \item Accuracy
+    \item Active prevention by proxies and anonymizers: 
+    \\ \fullcite{muir2006internet} 
+    \\ \fullcite{muir2009internet}
+    \\ \fullcite{duckham2005formal}
 \end{todos}
 
 Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
@@ -79,6 +84,27 @@ IP \RA Geolocation-Dienst \RA Koordinaten und Land
 \begin{todos}
     \item IE approach with Machine Learning \fullcite{xiao2004information}
     \item unsupervised IE: \fullcite{etzioni2005unsupervised}
+    \item if city is mentioned, determine country (needs disambiguation, e.g. Berlin)
+    \item coordinates are optional?
+\end{todos}
+
+
+\subsection{Geographic Profiling}
+
+\begin{todos}
+    \item \fullcite{lieberman2009you}
+    \item \fullcite{hecht2010localness}
+    \item from other fields such as criminal research: \\ \fullcite{snook2005complexity}
+    \item feasibility, maybe just as enhancer
+\end{todos}
+
+
+\subsection{Verdichtung}
+
+\begin{todos}
+    \item settle for a resolution
+    \item some examples on accuracy for different countries
+    \item clustering of origins: areas of influence
 \end{todos}
 
 
@@ -101,4 +127,16 @@ Mögliche Visualisierungen wären etwa:
 \item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
 \item[V6] Landeskürzel für eine gegebene Textstelle
 \end{labeling}
+
+
+\section{Datenstruktur und Modell}
+
+\begin{todos}
+    \item fetch article
+    \item get revision history
+    \item determine contributions
+    \item transform to word attribution
+    \item attach georeference 
+\end{todos}
+
 
