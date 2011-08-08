@@ -35,11 +35,11 @@
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
-\newcommand{\myTitle}{Schreiben wir unsere Geschichte selbst?\xspace}
+\newcommand{\myTitle}{Where is history being written? Georeferencing contributions to Wikipedia\xspace}
 \newcommand{\myDegree}{Diplomarbeit\xspace}
 \newcommand{\myName}{David Kaltschmidt\xspace}
-\newcommand{\myProf}{Betreuer: Dr. Claudia M\"uller-Birn\xspace}
-\newcommand{\myOtherProf}{2. Pr\"ufer: Prof. Dr. Robert Tolksdorf\xspace}
+\newcommand{\myProf}{Dr. Claudia M\"uller-Birn\xspace}
+\newcommand{\myOtherProf}{Prof. Dr. Robert Tolksdorf\xspace}
 \newcommand{\mySupervisor}{\xspace}
 \newcommand{\myFaculty}{Institut f\"ur Informatik\xspace}
 \newcommand{\myDepartment}{\xspace}
@@ -54,7 +54,7 @@
 \usepackage[sorting=none]{biblatex}
 
 \usepackage{csquotes}
-\usepackage[american,german,ngerman]{babel}           
+\usepackage[american]{babel}           
 %\usepackage[square,numbers]{natbib} 
 \usepackage[fleqn]{amsmath} % math environments and more by the AMS 
 
@@ -195,7 +195,7 @@
 \begin{document}
 \frenchspacing
 \raggedbottom
-\selectlanguage{ngerman} % american ngerman
+\selectlanguage{american} % american ngerman
 %\renewcommand*{\bibname}{new name}
 %\setbibpreamble{}
 \pagenumbering{roman}
@@ -217,14 +217,14 @@
 %*******************************************************
 \pagenumbering{arabic}
 % use \cleardoublepage here to avoid problems with pdfbookmark
-\cleardoublepage\part{Überlegungen}
+\cleardoublepage\part{Thoughts}
 \include{Introduction}
 \include{Foundation}
-\cleardoublepage\part{Experimentelles}
+\cleardoublepage\part{Experiments}
 \include{Apparatus}
 \include{Experiment}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-\cleardoublepage\part{Ergebnisse}
+\cleardoublepage\part{Results}
 \include{Results}
 \include{Conclusion}
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
