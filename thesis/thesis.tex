@@ -54,7 +54,7 @@
 \usepackage[sorting=none]{biblatex}
 
 \usepackage{csquotes}
-\usepackage[american]{babel}           
+\usepackage[american,ngerman]{babel}           
 %\usepackage[square,numbers]{natbib} 
 \usepackage[fleqn]{amsmath} % math environments and more by the AMS 
 
@@ -127,7 +127,22 @@
   }
 \newcommand{\company}[1]{{\sc#1}}
 \newcommand{\abbr}[1]{{\scshape\lowercase{#1}}}
-\newcommand{\titlequote}[2]{{\flushright{\slshape#1} \\  \medskip--- #2\\}}
+\newcommand{\titlequote}[2]{{\flushright{\slshape#1} \\  \medskip--- #2\\}\vspace{1em}}
+%\newcommand{\question}[2]{{\flushright{\slshape#1} \\  \medskip--- #2\\}\vspace{1em}}
+
+\usepackage{amsthm}
+\usepackage{thmtools}
+%\newtheorem{hypothesis}{Hypothesis}
+\declaretheoremstyle[headfont=\normalfont\sc,headindent=-1em]{thesisstyle}
+
+\declaretheorem[style=thesisstyle,name=question]{thquestion}
+\newcommand{\question}[1]{\begin{quote}\vspace{-\baselineskip}\begin{thquestion}#1\end{thquestion}\end{quote}}
+
+\declaretheorem[style=thesisstyle,name=hypothesis]{thhypothesis}
+\newcommand{\hypothesis}[1]{\begin{quote}\vspace{-\baselineskip}\begin{thhypothesis}#1\end{thhypothesis}\end{quote}}
+
+
+\newcommand{\footurl}[1]{\footnote{\url{#1}}}
 
 
 % ********************************************************************
@@ -224,7 +239,8 @@
 \cleardoublepage\part{Thoughts}
 \include{Introduction}
 \include{Foundation}
-\cleardoublepage\part{Experiments}
+\include{Hypotheses}
+\cleardoublepage\part{Methods}
 \include{Apparatus}
 \include{Experiment}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
