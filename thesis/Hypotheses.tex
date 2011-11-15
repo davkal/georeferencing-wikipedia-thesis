@@ -2,41 +2,46 @@
 \chapter{Hypotheses}\label{ch:hypotheses}
 %************************************************
 
+My effort to answer this thesis' main question, where the contributions to historic articles are coming from, will follow the path laid out by a set of questions:
+
 \section{Research questions}
 
-A handful of studies exist that analyze Wikipedia's geographical coverage based on articles that are geo-tagged.
-These articles contain geographic coordinates as part of the article content, e.g. the article about the Brandenburg Gate\footurl{http://en.wikipedia.org/wiki/Brandenburg_Gate} in Berlin contains its coordinates.
-These articles are mostly about geographic manifestations like cities, rivers and other places of interest but not about much else. 
-\todo{cite paper about coverage}
 A central part of this thesis is the determination of the geographic origins of individual contributions.
-A key research question for all following is thus:
+In prior research regarding the spatial distribution of contributors, most notably \citetitle{hardy2011volunteered}, \textcite[see 3.4.2]{hardy2011volunteered} took only anonymous users into account.
+Since anonymous contributions reveal the IP address their location can easily be approximated by using IP geolocation services.
+He has firmly established that anonymous contributors are more likely to write about nearby places.
+However, the above approach did not consider contributions done by registered users who, though being outnumbered by anonymous users, provide the majority of edits.
+Based on alternative approaches like \textcite{lieberman2009you} and \textcite{engelhardt2010geographic}, I will investigate whether registered users can be included for a spatial analysis.
+The search for the location of such a user will be satisfied when it yields a country which will be used as the origin of this user's contributions.
+A key question is thus:
 
-\question{What is the average ratio of contributions for which the geographic origins can be determined vs. all contributions to an article?}
+\question{Can a country of origin can be assigned to registered users?}
 
-Once the contributions have been georeferenced, the question of locality of the contributions can only be answered if the article itself can be geographically designated. 
-This is easy for the aforementioned geo-tagged articles concerning places, but will be more difficult for articles about historical events but according to \textcite{buscaldi2007comparison} not impossible.
-For some abstract concepts like \emph{culture}\footurl{http://en.wikipedia.org/wiki/Culture} it will even be futile.
-To allow for an analysis of historic events it is necessary to investigate the articles in a similar manner as the contributions:
+\textcite{hardy2011volunteered} also stopped short of how the spatial distribution changes over time.
+The knowledge of time and location of the contributions suggest the following question:
 
-\question{What is the ratio of articles for which the geographic origins can be determined vs. all articles?}
+\question{Does the spatial distribution of contributions change over time?}
 
-Even if an article does not have a location property, an analysis of the origins of its contributions can be desirable.
-According to \textcite{anthony2005explaining} the majority of high quality content is produced either by one-time users, the long tail of contributors, or registered power users who act as vigilantes for their favorite articles. 
-Given the strong bias shown by \textcite{ortega2009wikipedia} 
-Using the georeferenced contributions one can analyze how the spatial distribution of their origins changes over time.
-In fact, it seems unlikely that 
+Once the contributions have been georeferenced, the question of localness of the contributions can only be answered if the article itself can be geographically designated. 
+A handful of studies exist, notably \cite{hardy2011volunteered,hecht2010localness}, that perform a spatial analysis on Wikipedia articles that are geo-tagged.
+These articles contain geographic coordinates as part of the content, e.g. the article about the \term{Brandenburg Gate}\footurl{http://en.wikipedia.org/wiki/Brandenburg_Gate} in Berlin is tagged with the coordinates 52°30'58.58''N 13°22'39.80''E.
+However, these articles are geographic in nature treating cities, rivers and places of interest. 
+This thesis hopes to expand the spatial analysis of contributions to articles that have a location property only by association, e.g. the \term{Egyptian Revolution of 2001}\footurl{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}, that clearly happened in \term{Egypt}\footurl{http://en.wikipedia.org/wiki/Egypt}.
+To allow for an analysis of historic events it is necessary to investigate the articles in a similar manner as the registered users:
 
-\question{How much does the distribution of origins change over time?}
+\question{Can a location be assigned to an historic article?}
 
+Finally, an article with a location can be related to the spatial distribution of its contributors.
+In the context of historic articles this suggests the final two questions:
 
+\question{Are historic articles written by their respective citizens?}
 
-\todo{can a statistical analysis be done to answer the main question}
-
-\question{Do people write their own history?}
-
- 
 \section{Scope}
 
-\subsection{Article location}
+\subsection{Historic articles}
+The same questions may be applicable to other types of articles than historic ones.
+However, the latter satisfy the requirement of having a location attribute and were therefor referred to throughout this thesis.
 
-\subsection{Behavior}
+\subsection{Article location}
+Although \emph{location} is central to more abstract concepts like \term{Culture}\footurl{http://en.wikipedia.org/wiki/Culture} these subjects clearly defy being attributed with \emph{a} location.
+Nevertheless, an analysis of the spatial distribution of contributors could be interesting. 

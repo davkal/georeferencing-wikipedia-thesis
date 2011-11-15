@@ -23,6 +23,10 @@ Visualization:
 Distributions all authors vs what survived
 
 
+Geographic names:
+Use wikipedias redirecting functionaity: San Fran -> San Francisco
+Yahoos search API
+
 
 PhD topic
 
