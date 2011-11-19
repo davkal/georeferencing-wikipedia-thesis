@@ -2,45 +2,76 @@
 \chapter{Hypotheses}\label{ch:hypotheses}
 %************************************************
 
-My effort to answer this thesis' main question, where the contributions to historic articles are coming from, will follow the path laid out by a set of questions:
+To gain insight on how Wikipedia is being used during and after political events, and ultimately whether contributions to their respective articles are written by people that are most affected, I will propose a set of hypotheses aimed at different aspects of article production.
 
-\section{Research questions}
+For this thesis I will define an event as an occurrence that has an effect on the public affairs of a country.
+Let then an occurrence be marked by a location, a start date and, if not ongoing, an end date. 
+Further, let the beginning of an event be defined as the first quarter of time between its start and its end\footnote{For ongoing events the end date will be the present.}.
+In conjunction with the spatial distribution this division into time intervals allows for a detailed look into \nameref{sec:articlecreation}, the level of  \nameref{sec:participation} in following interval as well as  \nameref{sec:textsurvival}.
 
-A central part of this thesis is the determination of the geographic origins of individual contributions.
-In prior research regarding the spatial distribution of contributors, most notably \citetitle{hardy2011volunteered}, \textcite[see 3.4.2]{hardy2011volunteered} took only anonymous users into account.
-Since anonymous contributions reveal the IP address their location can easily be approximated by using IP geolocation services.
-He has firmly established that anonymous contributors are more likely to write about nearby places.
-However, the above approach did not consider contributions done by registered users who, though being outnumbered by anonymous users, provide the majority of edits.
-Based on alternative approaches like \textcite{lieberman2009you} and \textcite{engelhardt2010geographic}, I will investigate whether registered users can be included for a spatial analysis.
-The search for the location of such a user will be satisfied when it yields a country which will be used as the origin of this user's contributions.
-A key question is thus:
+\section{Article creation}\label{sec:articlecreation}
 
-\question{Can a country of origin can be assigned to registered users?}
+The use of Wikipedia concerning a political event starts with the creation of the article describing the event.
+In general one would expect the delay between the start date and the date of article creation to be rather short and, considering a rising year-on-year usage\cite{wikipv}, to shorten with time.
+This leads to the following hypotheses:
 
-\textcite{hardy2011volunteered} also stopped short of how the spatial distribution changes over time.
-The knowledge of time and location of the contributions suggest the following question:
+\hypothesis{Articles are created with only a short delay after the beginning of the event.}
 
-\question{Does the spatial distribution of contributors change over time?}
+\hypothesis{The delay between the beginning of the event and its article creation decreases over time.}
 
-Once the contributions have been georeferenced, the question of localness of the contributions can only be answered if the article itself can be geographically designated. 
-A handful of studies exist, notably \cite{hardy2011volunteered,hecht2010localness}, that perform a spatial analysis on Wikipedia articles that are geo-tagged.
-These articles contain geographic coordinates as part of the content, e.g. the article about the \term{Brandenburg Gate}\footurl{http://en.wikipedia.org/wiki/Brandenburg_Gate} in Berlin is tagged with the coordinates 52°30'58.58''N 13°22'39.80''E.
-However, these articles are geographic in nature treating cities, rivers and places of interest. 
-This thesis hopes to expand the spatial analysis of contributions to articles that have a location property only by association, e.g. the \term{Egyptian Revolution of 2001}\footurl{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}, that clearly happened in \term{Egypt}\footurl{http://en.wikipedia.org/wiki/Egypt}.
-To allow for an analysis of historic events it is necessary to investigate the articles in a similar manner as the registered users:
+\textcite[57]{hardy2011volunteered} has established that Wikipedians write about places in their proximity more often than distant ones.
+His sample included all articles that have a geotag.
+Naturally, articles about geographic places like towns and sights\footnote{According to \textcite{kittur2009s} these articles are third biggest group.} will dominate this sample.
+Since this thesis is concerned with political events, this point is worth revisiting\footnote{In addition, \textcite[61]{hardy2011volunteered} considered only anonymous users. Since creating an article is only allowed for registered users, his method has to be extended.} for the people most affected should be the ones creating the article, thus:
 
-\question{Can a location be assigned to an historic article?}
+\hypothesis{Articles about political events are created by people in the events' proximity.}
 
-Finally, an article with a location can be related to the spatial distribution of its contributors.
-In the context of historic articles this suggests the final question:
 
-\question{Are historic articles written by their respective citizens?}
+\section{Participation}\label{sec:participation}
+
+A Wikipedia article usually has more than one author.
+Once it has been created, users from around the globe can edit an article collectively.
+\textcite{viegas2004history} tried to find patterns in the revision history that would reveal certain aspects of collaboration or the lack thereof, e.g. discussions and vandalism.\footnote{Using their history flow visualization \textcite{viegas2004history} first identified patterns in single articles and later tried to statistically confirm their prevalence by analyzing the complete English corpus.} 
+In respect to authorship, the researchers found the proportions of anonymous contributions differed strongly from page to page while showing no preference to any topic.
+This inconclusive result and the age of the sample\footnote{\textcite{viegas2004history} used a dataset from May 2003.} merits further investigation. 
+
+Overall registered users have the biggest number of edits which could be due to their revising nature.\cn
+However, anonymous users contribute considerable amounts of text. 
+For accounts of political events, due to their dynamic nature, I expect a strong participation by unregistered users while the events are still unfolding.
+
+\hypothesis{In the beginning of the event anonymous users contribute more than registered users.}
+
+\hypothesis{For the duration of the event there are more local contributions than distant ones.}
+
+When the political is considered ``over'' its end date in the article changes from ``present'' to a calendar date.
+In this final phase, I would expect the contributions to subside and the content to consolidate when editors tighten prose or remove text they believe to be irrelevant.
+Given their more revisory nature\cn, I would expect registered users to outnumber anonymous ones and the spatial distribution contributions to become less local.
+Thus the final hypotheses:
+
+\hypothesis{Articles of a political event that has ended will continuously shrink in size.}
+
+\hypothesis{After an event has ended, there will be more contributions from registered users than from anonymous ones.}
+
+\hypothesis{After an event has ended, the spatial distribution of the contributors will become less local.}
+
+\section{Text survival}\label{sec:textsurvival}
+
+In \nameref{sec:participation} the contributions are only treated in volume giving credit to each contributor.
+However, when multiple authors write the same article, they do not only add text but also modify or even delete parts.
+A user who reads an article will only see the text that has survived all edits after it was added.
+\textcite{viegas2004history} found that early contributions have a high survival rate.
+Recognizing this \term{first-mover advantage}, I suspect that accounts of political events show a strong localness in the beginning.
+Thus the key hypotheses from \nameref{sec:participation} have to be extended to reflect the spatial distributions of the contributions that make up the article:
+
+\hypothesis{For the duration of the event the article text contains more local contributions than distant ones.}
+
+\hypothesis{After an event has ended, the spatial distribution of the surviving contributions will become less local.}
 
 \section{Scope}
 
-\subsection{Historic articles}
-The same questions may be applicable to other types of articles than historic ones.
-However, the latter satisfy the requirement of having a location attribute and were therefor referred to throughout this thesis.
+\subsection{Political events}
+The same hypotheses may be applicable to other types of articles than political ones.
+However, the latter satisfy the requirement of having a location attribute and a time interval.
 
 \subsection{Article location}
 Although \emph{location} is central to more abstract concepts like \term{Culture}\footurl{http://en.wikipedia.org/wiki/Culture} these subjects clearly defy being attributed with \emph{a} location.

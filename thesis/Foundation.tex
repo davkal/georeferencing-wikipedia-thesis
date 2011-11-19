@@ -40,15 +40,22 @@ With the initial registration a \emph{user page} is created where the user is al
 
 \section{Contributions}\label{sec:contribution}
 
-\todo{introduce collective authorship and name some important concepts. prior research in:}
+Wikipedia's articles are continuously edited by its users.
+The nature of an edit can range from simple spelling or grammar correction, over improving the content of a sentence to writing or removing of paragraphs or even whole articles. 
+This collective authorship makes it difficult to determine an individual author's contributions, in other words, who wrote what.
 
+Research in this area is mostly motivated by finding ways to assign trust to individual authors.
+This is based on the assumption that these authors consistently produce high quality contributions that outlive contributions of low quality.
+\textcite{kramer2008wiki} devised a method to assign trust to the authors of an article by examining the wealth of information contained in the article's revision history.
+They looked at an article as being a set of phrases.
+The author who first wrote a sentence gets the credit for that phrase and will gain trust if it survives future edits.\footnote{\textcite{kramer2008wiki} define a sentence as an n-gram---a sequence of n words---and use a sliding window model to follow it across revisions to prevent simple rearrangements of text from counting as a new sentence.}
+
+This survival of text was first 
 \begin{todos}
     \item text-longevity
     \item attribution
 \end{todos}
 
-Eine Analyse der Autorschaft bis auf Satzebene innerhalb eines Artikels wird von Kramer in \cite{kramer2008wiki} erforscht.
-Durch Auswertung der Versionsgeschichte lässt sich zu jedem Satz der Autor bestimmen, der dessen Hauptteil geschrieben hat.
 Eine automatische Auswertung eines Artikels bis auf Wortebene wird von Adler in \cite{adler2008assigning} vorgestellt.
 Sie basiert auf dem von Adler selbst entwickelten Reputationssystem \cite{adler2007content}, das Textstellen eine hohe Vertrauenswürdigkeit zuweist, die von einem vertrauenswürdigen Autor geschrieben oder mindestens einmal bearbeitet worden sind.\footnote{Basierend auf diesen beiden Arbeiten wurde die Software WikiTrust implementiert, welches die Vertrauenswürdigkeit als weiß-orange \emph{Heatmap} darstellt: zweifelhafte Textstellen werden orange hinterlegt und damit leicht erkennbar. Über ein API ist eine mit Vertrauenspunkten annotierte Version eines Artikels abrufbar: \url{http://www.wikitrust.net/vandalism-api}\label{wikitrust}}
 
