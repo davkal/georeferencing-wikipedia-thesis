@@ -58,36 +58,21 @@ The annotated text is the result of splitting the original text into chunks and 
 
 \section{Georeferences}\label{sec:georeference}
 
-\todo{explain this intermediate step to assign a location to a contribution}
+\todo{''Combined approaches (i.e., where quantitative spatial analysis models are calibrated with surveyed locations) may prove useful.''  \cite[p. 85]{hardy2011volunteered}}
 
-\begin{todos}
-    \item pick up where he left off: \fullcite{hardy2011volunteered} 
-    \\ He's more about the how, I'm about the where. Key findings:
-    \item ''I find that as a group, anonymous contributors write about fewer places than registered contributors, despite outnumbering them five-to-one.'' \cite{hardy2011volunteered}
-    \item ''I find that anonymous contributors are more likely to write about
-nearby places, and that the geographic effects fit an exponential distance decay
-function.'' \cite{hardy2011volunteered}
-    \item ''Combined approaches (i.e., where quantitative spatial analysis models
-are calibrated with surveyed locations) may prove useful.''  \cite[p. 85]{hardy2011volunteered}
-    \item WikiScanner
-    \item Erik Zachte's: Wikipedia edits visualized\footnote{\url{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}}
-    \item Indirect approach \fullcite{lieberman2009you}
-\end{todos}
+In order to analyze the localness of contributions, it is necessary to geotag them, i.e. applying geospatial metadata like coordinates to each contribution, derived from the author's location.
+In his doctoral thesis \textcite{hardy2011volunteered} used the Wikipedia corpora to study the spatial behavior of article production.
+The dataset was limited to anonymous users and articles that were geotagged.
 
-Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
-Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
-Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
+For each anonymous contribution an IP address, belonging to the point of Internet access, is stored in the revision that is created.
+Various methods to determine the geographic location from a given IP address have been studied by \textcite{muir2009internet}.
+Various visualizations\footurl{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/} \footurl{http://sonetlab.fbk.eu/wikitrip/} of edit distributions use geolocation databases like MaxMind\footurl{http://www.maxmind.com} and Quova\footurl{http://www.quova.com}.
 
-Ein zusätzlicher, indirekter Ansatz für die Bestimmung der Herkunft eines Nutzers wird von Lieberman in \emph{You are where you edit: Locating Wikipedia users through edit histories}\cite{lieberman2009you} beschrieben.
-Er basiert auf der Annahme, dass ein Nutzer mit Vorliebe an Artikeln über Orte in seiner geographischen Nähe mitarbeitet. 
-Diese Artikel sind in der Regel mit geographischen Koordinaten versehen und erlauben so eine sehr grobe Bestimmung des Aufenthaltsortes und dessen Visualisierung auf einer Landkarte.
+For registered users, the IP address is not stored with the revision.
+Therefor IP geolocation services cannot be used.
+\textcite{lieberman2009you} found an interesting approach by assuming users prefer to edit geographic articles in their proximity.
+The approximated user location was derived from the center of the convex hull around those articles.
 
-
-\section{Visualization}\label{sec:visualization}
-
-\todo{Write about prior works of visualizing the aspects of attribution and georeference}
-
-\begin{todos}
-    \item Erik Zachte's: Wikipedia edits visualized\footnote{\url{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}}
-    \item Wikitrust \ref{wikitrust}
-\end{todos}
+Registered users are also given the opportunity to create a personal profile in their \emph{user page}.
+The user can choose prose or structured boxes to reveal information like his general interests, spoken languages, but also his location.
+When entity names can be extracted from location information they can lead to coordinates as shown by \textcite{hecht2010localness}.
