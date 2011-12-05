@@ -29,9 +29,26 @@ Die Gewinnung der von dieser Anwendung zu verarbeitenden Daten kann aus einer de
 \item[Toolserver] Die Wikimedia Deutschland e.V. stellt Server bereit,\footnote{\url{http://toolserver.org}} welche einen direkten Zugang zu einer replizierten, schreibgeschützten Wikipedia-Datenbank ermöglichen. Die Nutzung eines solchen Servers vermeidet es zwar, eine eigene komplette Kopie der gesamten Wikipedia-Datenbank halten zu müssen, bedarf jedoch einer Anmeldung.
 \end{description}
 
-\subsection{Zugriff}
+\subsection{Toolkits}
 
 \todo{Tools and servers to access the articles.}
+
+\begin{todos}
+\item Revert analyzer and framework to map a processing function on dumps: \url{https://bitbucket.org/halfak/wikimedia-utilities/}
+\item Page view statistics for a given article: \url{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution} using data from \url{http://dumps.wikimedia.org/other/pagecounts-raw/}
+
+\end{todos}
+
+\subsection{Mediawiki API}
+
+\begin{todos}
+    \item check if a user is a bot 
+    \item all articles that are member of a category
+    \item revisions, includes user names
+    \item
+    \item 
+\end{todos}
+
 
 
 \section{Collective Authorship}
@@ -94,6 +111,7 @@ IP \RA Geolocation-Dienst \RA Koordinaten und Land
 \subsection{Information Extraction}
 
 \begin{todos}
+\item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
     \item IE approach with Machine Learning \fullcite{xiao2004information}
     \item unsupervised IE: \fullcite{etzioni2005unsupervised}
     \item if city is mentioned, determine country (needs disambiguation, e.g. Berlin)
@@ -170,6 +188,16 @@ Mögliche Visualisierungen wären etwa:
     \item determine contributions
     \item transform to word attribution
     \item attach georeference 
+\end{todos}
+
+\section{Analysis}
+
+\begin{todos}
+    \item article usage (page views) vs. article production (edits)
+    \item 
+    \item 
+    \item
+    \item 
 \end{todos}
 
 
