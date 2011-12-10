@@ -52,7 +52,10 @@
 %*******************************************************
 \usepackage[utf8]{inputenc}
 \usepackage[sorting=none]{biblatex}
-
+\usepackage{datetime}
+\mmddyyyydate
+%\yyyymmdddate
+%\renewcommand{\dateseparator}{-}
 \usepackage{csquotes}
 \usepackage[american,ngerman]{babel}           
 %\usepackage[square,numbers]{natbib} 
@@ -142,7 +145,7 @@
 
 \newcommand{\cn}{[\todo{citation needed}]}
 
-\newcommand{\footurl}[1]{\footnote{\url{#1}}}
+\newcommand{\footurl}[4]{\footnote{\url{#1} (visited on \formatdate{#4}{#3}{#2})}}
 
 
 % ********************************************************************

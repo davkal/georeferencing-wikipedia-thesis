@@ -2,15 +2,16 @@
 \chapter{Foundation}\label{ch:foundation}
 %************************************************
 
-Wikipedia is a phenomenon that has attracted researchers across all fields, notably computer science and sociology, who have written over 1,000 reports on the subject.\cite{nielsen2011wikipedia}
-These roughly fall into three categories: 
+Wikipedia is a phenomenon that has attracted researchers across all fields, notably computer science and sociology, who have written over 1,000 reports on the subject to date.
+\textcite{nielsen2011wikipedia} divides these roughly into four categories: 
 \begin{description}
 \item[Content production] Covering all aspects of voluntary production such as motivation, collaboration, coverage and bias, quality and vandalism, actuality and geography.
-\item[Information use] Treating how the resulting corpus is being used, e.g. citing in research, use in court, trend-spotting, thesaurus construction or categorization.
+\item[Information use] Treating how the resulting corpus is being used, e.g. Wikipedia citation in research, use in court, trend-spotting, natural language processing and automatic translation tools, thesaurus construction or categorization.
 \item[Improvement] These are studies concerned with the improvement of both the software used by Wikipedia and the content, e.g. automatic linking, bots, improved editors as well as quality and trust indicators. 
+\item[Communication] Studies in this category look at Wikipedia as an online collaboration tool for education and research. 
 \end{description}
 
-This thesis falls into the first category as it examines the geography of article contributions that will become part of the Wikipedia's corpus.
+This thesis falls into the first category, content production, as it examines the geography of article contributions that will become part of the Wikipedia's corpus.
 After a short overview of Wikipedia from a user's perspective, I will introduce its model of collective authorship and present prior research of concerning location and geography. 
 
 \section{Wikipedia}\label{sec:wikipedia}
@@ -19,6 +20,16 @@ Wikipedia is an online encyclopedia with editions in over 260 languages.
 Counting 3.6 million articles, the English version is by far the biggest.
 However, other language editions differ sharply in size and usage.\cite{wikistats}
 If articles covering the same topic exist in other language editions, these are connected by interwiki links.
+
+\subsection{History}
+
+\todo{when was it founded, idea behind it, first steps, road to success, anecdotes}
+
+\subsection{Wikimedia Foundation}
+
+\todo{Foundation structure, independence of language wikis, funding}
+
+\subsection{Editing policy}
 
 \todo{Image: graphic of article UI}
 
@@ -44,15 +55,15 @@ Wikipedia's articles are continuously edited by its users.
 The nature of an edit can range from simple spelling or grammar correction, over improving the content of a sentence to writing or removing of paragraphs or even whole articles. 
 This collective authorship makes it difficult to determine an individual author's contributions, in other words, it is not easy to tell who wrote what.
 
-Research in this area is mostly motivated by finding ways to assign trust to individual authors.
+Research in this area is motivated by finding ways to identify individual authors with a good reputation in order to assign a trust score to them.
 This is based on the assumption that trusted authors consistently produce high quality contributions that outlive contributions of lower quality.
-\textcite{kramer2008wiki} devised a method to assign trust to the authors of an article by examining the wealth of information contained in the article's revision history.
+\textcite{kramer2008wiki} devised a method to assign trust scores to the authors of an article by examining the wealth of information contained in the article's revision history.
 They looked at an article as being a set of phrases.
 The author who first wrote a sentence gets the credit for that phrase and will gain trust if it survives future edits.\footnote{\textcite{kramer2008wiki} define a sentence as an n-gram---a sequence of n words---and use a sliding window model to follow it across revisions to prevent simple rearrangements of text from counting as a new sentence.}
 
 A similar approach of calculating the longevity of text chunks was followed by \textcite{adler2007content}.
 They adapted standard text-diff algorithms to the peculiarities of the wiki revision system, e.g. keeping track of text chunks that were removed at one point and then reinserted in later revisions.
-Based on these algorithms a reputation system was implemented by \textcite{adler2008assigning} which offers an API\footurl{http://www.wikitrust.net/vandalism-api} that can annotate a Wikipedia article.
+Based on these algorithms a reputation system was implemented by \textcite{adler2008assigning} which offers an API\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} that can annotate a Wikipedia article.
 The annotated text is the result of splitting the original text into chunks and attributing them with their respective authors, the number of the revision where the chunk was added and a trust value for the author.\footnote{\citeauthor{adler2008assigning} also released a Firefox add-on that highlights untrustworthy passages when viewing Wikipedia articles: \url{https://addons.mozilla.org/en-US/firefox/addon/wikitrust/}.}
 
 
@@ -66,7 +77,7 @@ The dataset was limited to anonymous users and articles that were geotagged.
 
 For each anonymous contribution an IP address, belonging to the point of Internet access, is stored in the revision that is created.
 Various methods to determine the geographic location from a given IP address have been studied by \textcite{muir2009internet}.
-Various visualizations\footurl{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/} \footurl{http://sonetlab.fbk.eu/wikitrip/} of edit distributions use geolocation databases like MaxMind\footurl{http://www.maxmind.com} and Quova\footurl{http://www.quova.com}.
+Various visualizations\footurl{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}{2011}{10}{31} \footurl{http://sonetlab.fbk.eu/wikitrip/}{2011}{10}{31} of edit distributions use geolocation databases like MaxMind\footurl{http://www.maxmind.com}{2011}{10}{31} and Quova\footurl{http://www.quova.com}{2011}{10}{31}.
 
 For registered users, the IP address is not stored with the revision.
 Therefor IP geolocation services cannot be used.
