@@ -2,27 +2,32 @@
 \chapter{Apparatus}\label{ch:apparatus}
 %************************************************
 
-This chapter describes the data structures behind Wikipedia articles and the revision history as well as tools to retrieve and analyze those.
+This chapter describes data sources to get Wikipedia content like articles and revision history as well as tools to retrieve and analyze those.
 
-\section{Available data}
+\section{Data sources}
 
-A lot of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
+For an automated analysis browsing the user interface of Wikipedia's website is not really feasible.
+The bulk of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
 Unfortunately, these databases are not directly accessible over the Internet.
-The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an API.
+The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
 
 \subsection{Database dumps}
 
 Monthly database snapshots of all wikis run by the Wikimedia Foundation, including Wikipedia,  are publicly available\footurl{http://dumps.wikimedia.org}{2011}{12}{11} as database dump files in the XML file format.
-For each of the wikis a variety of dumps is available that include all articles and, optionally, their edit history, all categories, interwiki-links, etc.
-These dump files can be quite large, e.g. a compressed dump of all articles of the English Wikipedia in their current revision has a size 7.3 GB.\footnote{The uncompressed size is 31.0 GB, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:Database_download}{2011}{12}{11}}
+For each of the wikis a variety of dumps is available that include all articles and, optionally, their revision history, all categories, interwiki-links, etc.
+Despite this openness, some database tables are not publicly available.
+The dump files of the \emph{users} and the \emph{watchlist} tables are kept private.
 
+The dump files can be quite large, e.g. a compressed dump of all articles of the English Wikipedia in their current revision has a size 7.3 GB.\footnote{The uncompressed size is 31.0 GB, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:Database_download}{2011}{12}{11}}
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
-When analyzing only a single article or a category articles, the MediaWiki API can deliver the same information contained in the dumps. 
+When analyzing only a single article or a category articles, the MediaWiki API can deliver the same information contained in the dumps in a much more targeted manner. 
 
 \subsection{MediaWiki API}
 
-Wikipedia runs on the server software MediaWiki which offers an API  to access wiki features, e.g. changing content and restoring revisions, as well as queries to article properties, e.g. revisions and categories.
-The API also offers an article export including all revisions.\footnote{Similar functionality is also offered via MediaWiki's Special:Export page, e.g. \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows exporting articles from the English Wikipedia.}
+Wikipedia runs on the open source software MediaWiki.
+This PHP-based wiki package offers a well documented API which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.
+For analysis of articles, the API offers queries directed at a variety of article properties, e.g. revisions, categories and links.
+Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the API also offers an article export that includes all revisions.
 
 The following queries will be important for this thesis:
 
@@ -32,16 +37,42 @@ The following queries will be important for this thesis:
     \item revisions, includes user names
 \end{todos}
 
-\subsection{Toolserver}
+\subsection{Toolserver}\label{sub:toolserver}
 
-The Germany based Wikimedia Deutschland e.V. operates Toolserver\footurl{http://toolserver.org}{2011}{12}{11}, a platform for software tools that can access a copy of Wikipedia's databases. 
-The replicated databases include the English Wikipedia and major language editions.
-However, access is restricted and requires an account on Wikimedia's Toolserver.
+The Germany based Wikimedia Deutschland e.V. runs Toolserver\footurl{http://toolserver.org}{2011}{12}{11}, a platform for software tools that can access a continuously updated copy of Wikipedia's databases. 
+Among these replicated databases is the English Wikipedia and other major language editions.
+However, the deployment self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.
+
+Some scripts that are already deployed can be accessed freely, allowing them to be reused.
+One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group.
+It offers an API\footnote{The API is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/php}{2011}{12}{12}} to get simple article statistics like article ID, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
 
-\section{Tools}
+\subsection{Third-party sources}
+
+Some research projects can be reused as data sources.
+Depending on the project's goal, preprocessed statistics can become available:
+
+\begin{description}
+\item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a website that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
+These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or via an API \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
+\end{description}
+
+
+\section{Available Tools}
+
+In the open source community a wide range of software tools are available.
+A simple search for ``Wikipedia'' on GitHub\footurl{https://github.com/search?q=wikipedia&type=Repositories}{2011}{12}{12}, a source code exchange platform, shows a host of small software projects.
+These come in different programming languages and different feature sets and usually help in downloading articles in batches and extract data from big dump files. 
+Developed by vigilantes and researchers alike, these programs facilitate both data retrieval and processing.
 
 \subsection{Toolkits}
+
+A group of openly available software packages qualify as swiss-army knifes for processing dumps and sending requests to the API:
+
+\begin{description}
+\item[wikidump] Tools to get
+\end{description}
 
 \subsection{Analysis projects}
 
@@ -49,16 +80,13 @@ This section describes useful toolkits to analyze articles and their revision hi
 
 \begin{description}
 \item[WikiPride] Python web-application\footurl{https://github.com/declerambaul/WikiPride}{2011}{12}{11}  to visualize contributions of groups of editors that registered in the same month.\footnote{Project website: \weburl{http://meta.wikimedia.org/wiki/Research:WikiPride}{2011}{12}{11}}
-\item[Wiki Trip] JavaScript application\footurl{https://github.com/volpino/wikipedia-timeline}{2011}{12}{11} that uses the Wikipedia API as well as a toolserver backend to visualize the evolution of a single article over time including: anonymous vs. registered contributors, male vs. female registered users, anonymous edits by country.\footnote{Live demo: \weburl{http://sonetlab.fbk.eu/wikitrip/}{2011}{12}{11}} 
-Its backend can be reused to identify the gender for registered users who revealed their gender in their account page.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
+\item[Wiki Trip] JavaScript application\footurl{https://github.com/volpino/wikipedia-timeline}{2011}{12}{11} that uses the Wikipedia API as well as a Toolserver backend, see \nameref{sub:toolserver}, to visualize the evolution of a single article over time including: anonymous vs. registered contributors, male vs. female registered users, anonymous edits by country.\footnote{Live demo: \weburl{http://sonetlab.fbk.eu/wikitrip/}{2011}{12}{11}} 
 \item[] 
 \end{description}
 
 
 \begin{todos}
 \item Revert analyzer and framework to map a processing function on dumps: \url{https://bitbucket.org/halfak/wikimedia-utilities/}
-\item Page view statistics for a given article: \url{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution} using data from \url{http://dumps.wikimedia.org/other/pagecounts-raw/}
-
 \end{todos}
 
 \section{Collective Authorship}
