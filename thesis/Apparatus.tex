@@ -48,14 +48,17 @@ One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{1
 It offers an API\footnote{The API is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/php}{2011}{12}{12}} to get simple article statistics like article ID, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
 
-\subsection{Third-party sources}
+\subsection{Third-party sources/Web services}
 
 Some research projects can be reused as data sources.
 Depending on the project's goal, preprocessed statistics can become available:
 
 \begin{description}
-\item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a website that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
+\item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a web service that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
 These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or via an API \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
+\item[CatScan] This web service offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13} finds articles that belong to a given category and its sub-categories\footnote{See \nameref{sub:categories} on why this is non-trivial.}.
+It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.php?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
+The results are presented in the browser or can be downloaded as a file containing comma-separated values (CSV format). 
 \end{description}
 
 
@@ -88,6 +91,7 @@ This section describes useful toolkits to analyze articles and their revision hi
 \begin{todos}
 \item Revert analyzer and framework to map a processing function on dumps: \url{https://bitbucket.org/halfak/wikimedia-utilities/}
 \end{todos}
+
 
 \section{Collective Authorship}
 
