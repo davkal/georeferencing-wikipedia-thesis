@@ -55,25 +55,52 @@ Theses boxes show information in a structured way and can be found on articles o
 These information may include dates and geographic coordinates.
 E.g. the article \term{2011-2012 Bahraini uprising} has the time interval ``14 February 2011 – ongoing'' and is tagged with the coordinates 26°01'39''N 50°33'00''E, pointing to the centre of Bahrain.
 Even when no coordinates are present in the article, it still may be associated to a location.
-In that case the info box just presents the place, e.g. \todo{Bahrain}\todo{find article}, instead of providing the geographic coordinates. 
+In that case the info box just presents the place, e.g. \todo{Bahrain}, \todo{find article}, instead of providing the geographic coordinates. 
 
+\subsection{Categories}\label{sub:categories}
 
-\subsection{Wikipedia, wikis and editing}
+At the bottom of each article is an optional list of categories that the article belongs to, e.g. the article \term{2011-2012 Bahraini uprising} belongs, among others, to ``Arab Spring by country''\footurl{http://en.wikipedia.org/wiki/Category:Arab_Spring_by_country}{2012}{01}{23} and ``2011 protests''\footurl{http://en.wikipedia.org/wiki/Category:2011_protests}{2012}{01}{23}.
+
+Categories can not only have pages but also sub-categories, e.g. ``Arab Spring by country'' has the sub-category ``2011 Libyan civil war''\footurl{http://en.wikipedia.org/wiki/Category:2011_Libyan_civil_war}{2012}{01}{23} which in turn has 5 sub-categories and 55 pages.
+The categories do not form a tree, however, for there is no restriction on the inclusion of categories --- even circular inclusions are possible.
+As liberal as the topology is inclusion of articles into a category.
+The category ``Arab Spring by country'' does not only contain articles covering the Arab Spring by country, but also articles about killed individuals, e.g. ``Zakariya Rashid Hassan al-Ashiri''\footurl{http://en.wikipedia.org/wiki/Zakariya_Rashid_Hassan_al-Ashiri}{2012}{01}{23}. 
+
+\section{MediaWiki and editing}
 
 Anyone with a browser and internet access can edit Wikipedia's articles\footnote{Some articles can be locked because of sustained vandalism or content disputes.\cite{wpprotectionpolicy}}.
 In collaboration, people all over the world contribute and improve the content. 
 This is made possible by MediaWiki, the the server software that makes Wikipedia a wiki. 
 The software allows website visitors to add and modify the page content in the browser using \emph{wikitext}, simplified markup language.\footnote{For the syntax see \weburl{http://en.wikipedia.org/wiki/Help:Wiki_markup}{2011}{12}{12}.}
 Its syntax can be used to structure a text into sections, embed images and links to other pages, much like HTML.
-The syntax is explicitly kept simple to keep the entry barrier to editing low.
+The syntax is explicitly kept simple to keep the entry barrier to editing low, e.g. adding an article  to a category is as easy as putting the category name at the end of the wikitext.
+
+\subsection{Templates}\label{sub:templates}
+
+Wikitext has a special syntax for templates\footurl{http://en.wikipedia.org/wiki/Help:Template}{2012}{01}{23}. 
+These are reusable containers for text snippets and repetitive material like the info boxes described in \ref{sub:article}.
+When a template is used in a page, the server software replaces the template placeholder --- the template name surrounded by curly brackets --- with the template's content.
+The content can be parameterized with key/value pairs so that, for example, an info box about countries can be used by several countries.
+
+By using templates, the information is likely to be more structured than prose.
+Each invocation of a template also renders in the same way allowing for and encouraging more consistency\footnote{E.g. when an editor notices that an info box supports the parameter ``location'' but does not have one yet, the user may feel encouraged to complete it.}.
+More importantly, the usage of a template in an article is lets that article become a member of the group of articles that embed this template.
+This is an alternative mechanism to group articles that is likely to yield more homogenous results than the category system, see \ref{sub:categories}.
+
+\subsection{Revision history}
 
 Each submission of an edit in the browser creates a new revision of the article and is stored in the revision history, \imgref{history}.
 Naturally, each article available today started from an empty page and is the result of a succession of edits.
-Each entry in the revision history consists of the new wikitext, the date of submission, the user and an optional comment explaining the change.
-Each revision can not only be examined by other users and but also reverted.
-To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges its users to discuss controversial topics on the article's talk page.
 
 \img{history}{Revision history of the article \emph{2011-2012 Bahraini uprising} on \dformat{2012}{01}{23}.}
+
+Each entry in the revision history consists of the new wikitext, the date of submission, the user and an optional comment explaining the change.
+Each revision can not only be examined by other users and but also be reverted. 
+Especially in the case of vandalism this mechanism can be used to restore the previous state of the article.
+Reverts may also appear when different views on the same topic collide.
+To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges its users to discuss controversial topics on the article's talk page.
+
+\subsection{Authors}
 
 Contributions to an article can be done anonymously or as a registered user.
 A registered user gains privileges like the ability to create articles or the use of the social network features in Wikipedia.
@@ -82,21 +109,24 @@ The majority of edits comes from registered users, anonymous edits account for a
 
 A third group of editors are automatic programs known as \emph{bots}.
 They perform routine tasks ranging from spell-checking over curse word detection to automatic reverts on vandalism.
-Currently the English Wikipedia alone has nearly approved 1,500 bot tasks running.\cite{wpbots}
-Some editors may be registered as a bot
+Currently the English Wikipedia alone has nearly approved 1,500 bot tasks running, either automatically or manually triggered by a real user.\cite{wpbots}
 
 \subsection{User pages}\label{sub:userpages}
 
-\todo{write about user pages, prose, boxes}
+When a Wikipedia user decides to register, a \emph{user page} is created for him on Wikipedia's website. 
+This is a special page that can be edited like any other article.
+The user can publish personal information either in prose or reuse a template (see \ref{sub:templates}).
+The templates available to decorate one's user page include the following: 
+\begin{itemize}
+  \item Spoken languages, e.g. ``This user is a native speaker of English.''\footurl{http://en.wikipedia.org/wiki/Wikipedia:Babel}{2012}{01}{23}
+  \item Location, e.g. ``This user comes from India.''\footurl{http://en.wikipedia.org/wiki/Template:User_India}{2012}{01}{23}
+  \item Expression of personal views, e.g. ``This user opposes Imperialism.''\footurl{http://en.wikipedia.org/wiki/User:Serouj/UserBox/Against_Imperialism}{2012}{01}{23}
+\end{itemize}
+Of course, a user can publish just about anything.
+As a result, the information on a user page has to be taken with a grain of salt.\footnote{See user Lihaas, who seems to hail both from India and Pakistan: \weburl{http://en.wikipedia.org/wiki/User:Lihaas}{2012}{01}{23}}
 
-\subsection{Categories}\label{sub:categories}
-
-\todo{Wikpedia's category system, not a tree but rather a graph}
-
-
-\subsection{Templates}\label{sub:templates}
-
-\todo{Wikpedia's template system, can be used to get group of similar articles}
+Like any other article, each user page has a discussion page that can be used to communicate with that user by leaving a message.
+According to \textcite{Viegas2007talk} these pages ``hold much of the community interaction''.
 
 
 \section{Contributions}\label{sec:contribution}
@@ -118,8 +148,6 @@ The annotated text is the result of splitting the original text into chunks and 
 
 
 \section{Georeferences}\label{sec:georeference}
-
-\todo{''Combined approaches (i.e., where quantitative spatial analysis models are calibrated with surveyed locations) may prove useful.''  \cite[p. 85]{hardy2011volunteered}}
 
 In order to analyze the localness of contributions, it is necessary to geotag them, i.e. applying geospatial metadata like coordinates to each contribution, derived from the author's location.
 In his doctoral thesis \textcite{hardy2011volunteered} used the Wikipedia corpora to study the spatial behavior of article production.
