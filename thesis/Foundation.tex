@@ -41,13 +41,21 @@ By 2011 the combined article count passed 20 million.\cite{wphistory}
 
 \subsection{Anatomy of an article}\label{sub:article}
 
-\todo{Image: graphic of article UI}
+All Wikipedia articles share a similar layout: a large content area topped by the article title.
+Article titles can change over time, e.g. \emph{2011 Bahraini uprising} was renamed to \emph{2011-2012 Bahraini uprising}\footurl{http://en.wikipedia.org/wiki/2011-2012_Bahraini_uprising}{2012}{01}{23}. 
+For these cases, Wikipedia has a redirecting mechanism that forwards the visitor to the final article and displays a small note below the title (\imgref{article}).
 
-\todo{describe article anatomy, info boxes with dates and geotags}
+\img{article}{The article \emph{2011-2012 Bahraini uprising} viewed in a web browser on \dformat{2012}{01}{23}.}
 
-Some articles contain geographic coordinates as part of the content, e.g. the article about the \term{Brandenburg Gate}\footurl{http://en.wikipedia.org/wiki/Brandenburg_Gate}{2011}{10}{31} in Berlin is tagged with the coordinates 52°30'58.58''N 13°22'39.80''E.
-However, these articles are geographic in nature treating cities, rivers and places of interest. 
-This thesis hopes to expand the spatial analysis of contributions to articles that have a location property only by association, e.g. the \term{Egyptian Revolution of 2001}\footurl{http://en.wikipedia.org/wiki/Egyptian_Revolution_of_2011}{2011}{10}{31}, that clearly happened in \term{Egypt}\footurl{http://en.wikipedia.org/wiki/Egypt}{2011}{10}{31}.
+Occasionally the content section can be topped by one or more warning boxes to inform the visitor that the article is violating an editing policy, e.g. the information of the article may be outdated because it is subject to current events.
+When an article spans several sections a table of contents is added below the first introductory paragraphs.
+In addition to prose, some articles feature info boxes on the right hand side.
+Theses boxes show information in a structured way and can be found on articles of similar topics giving the visitor a quick glance on key information without having to read the text.
+
+These information may include dates and geographic coordinates.
+E.g. the article \term{2011-2012 Bahraini uprising} has the time interval ``14 February 2011 – ongoing'' and is tagged with the coordinates 26°01'39''N 50°33'00''E, pointing to the centre of Bahrain.
+Even when no coordinates are present in the article, it still may be associated to a location.
+In that case the info box just presents the place, e.g. \todo{Bahrain}\todo{find article}, instead of providing the geographic coordinates. 
 
 
 \subsection{Wikipedia, wikis and editing}
@@ -59,13 +67,13 @@ The software allows website visitors to add and modify the page content in the b
 Its syntax can be used to structure a text into sections, embed images and links to other pages, much like HTML.
 The syntax is explicitly kept simple to keep the entry barrier to editing low.
 
-Each submission of an edit in the browser creates a new revision of the article and is stored in the revision history.
+Each submission of an edit in the browser creates a new revision of the article and is stored in the revision history, \imgref{history}.
 Naturally, each article available today started from an empty page and is the result of a succession of edits.
 Each entry in the revision history consists of the new wikitext, the date of submission, the user and an optional comment explaining the change.
 Each revision can not only be examined by other users and but also reverted.
 To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges its users to discuss controversial topics on the article's talk page.
 
-\todo{Image: revision history}
+\img{history}{Revision history of the article \emph{2011-2012 Bahraini uprising} on \dformat{2012}{01}{23}.}
 
 Contributions to an article can be done anonymously or as a registered user.
 A registered user gains privileges like the ability to create articles or the use of the social network features in Wikipedia.

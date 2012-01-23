@@ -149,6 +149,28 @@
 \newcommand{\footurl}[4]{\footnote{\url{#1} (visited on \formatdate{#4}{#3}{#2})}}
 \newcommand{\weburl}[4]{\url{#1} (visited on \formatdate{#4}{#3}{#2})}
 
+\newcommand{\img}[2]{
+\begin{figure}[htb]
+\centering
+%\includegraphics[width=0.8\textwidth]{images/#1}
+\caption{#2}
+\label{fig:#1}
+\end{figure}
+}
+
+% apply same changes to \img
+\newcommand{\imgx}[2]{
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{images/#1}
+\caption{#2}
+\label{fig:#1}
+\end{figure}
+}
+
+\newcommand{\imgref}[1]{see figure~\ref{fig:#1}}
+\newcommand{\dformat}[3]{\formatdate{#3}{#2}{#1}}
+
 
 % ********************************************************************
 % Captions look and feel
