@@ -4,19 +4,31 @@
 
 This chapter describes data sources to get Wikipedia content like articles and revision history as well as tools to retrieve and analyze those.
 
+\todo{Intro aspects of apparatus}
+
 \section{Data sources}
 
-For an automated analysis browsing the user interface of Wikipedia's website is not really feasible.
+For an automated analysis, simply browsing Wikipedia's website is not really feasible. \todo{why?}
 The bulk of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
 Unfortunately, these databases are not directly accessible over the Internet.
 The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
+
+\subsection{Wikipedia website}
+
+\todo{used to get static data useful throughout the analysis process, screen scraping, static data}
+
+\begin{description}
+\item[bots] \todo{list of bots}
+\item[countries] \todo{country names}
+\end{description}
+
 
 \subsection{Database dumps}
 
 Monthly database snapshots of all wikis run by the Wikimedia Foundation, including Wikipedia,  are publicly available\footurl{http://dumps.wikimedia.org}{2011}{12}{11} as database dump files in the XML file format.
 For each of the wikis a variety of dumps is available that include all articles and, optionally, their revision history, all categories, interwiki-links, etc.
 Despite this openness, some database tables are not publicly available.
-The dump files of the \emph{users} and the \emph{watchlist} tables are kept private.
+The dump files of the database tables \emph{users} and the \emph{watchlist} are kept private.
 
 The dump files can be quite large, e.g. a compressed dump of all articles of the English Wikipedia in their current revision has a size 7.3 GB.\footnote{The uncompressed size is 31.0 GB, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:Database_download}{2011}{12}{11}}
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
@@ -29,22 +41,31 @@ This PHP-based wiki package offers a well documented API which can be used by ot
 For analysis of articles, the API offers queries directed at a variety of article properties, e.g. revisions, categories and links.
 Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the API also offers an article export that includes all revisions.
 
+\todo{Sandbox, Example call}
+
 The following queries will be important for this thesis:
 
 \begin{todos}
-    \item check if a user is a bot 
-    \item all articles that are member of a category
-    \item revisions, includes user names
+    \item query info (pageid info, wikitext, langlinks, ...)
+    \item parse (HTML version of wikitext)
+    \item parse (HTML user pages)
+    \item open search (autocomplete search)
+    \item revisions (all revisions, first revisions of all languages)
+    \item category members
+    \item template embedders
 \end{todos}
+
+\todo{Category and template embedders will be used to get groups of articles}
 
 \subsection{Toolserver}\label{sub:toolserver}
 
 The Germany based Wikimedia Deutschland e.V. runs Toolserver\footurl{http://toolserver.org}{2011}{12}{11}, a platform for software tools that can access a continuously updated copy of Wikipedia's databases. 
 Among these replicated databases is the English Wikipedia and other major language editions.
-However, the deployment self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.
+However, the deployment of self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.\footnote{I applied for a Toolserver account outlining my necessary database queries, usage profile as well as my affiliation with the Freie Universit\"at Berlin. The application was submitted on 2011-12-21 and has not been processed yet (2012-01-23).}
 
 Some scripts that are already deployed can be accessed freely, allowing them to be reused.
 One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group.
+\todo{link to wikitrip} 
 It offers an API\footnote{The API is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/php}{2011}{12}{12}} to get simple article statistics like article ID, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
 
@@ -59,6 +80,9 @@ These statistics can be viewed through a browser\footnote{E.g. \weburl{http://st
 \item[CatScan] This web service offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13} finds articles that belong to a given category and its sub-categories\footnote{See \nameref{sub:categories} on why this is non-trivial.}.
 It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.php?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
 The results are presented in the browser or can be downloaded as a file containing comma-separated values (CSV format). 
+\item[Poor man's checkuser] \todo{Username to IP resolution, link to georeferencing}
+\item[Quova] \todo{IP to location resolution, link to georeferencing}
+\item[WikiTrust] \todo{annotations}
 \end{description}
 
 
@@ -69,48 +93,92 @@ A simple search for ``Wikipedia'' on GitHub\footurl{https://github.com/search?q=
 These come in different programming languages and different feature sets and usually help in downloading articles in batches and extract data from big dump files. 
 Developed by vigilantes and researchers alike, these programs facilitate both data retrieval and processing.
 
-\subsection{Toolkits}
+\subsection{Toolkits}\label{sub:toolkits}
 
 A group of openly available software packages qualify as swiss-army knifes for processing dumps and sending requests to the API:
 
 \begin{description}
-\item[wikidump] Tools to get
+\item[pywikipedia] \todo{the mother of all python wp toolkits, classes for all mediawiki entities like page, user, revision}
+\item[pymwdat] \todo{relies on pywikipedia, dump file analysis, revisions, revert detection, filtering, helps in understanding}
+\item[levitation] \todo{original project using git scm for blaming, my fork word level}
 \end{description}
 
-\subsection{Analysis projects}
+\subsection{Analysis projects}\label{sub:analysisprojects}
 
-This section describes useful toolkits to analyze articles and their revision history.
+\todo{This section describes useful projects, exemplary  on how to combine different data sources...}
 
 \begin{description}
 \item[WikiPride] Python web-application\footurl{https://github.com/declerambaul/WikiPride}{2011}{12}{11}  to visualize contributions of groups of editors that registered in the same month.\footnote{Project website: \weburl{http://meta.wikimedia.org/wiki/Research:WikiPride}{2011}{12}{11}}
 \item[Wiki Trip] JavaScript application\footurl{https://github.com/volpino/wikipedia-timeline}{2011}{12}{11} that uses the Wikipedia API as well as a Toolserver backend, see \nameref{sub:toolserver}, to visualize the evolution of a single article over time including: anonymous vs. registered contributors, male vs. female registered users, anonymous edits by country.\footnote{Live demo: \weburl{http://sonetlab.fbk.eu/wikitrip/}{2011}{12}{11}} 
-\item[] 
 \end{description}
 
 
+\section{Application design}
+
+\todo{following wikitrip design of a browser application, based on the following technologies}
+
+\subsection{Technologies}
+
+\subsection{Models}
+
+\subsection{Views}
+
+\subsection{Operation}
+
 \begin{todos}
-\item Revert analyzer and framework to map a processing function on dumps: \url{https://bitbucket.org/halfak/wikimedia-utilities/}
+    \item fetch article, wikitext and HTML
+    \item parse for dates and location (delegate to subpage) and evaluate article relevancy
+    \item fetch authors (toolserver)
+    \item fetch revisions
+    \item fetch first revision of each language
+    \item fetch page views
+    \item locate users
+    \item fetch annotated source from WikiTrust for selected revisions 
+    \item render/store results
+\end{todos}
+
+\todo{group mode}
+
+\begin{todos}
+    \item fetch article list
+    \item analyze all articles
+    \item render group results
 \end{todos}
 
 
-\section{Collective Authorship}
+\section{Algorithms}
+
+\todo{intro, complementary HTML and wikitext, HTML was easier offering annotations like dtstart}
+
+\subsection{Article requirements}
+
+\todo{list requirements}
+
+\subsection{Date parsing}
+
+\todo{link to Template}
+
+% Tricky http://en.wikipedia.org/wiki/2007_Georgian_demonstrations
+% The demonstrations peaked on November 2, 2007, ...
+
+\subsection{Location parsing}
+
+\todo{link to Template}
+
+\subsection{Collective authorship}
 
 \todo{Introduce types of authors (roles) as well as methods to determine contribution/attribution}
 
 \begin{todos}
     \item Autoren
     \item Bots
-    \item Wer überlebt?
-    \item Algorithmen, welche Unterschiede?
+    \item text attribution, using wikitrust annotations, not for all revisions
 \end{todos}
-
-\subsection{Relevant Edits}
 
 \todo{Are all edits relevant? Edit wars? Bots?}
 
 
-
-\section{Georeferences}
+\subsection{Resolving user names to IPs}
 
 \begin{todos}
     \item registered vs. unregistered vs. bots vs. admins
@@ -120,15 +188,15 @@ This section describes useful toolkits to analyze articles and their revision hi
     \item Geographische Zuordnung vom user profile
 \end{todos}
 
-Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
-Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
-Der zweite Ansatz betrifft die registrierten Benutzer.
-Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.
-\footnote{Das WikiWatcher-Teilprojekt \emph{Poor Man's Check User} erlaubt eine Auflösung des Benutzernamens in eine IP-Adresse, wenn dieser Nutzer in der Vergangenheit beim Ändern eines Artikels das Session-Limit überschritten hatte. Inzwischen wurde diese Sicherheitslücke in der WikiMedia-Software jedoch behoben. \url{http://wikiwatcher.virgil.gr/pmcu}}
-\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
-Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
-Letztere sind definierte Einheiten mit denen der Nutzer persönliche Eigenschaften wie Herkunftsland, gesprochene Sprachen oder wissenschaftliche Interessen kodifizieren kann.
-Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden Nutzerschaft ab.
+%Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
+%Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
+%Der zweite Ansatz betrifft die registrierten Benutzer.
+%Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.
+%\footnote{Das WikiWatcher-Teilprojekt \emph{Poor Man's Check User} erlaubt eine Auflösung des Benutzernamens in eine IP-Adresse, wenn dieser Nutzer in der Vergangenheit beim Ändern eines Artikels das Session-Limit überschritten hatte. Inzwischen wurde diese Sicherheitslücke in der WikiMedia-Software jedoch behoben. \url{http://wikiwatcher.virgil.gr/pmcu}}
+%\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
+%Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
+%Letztere sind definierte Einheiten mit denen der Nutzer persönliche Eigenschaften wie Herkunftsland, gesprochene Sprachen oder wissenschaftliche Interessen kodifizieren kann.
+%Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden Nutzerschaft ab.
 
 
 \subsection{IP Look-up}
@@ -142,17 +210,17 @@ Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden 
     \\ \fullcite{duckham2005formal}
 \end{todos}
 
-Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
+%Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
+%
+%Im Bezug auf die Herkunft sind sowohl das Land als auch die Geo-Koordinaten interessant.  
+%Basierend auf der Versionsgeschichte würde für nicht registrierte Benutzer eine Gewinnung von Daten dann beispielsweise folgende Schritte durchlaufen:
+%
+%\begin{quotation}
+%IP \RA Geolocation-Dienst \RA Koordinaten und Land
+%\end{quotation}
 
-Im Bezug auf die Herkunft sind sowohl das Land als auch die Geo-Koordinaten interessant.  
-Basierend auf der Versionsgeschichte würde für nicht registrierte Benutzer eine Gewinnung von Daten dann beispielsweise folgende Schritte durchlaufen:
 
-\begin{quotation}
-IP \RA Geolocation-Dienst \RA Koordinaten und Land
-\end{quotation}
-
-
-\subsection{Information Extraction}
+\subsection{Parsing user pages}
 
 \begin{todos}
 \item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
@@ -171,55 +239,19 @@ IP \RA Geolocation-Dienst \RA Koordinaten und Land
 %3. Container around country link contained RegExp. e.g. "and live in a rather small town close to <a>my country's</a> capital"
 
 
-
-\subsection{Geographic Profiling}
-
-\begin{todos}
-    \item \fullcite{lieberman2009you}
-    \item \fullcite{hecht2010localness}
-    \item from other fields such as criminal research: \\ \fullcite{snook2005complexity}
-    \item feasibility, maybe just as enhancer
-\end{todos}
-
-
-\subsection{Consolidation}
+\subsection{Geographic resolution}
 
 \begin{todos}
-    \item settle for a resolution
+    \item settle for a country
     \item some examples on accuracy for different countries
     \item clustering of origins: areas of influence
 \end{todos}
 
 
-
 \section{Visualization}
 
-\subsection{Maps}
+%Auf Basis der strukturierten Daten in Form von Artikeln, Sätzen, Ländern, Koordinaten und Sprachen sollen nun Visualisierungen gefunden werden, welche die Fülle an Informationen zugänglich machen.
 
-\begin{description}
-\item[OpenLayers] JavaScript library\footurl{http://www.openlayers.org/}{2011}{12}{11} to render map data in the browser.
-\end{description}
-
-\begin{todos}
-    \item Darstellung der geographischen Analyse
-    \item per Wort, Satz, Artikel, Wort
-\end{todos}
-
-Auf Basis der strukturierten Daten in Form von Artikeln, Sätzen, Ländern, Koordinaten und Sprachen sollen nun Visualisierungen gefunden werden, welche die Fülle an Informationen zugänglich machen.
-Mögliche Visualisierungen wären etwa:
-
-\begin{labeling}{V2}
-\item[V1] Revisionshistogramm à la Google Finance 
-\item[V2] \emph{Heatmap} einer Landkarte mit Ursprüngen der Revisionen 
-\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt
-\item[V4] Dynamisches Blasendiagramm\footnote{\url{http://en.wikipedia.org/wiki/Motion_chart}} über die Entwicklung unterschiedlicher Sprachvarianten
-\item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
-\item[V6] Landeskürzel für eine gegebene Textstelle
-\item[V7] Edit wars on map, linking two or more places
-\end{labeling}
-
-
-\subsection{Goals}
 
 \begin{todos}
     \item \fullcite{kjellin2010evaluating}
@@ -235,28 +267,70 @@ Mögliche Visualisierungen wären etwa:
     \item Correlate. A direct connection.
 \end{todos}
 
-
-\subsection{Design}
-
-
-\section{Data Model and System Overview}
+\subsection{Maps}
 
 \begin{todos}
-    \item fetch article
-    \item get revision history
-    \item determine contributions
-    \item transform to word attribution
-    \item attach georeference 
+    \item Darstellung der geographischen Analyse
+    \item per Wort, Satz, Artikel, Wort
 \end{todos}
 
-\section{Analysis}
+\subsection{Maps}
+
+%\begin{labeling}{V2}
+%\item[V1] Revisionshistogramm à la Google Finance 
+%\item[V2] \emph{Heatmap} einer Landkarte mit Ursprüngen der Revisionen 
+%\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt
+%\item[V4] Dynamisches Blasendiagramm\footnote{\url{http://en.wikipedia.org/wiki/Motion_chart}} über die Entwicklung unterschiedlicher Sprachvarianten
+%\item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
+%\item[V6] Landeskürzel für eine gegebene Textstelle
+%\item[V7] Edit wars on map, linking two or more places
+%\end{labeling}
+%
+
+\subsection{Line and scatter charts}
+
+
+\subsection{Motion chart}
+
+
+\section{Hypotheses analysis}
+
+\todo{for each hypothesis, what data is gathers, how is it crunched}
+
+\subsection*{H1}
+
+\subsection*{H2}
+
+\subsection*{H3}
+
+\subsection*{H4}
+
+\subsection*{H5}
+
+\subsection*{H6}
+
+\subsection*{H7}
+
+\subsection*{H8}
+
+\subsection*{H9}
+
+\subsection*{H10}
+
+\subsection*{H11}
+
+
+\section{Possible enhancements}
+
+\subsection{Edit relevance}
+
+\todo{detect reverts, vandalism}
+
+\subsection{Geographic profiling}
 
 \begin{todos}
-    \item article usage (page views) vs. article production (edits)
-    \item 
-    \item 
-    \item
-    \item 
+    \item \fullcite{lieberman2009you}
+    \item \fullcite{hecht2010localness}
+    \item from other fields such as criminal research: \\ \fullcite{snook2005complexity}
+    \item feasibility, maybe just as enhancer
 \end{todos}
-
-
