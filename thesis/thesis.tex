@@ -148,6 +148,7 @@
 
 \newcommand{\footurl}[4]{\footnote{\url{#1} (visited on \formatdate{#4}{#3}{#2})}}
 \newcommand{\weburl}[4]{\url{#1} (visited on \formatdate{#4}{#3}{#2})}
+\newcommand{\webhref}[5]{\href{#1}{#2} (visited on \formatdate{#5}{#4}{#3})}
 
 \newcommand{\img}[2]{
 \begin{figure}[htb]
@@ -179,26 +180,32 @@
 % ********************************************************************
 % Listings setup
 % ********************************************************************
-%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
 % ********************************************************************
-%\lstset{language=[LaTeX]Tex,%C++,
-%    keywordstyle=\color{RoyalBlue},%\bfseries,
-%    basicstyle=\small\ttfamily,
-%    %identifierstyle=\color{NavyBlue},
-%    commentstyle=\color{Green}\ttfamily,
-%    stringstyle=\rmfamily,
-%    numbers=none,%left,%
-%    numberstyle=\scriptsize,%\tiny
-%    stepnumber=5,
-%    numbersep=8pt,
-%    showstringspaces=false,
-%    breaklines=true,
-%    frameround=ftff,
-%    frame=single,
-%    belowcaptionskip=.75\baselineskip,
-%    numberbychapter=false
-%    %frame=L
-%} 
+\definecolor{smoke}{rgb}{0.98,0.98,0.98}
+\lstset{language=Python,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\scriptsize\ttfamily,
+    backgroundcolor=\color{smoke},
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\color{gray}\ttfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    tabsize=4,
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    %frame=single,
+    aboveskip=.75\baselineskip,
+    belowskip=.75\baselineskip,
+    framesep=1cm,
+    belowcaptionskip=.75\baselineskip,
+    numberbychapter=false
+    %frame=L
+} 
 
 % ********************************************************************
 % Where to look for graphics

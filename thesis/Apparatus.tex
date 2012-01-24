@@ -36,7 +36,7 @@ There are unregistered bots, however, that appear not in the list.
 For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
 \item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
-In a second pass, the Wikipedia article of each country was parsed for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \ref{sub:resolution}.}
+In a second pass, the Wikipedia article of each country was parsed for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \nameref{sub:resolution}.}
 \end{description}
 
 Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
@@ -55,25 +55,59 @@ When analyzing only a single article or a category articles, the MediaWiki API c
 \subsection{MediaWiki API}
 
 Wikipedia runs on the open source software MediaWiki.
-This PHP-based wiki package offers a well documented API which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.
+This PHP-based wiki package offers a well documented API\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the API can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
 For analysis of articles, the API offers queries directed at a variety of article properties, e.g. revisions, categories and links.
+Among the output formats for the responses is the JavaScript Object Notation (JSON).
 Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the API also offers an article export that includes all revisions.
+\lstset{caption={Example JSON response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
+\begin{lstlisting}
 
-\todo{Sandbox, Example call}
+	{
+		"query": {
+			"redirects": [{
+					"from": "2011 Bahraini uprising",
+					"to": "2011-2012 Bahraini uprising"
+			}],
+			"pages": {
+				"30876395": {
+					"pageid": 30876395,
+					"ns": 0,
+					"title": "2011-2012 Bahraini uprising"
+				}
+			},
+			"allusers": [{
+					"userid": "13146235", "name": "28bot"
+				}, {
+					"userid": "5415725", "name": "718 Bot"
+				}, ..., {
+					"userid": "13770078", "name": "AWBCPBot"
+			}]
+		},
+		"query-continue": {
+			"allusers": {
+				"aufrom": "AWeenieBot"
+			}
+		}
+	}
+\end{lstlisting}
 
-The following queries will be important for this thesis:
+Some of the queries have a limit on how many results they return on a single request.
+When there are more results, the response contains a \emph{query-continue} attribute that can be sent with following query so that the next result set can be returned.
+The following API calls will be important for this thesis:
 
-\begin{todos}
-    \item query info (pageid info, wikitext, langlinks, ...)
-    \item parse (HTML version of wikitext)
-    \item parse (HTML user pages)
-    \item open search (autocomplete search)
-    \item revisions (all revisions, first revisions of all languages)
-    \item category members
-    \item template embedders
-\end{todos}
-
-\todo{Category and template embedders will be used to get groups of articles}
+\begin{description}
+    \item[query info] This basic query is returns essential information like the article ID, the last revision ID, but also the full wikitext of the last revision.
+    \item[query revisions] Lists all revisions for an article and for each includes a timestamp and the user as well as the comment for the text change.
+    \item[query categorymembers] For a given category, this query lists the articles and subcategories belong to it.
+    This query can be used to construct groups of articles for analysis in this thesis.
+    \item[query templateembedders] For a given template name, this request lists all pages that embed it.
+    This query can also be used to build a group of articles. 
+    \item[open search] A method to suggest articles, categories and templates that contain a term. 
+    It can be attached to an input field where a user is supposed to enter the name of an article.
+    \item[parse] This special query returns the HTML version of the article's wikitext.
+    The content that is returned is exactly the HTML source that is sent to a browser when a visitor looks at this article or user page.
+    This query will be used in cases where it is easier to parse the HTML markup than the wikitext, e.g. the \nameref{sub:userpages}.
+\end{description}
 
 \subsection{Toolserver}\label{sub:toolserver}
 
@@ -82,25 +116,76 @@ Among these replicated databases is the English Wikipedia and other major langua
 However, the deployment of self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.\footnote{I applied for a Toolserver account outlining my necessary database queries, usage profile as well as my affiliation with the Freie Universit\"at Berlin. The application was submitted on 2011-12-21 and has not been processed yet (2012-01-23).}
 
 Some scripts that are already deployed can be accessed freely, allowing them to be reused.
-One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group.
-\todo{link to wikitrip} 
+One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group based in Italy, for a project called WikiTrip (see \nameref{sub:analysisprojects}).
 It offers an API\footnote{The API is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/php}{2011}{12}{12}} to get simple article statistics like article ID, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
+In effect, calling the SoNet API replaces several calls to the original MediaWiki API and therefor speeds up the information retrieval, especially when the number of revisions or authors is high.
+The returned data object has the following structure:
+
+\lstset{caption={SoNet API response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
+\begin{lstlisting}
+	{
+		"first_edit": {"timestamp":1297734917,"user":"Master&Expert"},
+		"count":1778,
+		"minor_count":401,
+		"count_history":{"today":3,"week":5,"month":90,"year":1778},
+		"last_edit":1327370324,
+		"totaldays":0,
+		"average_days_per_edit":"0.00",
+		"edits_per_month":0,
+		"edits_per_year":0,
+		"edits_per_editor":"4.17",
+		"editor_count":426,
+		"anon_count":337,
+		"editors": {"Bahraini Activist":
+			{"all":106,"minor":21,"first":"17 May 2011, 09:45:25",
+			"last":"22 January 2012, 10:52:50","atbe" 203811,
+			"minorpct":"19.81", "size":"140.54","urlencoded":"Bahraini_Activist"},
+			...
+		},
+		"anons":{"2011-02-15T08:11:52Z":
+			["78.2.29.139","Rovinj Croatia",45.08,13.64],
+			...
+		}
+	}
+\end{lstlisting}
+
+This high density of preprocessed information shows the power of the Toolserver and its direct access to the database.
+The property \emph{editors} lists all unique authors of an article and their edit count (property \emph{all}).
+The second exhaustive collection is under the property \emph{anons}. 
+There, all anonymous contributors are listed with their IP address, their geographic region and coordinates.
+The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/php/api.php}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
 
 \subsection{Third-party sources/Web services}
 
-Some research projects can be reused as data sources.
-Depending on the project's goal, preprocessed statistics can become available:
+Like the Toolserver scripts in the previous section, other research projects exist that can be reused as data sources.
+Depending on the project's goal, a variety of preprocessed data is available:
 
 \begin{description}
 \item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a web service that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
-These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or via an API \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
-\item[CatScan] This web service offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13} finds articles that belong to a given category and its sub-categories\footnote{See \nameref{sub:categories} on why this is non-trivial.}.
+These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or queried through an API \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
+\item[CatScan] This web service, offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13}, finds articles that belong to a given category and its sub-categories (see \nameref{sub:categories} on why this is non-trivial).
 It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.php?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
 The results are presented in the browser or can be downloaded as a file containing comma-separated values (CSV format). 
-\item[Poor man's checkuser] \todo{Username to IP resolution, link to georeferencing}
-\item[Quova] \todo{IP to location resolution, link to georeferencing}
-\item[WikiTrust] \todo{annotations}
+\item[Poor man's checkuser] The project \emph{Poor Man's Check User}\footnote{Project website: \weburl{http://wikiwatcher.virgil.gr/pmcu}{2012}{01}{2}. The project's name is a reference to the \emph{checkuser} permission that a community-elected group of registered users possesses. It allows a de-masking of the IP addresses for each of a registered user's edit.} mapped registered users to IP addresses based on a bug in the session management of the MediaWiki software.\footnote{When a user exceeded a certain time while editing an article without submitting the current changes, the user's session expired on the server. When the edit was submitted after the expiration the user appeared as an anonymous author, being only known by his IP address. When the user then logged in again, the same change was sent again. Scanning all revisions for the same change set therefor allowed for a matching between user name and IP address. This loophole has been closed, however.} 
+For the period the bug has been active, some usernames could be mapped.
+Naturally, the more edits a user did in this period, the more likely is an appearance in this list.
+For the purpose of this thesis, I screen-scraped this table and condensed\footnote{Some usernames have multiple entries as each occurrence of the bug created a unique ``evidence''. Among those, some have been manually verified and ranked. When multiple entries exist, my algorithm picks the top ranked.} it to 14,171 unique users.
+\item[Quova] This geo-location web service maps an IP address to a geographic location, see \nameref{sec:georeference}.
+\item[WikiTrust] Based on \textcite{adler2008assigning} an open source online reputation system\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} was set up by the University of California, Santa Cruz, to allow for easy vandalism detection (see \nameref{sec:contribution}).
+Given an article ID and a revision ID, the API method \emph{wikimarkup} returns an annotated version of the wikitext of that revision.
+An annotation consists of a trust value, the revision ID the text got introduced into the article as well as the authors user name or IP address, e.g. revision 473029564 of the article \emph{2011-2012 Bahraini uprising}\footurl{http://en.collaborativetrust.com/WikiTrust/RemoteAPI?method=wikimarkup&pageid=30876395&revid=473029564}{2012}{01}{23}:
+\lstset{language=HTML,caption={Excerpt of the annotated markup for the revision \\473029564 of the article \emph{2011-2012 Bahraini uprising}},label=wikitrustapicall}
+\begin{lstlisting}
+	{{#t:7,468889105,Kudzu1}}The 
+	{{#t:7,470041169,Happysailor}}2011-2012 
+	{{#t:8,413989516,Master&Expert}}Bahraini 
+	{{#t:8,427545590,Kudzu1}}uprising, sometimes called the
+	{{#t:9,455029613,Sitrawi86}}February 14 Revolution 
+\end{lstlisting}
+All wikitext following an annotation, up to the next one, was written by that author.
+The web service provider implemented a custom diff algorithm for the attribution of authorship.
+This was needed to overcome wiki-specific issues and to maximize tracking, e.g. for text that is removed and re-inserted at a later revision.\footurl{http://www.wikitrust.net/frequently-asked-questions-faq\#TOC-On-text-author-and-origin}{2012}{01}{24}
 \end{description}
 
 
@@ -210,14 +295,10 @@ A group of openly available software packages qualify as swiss-army knifes for p
 %Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
 %Der zweite Ansatz betrifft die registrierten Benutzer.
 %Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.
-%\footnote{Das WikiWatcher-Teilprojekt \emph{Poor Man's Check User} erlaubt eine Auflösung des Benutzernamens in eine IP-Adresse, wenn dieser Nutzer in der Vergangenheit beim Ändern eines Artikels das Session-Limit überschritten hatte. Inzwischen wurde diese Sicherheitslücke in der WikiMedia-Software jedoch behoben. \url{http://wikiwatcher.virgil.gr/pmcu}}
 %\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
-%Die registrierten Nutzer können jedoch auf ihrer \emph{user page} Informationen über ihre Person entweder als Freitext oder strukturiert in \emph{user boxes} veröffentlichen.
-%Letztere sind definierte Einheiten mit denen der Nutzer persönliche Eigenschaften wie Herkunftsland, gesprochene Sprachen oder wissenschaftliche Interessen kodifizieren kann.
-%Zusammen decken beide Ansätze jedoch nur einen Teil der Beiträge schreibenden Nutzerschaft ab.
 
 
-\subsection{IP Look-up}
+\subsection{IP Look-up}\label{sub:iplookup}
 
 \begin{todos}
     \item Services
