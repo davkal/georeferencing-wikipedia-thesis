@@ -41,7 +41,7 @@ In a second pass, the Wikipedia article of each country was parsed for coordinat
 
 Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
 
-\subsection{Database dumps}
+\subsection{Database dumps}\label{sub:dumps}
 
 Monthly database snapshots of all wikis run by the Wikimedia Foundation, including Wikipedia,  are publicly available\footurl{http://dumps.wikimedia.org}{2011}{12}{11} as database dump files in the XML file format.
 For each of the wikis a variety of dumps is available that include all articles and, optionally, their revision history, all categories, interwiki-links, etc.
@@ -52,7 +52,7 @@ The dump files can be quite large, e.g. a compressed dump of all articles of the
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
 When analyzing only a single article or a category articles, the MediaWiki API can deliver the same information contained in the dumps in a much more targeted manner. 
 
-\subsection{MediaWiki API}
+\subsection{MediaWiki API}\label{sub:mediawikiapi}
 
 Wikipedia runs on the open source software MediaWiki.
 This PHP-based wiki package offers a well documented API\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the API can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
@@ -156,7 +156,7 @@ The second exhaustive collection is under the property \emph{anons}.
 There, all anonymous contributors are listed with their IP address, their geographic region and coordinates.
 The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/php/api.php}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
 
-\subsection{Third-party sources/Web services}
+\subsection{Third-party sources/Web services}\label{sub:webservices}
 
 Like the Toolserver scripts in the previous section, other research projects exist that can be reused as data sources.
 Depending on the project's goal, a variety of preprocessed data is available:
@@ -191,28 +191,32 @@ This was needed to overcome wiki-specific issues and to maximize tracking, e.g. 
 
 \section{Available Tools}
 
-In the open source community a wide range of software tools are available.
-A simple search for ``Wikipedia'' on GitHub\footurl{https://github.com/search?q=wikipedia&type=Repositories}{2011}{12}{12}, a source code exchange platform, shows a host of small software projects.
+To process the data from all the data sources, a wide range of software tools are available in the open source community.
+A simple search for ``Wikipedia'' on GitHub\footurl{https://github.com/search?q=wikipedia&type=Repositories}{2011}{12}{12}, a source code exchange platform, shows a multitude of small software projects.
 These come in different programming languages and different feature sets and usually help in downloading articles in batches and extract data from big dump files. 
 Developed by vigilantes and researchers alike, these programs facilitate both data retrieval and processing.
 
 \subsection{Toolkits}\label{sub:toolkits}
 
-A group of openly available software packages qualify as swiss-army knifes for processing dumps and sending requests to the API:
+A group of openly available software packages\footnote{Although none of these were used for the content analysis of this thesis, their study proved very insightful on how to process Wikipedia's content.} qualify as swiss-army knifes for processing and analyzing \nameref{sub:dumps}:
 
 \begin{description}
-\item[pywikipedia] \todo{the mother of all python wp toolkits, classes for all mediawiki entities like page, user, revision}
-\item[pymwdat] \todo{relies on pywikipedia, dump file analysis, revisions, revert detection, filtering, helps in understanding}
-\item[levitation] \todo{original project using git scm for blaming, my fork word level}
+\item[pywikipedia] As the mother of all Python toolkits, the Python wikipedia robot framework\footurl{http://pywikipediabot.sourceforge.net/}{2012}{01}{24} offers an extendable set of classes for all MediaWiki entities like a page, a user, revision, etc, and is typically used to write a bot program for automated editing tasks (see \nameref{sub:authors}).
+\item[pymwdat] Based on \entity{pywikipedia}, this toolkit offers a convenient downloader for all revisions of an article as well as an extensible dump file analyzer with support for filtering and revert detection.
+\item[levitation] A creative project to turn \nameref{sub:dumps} into a Git\footurl{http://git-scm.com/}{2012}{01}{24} repository.
+As a source code management system, Git offers a more space efficient way to store the sequence of revisions of the articles, since it only stores the difference between revisions.
+Once converted to a repository, moving from revision to revision is much faster than processing the large dump files.
+Git's diff mechanism together with its \emph{blame} command can be used as an alternative way to attribute authorship to passages of article content.\footnote{In fact, git operates on a line level, making the attribution rather coarse. To get blaming functionality on a word level, I patched the source, see my fork at \weburl{https://github.com/davkal/levitation/commit/5fca0001d26cb67fde6ff9d8a5f2b1414cf7681e}{2012}{01}{24}.}
 \end{description}
 
 \subsection{Analysis projects}\label{sub:analysisprojects}
 
-\todo{This section describes useful projects, exemplary  on how to combine different data sources...}
+In addition to the toolkits, a handful of research projects exist that process Wikipedia's content.
+These are purpose built applications that have a much narrower focus but are very skillful in combining and using different data sources such as \nameref{sub:mediawikiapi}, the \nameref{sub:toolserver} or other \nameref{sub:webservices}:
 
 \begin{description}
 \item[WikiPride] Python web-application\footurl{https://github.com/declerambaul/WikiPride}{2011}{12}{11}  to visualize contributions of groups of editors that registered in the same month.\footnote{Project website: \weburl{http://meta.wikimedia.org/wiki/Research:WikiPride}{2011}{12}{11}}
-\item[Wiki Trip] JavaScript application\footurl{https://github.com/volpino/wikipedia-timeline}{2011}{12}{11} that uses the Wikipedia API as well as a Toolserver backend, see \nameref{sub:toolserver}, to visualize the evolution of a single article over time including: anonymous vs. registered contributors, male vs. female registered users, anonymous edits by country.\footnote{Live demo: \weburl{http://sonetlab.fbk.eu/wikitrip/}{2011}{12}{11}} 
+\item[Wiki Trip] JavaScript application\footurl{https://github.com/volpino/wikipedia-timeline}{2011}{12}{11}, written at SoNet, that uses the \nameref{sub:mediawikiapi} as well as its own \nameref{sub:toolserver} scripts, to visualize the evolution of a single article over time including: anonymous vs. registered contributors, male vs. female registered users, anonymous edits by country.\footnote{Live demo: \weburl{http://sonetlab.fbk.eu/wikitrip/}{2011}{12}{11}} 
 \end{description}
 
 
