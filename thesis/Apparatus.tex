@@ -8,20 +8,38 @@ This chapter describes data sources to get Wikipedia content like articles and r
 
 \section{Data sources}
 
-For an automated analysis, simply browsing Wikipedia's website is not really feasible. \todo{why?}
+For an automated analysis, simply browsing Wikipedia's website is not really feasible. 
 The bulk of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
 Unfortunately, these databases are not directly accessible over the Internet.
 The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
 
 \subsection{Wikipedia website}
 
-\todo{used to get static data useful throughout the analysis process, screen scraping, static data}
+For a complete article analysis, navigating the website can be tedious as one would have to click through a complete revision history and parse the page's source which is formatted using the HyperText Markup Language (HTML).
+However, individual pages contain data that is static and can be used throughout the analysis process.
+This makes it worth writing a specific parser for a technique known as \emph{screen scraping} to extract the information.
+On a high level, it involves the following steps:
+
+\begin{enumerate}
+  \item Looking at the HTML source of the page and identifying how the HTML tags and attributes that are used to structure the information.
+  \item Writing a parser that addresses the identifying tags and thereby tokenizes the data.
+  \item Converting the found tokens into an output format, e.g. JSON.
+\end{enumerate}
+
+For a simple HTML table, a parser can be written in a few lines of code.
+Using this technique, the following static information was gathered:
 
 \begin{description}
-\item[bots] \todo{list of bots}
-\item[countries] \todo{country names}
+\item[bots] A list of bots was built based on the Wikipedia page \emph{List of bots by number of edits}\footurl{http://en.wikipedia.org/wiki/Wikipedia:List_of_bots_by_number_of_edits}{2012}{01}{24}. 
+This list is used to distinguish bots from real authors as contributions done by bots are excluded from the analysis.
+There are unregistered bots, however, that appear not in the list.
+For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
+\item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
+It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
+In a second pass, the Wikipedia article of each country was parsed for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \ref{sub:resolution}.}
 \end{description}
 
+Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
 
 \subsection{Database dumps}
 
@@ -239,7 +257,7 @@ A group of openly available software packages qualify as swiss-army knifes for p
 %3. Container around country link contained RegExp. e.g. "and live in a rather small town close to <a>my country's</a> capital"
 
 
-\subsection{Geographic resolution}
+\subsection{Geographic resolution}\label{sub:resolution}
 
 \begin{todos}
     \item settle for a country
