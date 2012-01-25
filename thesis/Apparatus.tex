@@ -262,7 +262,9 @@ When a change event is observed, the view renders itself.
 For example, the \emph{article view} is rendered multiple times because it draws data from different sources (the page ID is available sooner than, say, the first sentence of the article). 
 Most views, however, rely on several models as they analyze various aspects of an article and then display the results in a chart (see \nameref{sec:visualization}).
 
-\subsection{Operation}
+\subsection{Main routine}
+
+This section describes an application run on a high level, for noteworthy algorithms for the sub-routines, see \nameref{sec:algorithms}.
 
 When loaded in a browser, the application expects an article title, a category or a template name as input.
 In the case of an article being entered, a click on ``Analyze!'' starts following routine, querying the various \nameref{sec:datasources}:
@@ -281,10 +283,10 @@ In the case of an article being entered, a click on ``Analyze!'' starts followin
 	\item All loaded data is analyzed and the results are stored and rendered in the browser.
 \end{enumerate}
 
-Depending on the article, this process takes around one minute and involves 100--500 API calls, most of which are done in parallel. 
-During this process, data is rendered whenever it arrives and has been processed.
+Depending on the article's number of revisions, this process takes around one minute and involves 100--500 API calls, most of which are done in parallel. 
+During this process, data is rendered whenever it has been arrived and processed.
 However, when a category or template name has been entered, only the article overview will be rendered while still all of the above steps are being taken.
-On a high level, the group mode progresses as follows:
+On a high level, this \emph{group mode} works as follows:
 
 \begin{enumerate}
     \item Fetch a list of articles by calling \entity{query categorymembers} or \entity{query templateembedders}.
@@ -293,15 +295,34 @@ On a high level, the group mode progresses as follows:
 \end{enumerate}
 
 
-\section{Algorithms}
+\section{Algorithms}\label{sec:algorithms}
 
-\todo{intro, complementary HTML and wikitext, HTML was easier offering annotations like dtstart}
+The individual algorithms described mostly deal with extracting data from the various \nameref{sec:datasources}.
+To classify an article as treating an event, the article had to be parsed for a location and a date or date interval.
 
 \subsection{Article requirements}
 
-\todo{list requirements}
+The presence of a date and a location is a direct requirement for an article to qualify for further analysis when the application is in group mode.
+All of the following criteria have to be satisfied:
+
+\begin{itemize}
+  \item The article has a location in the form of geographic coordinates or by name, e.g. Cairo.
+  \item The article has a date, e.g. 9 November 1989, or a date interval, e.g. May 2007 - August 2007.
+  \item The article was created after the event started (with a 3 day tolerance) to sort out events that have been scheduled.
+  \item The event (start) date is not before 2002 to make sure that Wikipedia was available as a medium. 
+  \item The article does not use certain templates or is part of certain categories, e.g. \emph{Category:Living People}.
+  This has been included for the purpose of filtering out articles that passed the previous tests but a clearly not an event article. 
+\end{itemize}
+
+Even when all of the requirements above are met, some articles may not have a full set of results after their analysis.
+They will however be included in the computations for which results are present.
+\todo{link to group analysis}
 
 \subsection{Date parsing}
+
+For event analysis, the analyzd
+
+\todo{intro, complementary HTML and wikitext, HTML was easier offering annotations like dtstart}
 
 \todo{link to Template}
 
