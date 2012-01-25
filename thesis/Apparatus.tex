@@ -222,11 +222,31 @@ These are purpose built applications that have a much narrower focus but are ver
 
 \section{Application design}
 
-\todo{following wikitrip design of a browser application, based on the following technologies}
+For the analysis of articles I developed an application that could draw data from the different sources and process them in a timely fashion.
+Following the impressive WikiTrip application design (see \nameref{sub:analysisprojects}) I decided to build a web application that runs entirely in a web browser.\footnote{Application development was done mainly using the Google Chrome browser. The application should run in any HTML5-capable browser.}
 
 \subsection{Technologies}
 
+As a web application the software heavily relies on HTML version 5, JavaScript (JS) and Cascading Stylesheets (CSS). 
+It uses a range of open-source toolkits and libraries for a variety purposes:
+
+\begin{description}
+  \item[Bootstrap] Twitter's web application toolkit\footurl{http://twitter.github.com/bootstrap/}{2012}{01}{25} controls the basic layout, the styling of sections and form fields, and the navigation bar at the top.
+  \item[jquery] The JavaScript library jQuery\footurl{http://jquery.com/}{2012}{01}{25} is used to dynamically insert elements into the layout as well as parsing screen-scraped webpages by making use of its selectors for addressing elements.
+  \item[Underscore] Underscore\footurl{http://documentcloud.github.com/underscore/}{2012}{01}{25} is a ``utility-belt library'' for functional programming in JS. 
+  Its \emph{map} and \emph{groupBy} methods are being heavily used in the analysis of content.
+  \item[Backbone] Built upon Underscore, Backbone\footurl{http://documentcloud.github.com/backbone/}{2012}{01}{25} provides a way to structure a JS application.
+  All models, collections and views in the application are encapsulated by Backbone objects that can communicate with each other via events.
+  \item[datejs] Date.js\footurl{http://www.datejs.com/}{2012}{01}{25} is a library that was being used to parse dates in articles about events.
+  \item[lz77] A JS implementation\footurl{https://github.com/olle/lz77-kit}{2012}{01}{25} of the LZ77 text compression algorithm\footurl{http://en.wikipedia.org/wiki/LZ77_and_LZ78}{2012}{01}{25}. 
+  It is used to shrink the size of results when stored in the browser's limited data store\footnote{See \weburl{http://dev.w3.org/html5/webstorage/}{2012}{01}{25} for the limitations.}.
+  \item[d3.js] Data-driven documents (d3)\footurl{http://mbostock.github.com/d3/}{2012}{01}{25} is a library to visualize big data sets. 
+  This application uses d3's box plots\footurl{http://mbostock.github.com/d3/ex/box.html}{2012}{01}{25} to summarize the quantitive distribution of the analysis results.
+  \item[Google Chart Tools] Google's\footnote{Although not open source, some of the charts are developed by the open-source community.} chart tools\footurl{http://code.google.com/apis/chart/interactive/docs/index.html}{2012}{01}{25} provide a wide range of chart types that I used in the application, including line chart, scatter chart and motion chart.
+\end{description}
+
 \subsection{Models}
+
 
 \subsection{Views}
 
