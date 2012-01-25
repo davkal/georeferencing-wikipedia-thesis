@@ -170,7 +170,7 @@ The results are presented in the browser or can be downloaded as a file containi
 \item[Poor man's checkuser] The project \emph{Poor Man's Check User}\footnote{Project website: \weburl{http://wikiwatcher.virgil.gr/pmcu}{2012}{01}{2}. The project's name is a reference to the \emph{checkuser} permission that a community-elected group of registered users possesses. It allows a de-masking of the IP addresses for each of a registered user's edit.} mapped registered users to IP addresses based on a bug in the session management of the MediaWiki software.\footnote{When a user exceeded a certain time while editing an article without submitting the current changes, the user's session expired on the server. When the edit was submitted after the expiration the user appeared as an anonymous author, being only known by his IP address. When the user then logged in again, the same change was sent again. Scanning all revisions for the same change set therefor allowed for a matching between user name and IP address. This loophole has been closed, however.} 
 For the period the bug has been active, some usernames could be mapped.
 Naturally, the more edits a user did in this period, the more likely is an appearance in this list.
-For the purpose of this thesis, I screen-scraped this table and condensed\footnote{Some usernames have multiple entries as each occurrence of the bug created a unique ``evidence''. Among those, some have been manually verified and ranked. When multiple entries exist, my algorithm picks the top ranked.} it to 14,171 unique users.
+For the purpose of this thesis, I screen-scraped the entire table and condensed\footnote{Some usernames have multiple entries as each occurrence of the bug created a unique ``evidence''. Among those, some have been manually verified and ranked. When multiple entries exist, my algorithm picks the top ranked.} it to 14,171 unique users.
 \item[Quova] This geo-location web service maps an IP address to a geographic location, see \nameref{sec:georeference}.
 \item[WikiTrust] Based on \textcite{adler2008assigning} an open source online reputation system\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} was set up by the University of California, Santa Cruz, to allow for easy vandalism detection (see \nameref{sec:contribution}).
 Given an article ID and a revision ID, the API method \emph{wikimarkup} returns an annotated version of the wikitext of that revision.
@@ -427,45 +427,22 @@ It returns an annotated markup that can easily be parsed with the following regu
 
 Barring bots, all edits are considered relevant, i.e. reverts or blanking\footnote{The illegitimate removal of all content of an article, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:VANDTYPES\#Types_of_vandalism}{2012}{01}{25}} are not treated in a special way.
 
-\subsection{Resolving user names to IPs}
 
-\begin{todos}
-    \item registered vs. unregistered vs. bots vs. admins
-    \item incorporate key findings of \cite{hardy2011volunteered} as laid out in chapter \ref{sec:georeference}
-    \item IPs of unregistered users: Geo lookup
-    \item Autoren-Profile: Information Extraction
-    \item Geographische Zuordnung vom user profile
-\end{todos}
+\subsection{Locating users}
 
-%Zur Bestimmung der Herkunft eines Autors bietet Wikipedia zwei direkte Ansätze: 
-%Für jeden Beitrag eines nicht registrierten Benutzers wird die IP-Adresse gespeichert, über die er Zugang zum Internet erlangt hat. 
-%Der zweite Ansatz betrifft die registrierten Benutzer.
-%Ihre IP-Adressen sind maskiert und nicht öffentlich zugänglich.
-%\footnote{Eine kleine, von der Wikipedia-Community gewählte Nutzerschaft mit der Berechtigung \emph{checkuser} kann die Adressen demaskieren.}
+The location of all anonymous authors has already been determined by SoNet's Toolserver script.
+For each of the remaining (registered) users, it is first checked if the user is included in the \emph{Poor man's checkuser} list (see \nameref{sub:webservices}).
+In that case, the username can be resolved to an IP address which, in turn, can be resolved to an accurate location, see \nameref{sub:iplookup}.
+For all remaining authors, their user page is parsed for a location, see \nameref{sub:parsinguserpages}.
 
 
 \subsection{IP Look-up}\label{sub:iplookup}
 
-\begin{todos}
-    \item Services
-    \item Accuracy
-    \item Active prevention by proxies and anonymizers: 
-    \\ \fullcite{muir2006internet} 
-    \\ \fullcite{muir2009internet}
-    \\ \fullcite{duckham2005formal}
-\end{todos}
-
-%Mit frei verfügbaren\footnote{Die vorgestellten Dienste haben ein tägliches Kontingent an Anfragen. Hilfstechniken wie Caching können diese Einschränkungen jedoch mindern.} Online-Diensten wie \term{Quova}\footnote{\url{http://developer.quova.com}} oder \term{geoplugin}\footnote{\url{http://www.geoplugin.com/webservices}} lässt sich für einen Großteil der IPs daraufhin das Herkunftsland bestimmen.
-%
-%Im Bezug auf die Herkunft sind sowohl das Land als auch die Geo-Koordinaten interessant.  
-%Basierend auf der Versionsgeschichte würde für nicht registrierte Benutzer eine Gewinnung von Daten dann beispielsweise folgende Schritte durchlaufen:
-%
-%\begin{quotation}
-%IP \RA Geolocation-Dienst \RA Koordinaten und Land
-%\end{quotation}
+Resolving the location\footnote{Regarding their accuracy and coverage, their website is rather vague, but coverage is at least 99.8\% on a state level, see \weburl{http://www.quova.com/what/}{2012}{01}{25}} for a given IP address is a simple call to Quova's IP-lookup API.\footnote{For the API call, a registered account is needed. This provides a secret key which has to be used to sign each request.}
+The limits of the non-commercial license --- 2 requests per second and a maximum of 1,000 requests per day --- have been overcome by a caching server proxy.
 
 
-\subsection{Parsing user pages}
+\subsection{Parsing user pages}\label{sub:parsinguserpages}
 
 \begin{todos}
 \item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
@@ -491,6 +468,10 @@ Barring bots, all edits are considered relevant, i.e. reverts or blanking\footno
     \item some examples on accuracy for different countries
     \item clustering of origins: areas of influence
 \end{todos}
+
+\subsection{Signature distance}
+
+\todo{formula}
 
 
 \section{Visualization}\label{sec:visualization}
@@ -579,3 +560,4 @@ Barring bots, all edits are considered relevant, i.e. reverts or blanking\footno
     \item from other fields such as criminal research: \\ \fullcite{snook2005complexity}
     \item feasibility, maybe just as enhancer
 \end{todos}
+
