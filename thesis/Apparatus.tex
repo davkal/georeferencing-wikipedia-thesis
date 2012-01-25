@@ -444,13 +444,35 @@ The limits of the non-commercial license --- 2 requests per second and a maximum
 
 \subsection{Parsing user pages}\label{sub:parsinguserpages}
 
-\begin{todos}
-\item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
-    \item IE approach with Machine Learning \fullcite{xiao2004information}
-    \item unsupervised IE: \fullcite{etzioni2005unsupervised}
-    \item if city is mentioned, determine country (needs disambiguation, e.g. Berlin)
-    \item coordinates are optional?
-\end{todos}
+A user page is scanned for possible locations by parsing its HTML content.
+This is easier than parsing the wikitext, since embedded templates can be inconsistent\footnote{See \weburl{http://en.wikipedia.org/wiki/Category:Nation_of_origin_user_templates}{2012}{01}{25}}.
+The parser looks for links with country names and then checks if they appear in a certain context:
+
+\lstset{caption={User page location algorithm},label=userpagelocation,language=Python,numbers=left}
+\begin{lstlisting}
+	candidates = []
+	for link in userpage.links:
+		if is_country(link.title):
+			candidates.append(link)
+
+	patterns = [" comes? from", " am from", "This user is from", 
+		"This user is in", " lives? in", " currently living in"]
+		
+	for candidate in candidates:
+		context = link.parent
+		for pattern in patterns:
+			if context.match(pattern):
+				country = candidate
+				break
+	return country
+\end{lstlisting}
+
+Plainly parsing for locations and flags, as done in the article's location parsing, yields too many false positives as some userpages are flooded with flags of countries the user professes to have visited.
+However, looking at the context of where a link is appears helps in parsing prose such as:
+\begin{quotation}
+ ``...and live in a rather small town close to \\\verb"<a title='Austria'>"my country's\verb"</a>" capital''.
+\end{quotation}
+from the user page of \emph{Nightstallion}\footurl{http://en.wikipedia.org/wiki/User:Nightstallion}{2012}{01}{25}.
 
 % IE algorithms based on Templates
 %A(723) 755 -> 758 -> 802
@@ -460,14 +482,17 @@ The limits of the non-commercial license --- 2 requests per second and a maximum
 %2. Country part of RegExp (no link)
 %3. Container around country link contained RegExp. e.g. "and live in a rather small town close to <a>my country's</a> capital"
 
-
 \subsection{Geographic resolution}\label{sub:resolution}
 
+As accurate as the IP location services may appear, adding the results of the user page analysis to the set of located authors means settling for a country-level resolution.
+
 \begin{todos}
-    \item settle for a country
     \item some examples on accuracy for different countries
     \item clustering of origins: areas of influence
 \end{todos}
+
+% c = 0; l = $(".wikitable td:nth-child(5)").each(function(index){c += index ? parseInt($(this).text().replace(/,/g, "")) : 0}).length; c / l // average country size according to http://en.wikipedia.org/wiki/List_of_countries_by_area
+
 
 \subsection{Signature distance}
 
@@ -551,6 +576,13 @@ The limits of the non-commercial license --- 2 requests per second and a maximum
 \subsection{Edit relevance}
 
 \todo{detect reverts, vandalism}
+
+\subsection{user page parsing}
+
+\begin{todos}
+\item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
+    \item if city is mentioned, determine country (needs disambiguation, e.g. Berlin)
+\end{todos}
 
 \subsection{Geographic profiling}
 
