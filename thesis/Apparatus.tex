@@ -299,6 +299,7 @@ On a high level, this \emph{group mode} works as follows:
 
 The individual algorithms described mostly deal with extracting data from the various \nameref{sec:datasources}.
 To classify an article as treating an event, the article had to be parsed for a location and a date or date interval.
+All algorithms will be written in a Python-esque pseudo-code.
 
 \subsection{Article requirements}
 
@@ -325,7 +326,7 @@ And when it comes to date intervals, e.g. May 8--12 2007, even a specialized dat
 I wrote a custom parser that for a given text returns first occurrence of an interval or a single date, i.e. if no interval could be found, the parsing is repeated for a single date.
 
 Some articles embed info box templates (see \nameref{sub:templates}) that produce annotated markup using the \entity{hcard}\footurl{http://en.wikipedia.org/wiki/HCard}{2012}{01}{25} microformat.
-The annotations can be easily addressed with CSS selectors\footnote{This requires the template to be properly programmed. Some templates mistakenly mark start and end of an interval with the same annotation: \emph{dtstart}. On other pages the error lies with the authors who misused the date template, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908 possibly due to a mixup in the order, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, ISO 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
+The annotations can be easily addressed with CSS selectors\footnote{This requires the template to be properly programmed. Some templates mistakenly mark start and end of an interval with the same annotation: \verb"dtstart". On other pages the error lies with the authors who misused the date template, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908 possibly due to a mixup in the order, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, ISO 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
 In listing \ref{datecandidates} the first block tries to parse the microformat annotations.
 When they are not present, the first info box is checked for a date field.
 As a last resort, the first sentence and paragraph are scanned for dates to not filter out eligible articles like \emph{2007 Georgian demonstrations}\footnote{The article does not contain an info box and a date is only mentioned in the second sentence: ``The demonstrations peaked on November 2, 2007,...'' with more dates to follow in the same paragraph. This particular example already shows how idiosyncratic dates can be codified. See \weburl{http://en.wikipedia.org/wiki/2007_Georgian_demonstrations}{2012}{01}{25}.}
@@ -373,20 +374,58 @@ The coarsest pattern to match is \verb"Y", a single year (4 digits).
 
 \subsection{Location parsing}
 
-\todo{link to Template}
+Like dates, locations and even coordinates can be codified in numerous ways. 
+Most of the coordinate templates used in the info boxes produce annotated markup, thereby making machine-readable.
+I still wrote a custom parser for all the cases where the marker (\verb"geo") is not produced.
+
+Some event articles however, do not have coordinates are clearly describing actions at a location, e.g. \emph{Maspero demonstrations}\footurl{http://en.wikipedia.org/wiki/Maspero_demonstrations}{2012}{01}{25}.
+From articles like these, location candidates are scraped and then resolved:
+
+\lstset{caption={Article's locate algorithm},label=articlelocation,language=Python,numbers=left}
+\begin{lstlisting}
+	function locate(article):
+		if 'geo' in article.HTML: # checking for machine-readable coords
+			location = custom.parse(article.geo.text)
+			return
+		else: # look for location candidates
+			candidates = []
+			# all links from the first info box's location field (wikitext)
+			candidates.extend(templates.infoboxes[0].location.links)
+			# all flags in the first info box 
+			candidates.extend(templates.infoboxes[0].flags) #HTML
+			# all links from the first paragraph
+			candidates.extend(article.first_paragraph.links) # HTML
+		if len(candidates) and article.isMainArticle:
+			candidates = candidates[:10]
+			until location:
+				location = locate(retrieve(candidates.pop()))
+			return location
+\end{lstlisting}
+
+The above mentioned \emph{Maspero demonstrations} article is exemplary for the candidate list mechanism.
+Its info box's location field offers three links to articles of a place: Maspiro, Cairo, Egypt.
+They are checked until an article with coordinates is found, in this case after the second try, Cairo\footurl{http://en.wikipedia.org/wiki/Cairo}{2012}{01}{25}.
 
 \subsection{Collective authorship}
 
-\todo{Introduce types of authors (roles) as well as methods to determine contribution/attribution}
+Most of the authorship processing is being done by SoNet's Toolserver script\footurl{https://github.com/volpino/toolserver-scripts/blob/master/php/api.php}{2012}{01}{25}, see \nameref{sub:toolserver}.
+The PHP-script directly queries a live copy of the Wikipedia database for all revisions of the requested article.
+For each revision's author, an edit counter is incremented, and if the author was anonymous, the IP is being resolved to a geographic location.
+A collection of authors and all resolved locations are then returned in a JSON object. 
 
-\begin{todos}
-    \item Autoren
-    \item Bots
-    \item text attribution, using wikitrust annotations, not for all revisions
-\end{todos}
+From the response, my application then creates an author collection.
+If an author is a registered bot, the author is excluded.
+From the location list, a second collection is created to manage all author locations for the current article. 
 
-\todo{Are all edits relevant? Edit wars? Bots?}
+The attribution of text passages to authors is done by the web service WikiTrust, see \nameref{sub:webservices}. 
+It returns an annotated markup that can easily be parsed with the following regular expression (JS):
 
+\lstset{caption=,label=wikitrustre,language=HTML,numbers=none}
+\begin{lstlisting}
+	/{{#t:\d+,\d+,[^}]*}}/g;
+\end{lstlisting}
+
+Barring bots, all edits are considered relevant, i.e. reverts or blanking\footnote{The illegitimate removal of all content of an article, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:VANDTYPES\#Types_of_vandalism}{2012}{01}{25}} are not treated in a special way.
 
 \subsection{Resolving user names to IPs}
 
