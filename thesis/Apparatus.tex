@@ -320,14 +320,56 @@ They will however be included in the computations for which results are present.
 
 \subsection{Date parsing}
 
-For event analysis, the analyzd
+The way dates are mentioned in articles are as diverse as the people that write them.
+And when it comes to date intervals, e.g. May 8--12 2007, even a specialized date parsing library like \entity{date.js} can only be of limited use.
+I wrote a custom parser that for a given text returns first occurrence of an interval or a single date, i.e. if no interval could be found, the parsing is repeated for a single date.
 
-\todo{intro, complementary HTML and wikitext, HTML was easier offering annotations like dtstart}
+Some articles embed info box templates (see \nameref{sub:templates}) that produce annotated markup using the \entity{hcard}\footurl{http://en.wikipedia.org/wiki/HCard}{2012}{01}{25} microformat.
+The annotations can be easily addressed with CSS selectors\footnote{This requires the template to be properly programmed. Some templates mistakenly mark start and end of an interval with the same annotation: \emph{dtstart}. On other pages the error lies with the authors who misused the date template, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908 possibly due to a mixup in the order, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, ISO 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
+In listing \ref{datecandidates} the first block tries to parse the microformat annotations.
+When they are not present, the first info box is checked for a date field.
+As a last resort, the first sentence and paragraph are scanned for dates to not filter out eligible articles like \emph{2007 Georgian demonstrations}\footnote{The article does not contain an info box and a date is only mentioned in the second sentence: ``The demonstrations peaked on November 2, 2007,...'' with more dates to follow in the same paragraph. This particular example already shows how idiosyncratic dates can be codified. See \weburl{http://en.wikipedia.org/wiki/2007_Georgian_demonstrations}{2012}{01}{25}.}
 
-\todo{link to Template}
+\lstset{caption={Date candidates algorithm},label=datecandidates,language=Python,numbers=left}
+\begin{lstlisting}
+	if 'dtstart' in HTML:	# checking for hcard
+		start = datejs.parse(dtstart.text)
+		if 'dtend' in HTML:
+			end = datejs.parse(dtend.text) # proper interval
+		elif 'ongoing' in dtstart.next.text:
+			end = today() # ongoing event
+		else:
+			end = start + 1 # single day event
+	elif 'date' in templates.infoboxes[0]:
+		start, end = custom.parse(templates.infoboxes[0].date) # wikitext
+	if not start:
+		start, end = custom.parse(article.first_sentence) # HTML
+	if not start:
+		start, end = custom.parse(article.first_paragraph) #HTML
+\end{lstlisting}
 
-% Tricky http://en.wikipedia.org/wiki/2007_Georgian_demonstrations
-% The demonstrations peaked on November 2, 2007, ...
+The custom parser then checks for a range of formats including lazy ones like December 14--19, 2008.
+Over a long iterative process, I identified the following tokens from which to construct the date patterns as regular expressions:
+
+\lstset{caption={Date tokens},label=datetokens,language=Python,numbers=left}
+\begin{lstlisting}
+	ords = ['th', 'st', 'nd', 'rd'];
+	tokens = {
+		M: "({0})".format(MonthNames.join('|')), # months
+		D: "(\d{1,2})" + "({0})?".format(ords.join('|')), # day
+		Y: "(\d{4})", #year
+		T: "(/|-|--|\sto\s|\sand\s)", # interval delimiter
+		O: "('*ongoing'*?|'*present'*)", # ongoing event
+		F: "From", # ongoing event
+		S: "[,\s]*", # whitespace
+		P: "\|", # pipe
+		A: "([^- --]*)" # other text
+	};
+\end{lstlisting}
+
+Using these tokens, I produced patterns to match all encountered date formats, e.g. the pattern for December 14--19, 2008 is \verb"MDTDY", or to capture the even less conform ``From 15 October 2011'' (meaning the event is ongoing) the pattern is \verb"FDMY".
+The patterns are ranked by accuracy so that ``12 May 2001 - present'' is matched before ``May 2001 - present''.
+The coarsest pattern to match is \verb"Y", a single year (4 digits).
 
 \subsection{Location parsing}
 
