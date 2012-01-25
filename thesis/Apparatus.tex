@@ -6,7 +6,7 @@ This chapter describes data sources to get Wikipedia content like articles and r
 
 \todo{Intro aspects of apparatus}
 
-\section{Data sources}
+\section{Data sources}\label{sec:datasources}
 
 For an automated analysis, simply browsing Wikipedia's website is not really feasible. 
 The bulk of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
@@ -232,7 +232,8 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
 
 \begin{description}
   \item[Bootstrap] Twitter's web application toolkit\footurl{http://twitter.github.com/bootstrap/}{2012}{01}{25} controls the basic layout, the styling of sections and form fields, and the navigation bar at the top.
-  \item[jquery] The JavaScript library jQuery\footurl{http://jquery.com/}{2012}{01}{25} is used to dynamically insert elements into the layout as well as parsing screen-scraped webpages by making use of its selectors for addressing elements.
+  \item[jquery] The JS library jQuery\footurl{http://jquery.com/}{2012}{01}{25} is used to asynchronously retrieve data from the various data sources, dynamically insert elements into the layout as well as parsing screen-scraped webpages by making use of its selectors for addressing elements.
+  The \entity{autocomplete}\footurl{http://jqueryui.com/demos/autocomplete/}{2012}{01}{25} widget of jQuery's UI library is used to display article suggestions based on what has been entered into the article search field.
   \item[Underscore] Underscore\footurl{http://documentcloud.github.com/underscore/}{2012}{01}{25} is a ``utility-belt library'' for functional programming in JS. 
   Its \emph{map} and \emph{groupBy} methods are being heavily used in the analysis of content.
   \item[Backbone] Built upon Underscore, Backbone\footurl{http://documentcloud.github.com/backbone/}{2012}{01}{25} provides a way to structure a JS application.
@@ -241,36 +242,55 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
   \item[lz77] A JS implementation\footurl{https://github.com/olle/lz77-kit}{2012}{01}{25} of the LZ77 text compression algorithm\footurl{http://en.wikipedia.org/wiki/LZ77_and_LZ78}{2012}{01}{25}. 
   It is used to shrink the size of results when stored in the browser's limited data store\footnote{See \weburl{http://dev.w3.org/html5/webstorage/}{2012}{01}{25} for the limitations.}.
   \item[d3.js] Data-driven documents (d3)\footurl{http://mbostock.github.com/d3/}{2012}{01}{25} is a library to visualize big data sets. 
-  This application uses d3's box plots\footurl{http://mbostock.github.com/d3/ex/box.html}{2012}{01}{25} to summarize the quantitive distribution of the analysis results.
+  This application uses d3's box plots\footurl{http://mbostock.github.com/d3/ex/box.html}{2012}{01}{25} to summarize the quantitive distribution of analysis results.
   \item[Google Chart Tools] Google's\footnote{Although not open source, some of the charts are developed by the open-source community.} chart tools\footurl{http://code.google.com/apis/chart/interactive/docs/index.html}{2012}{01}{25} provide a wide range of chart types that I used in the application, including line chart, scatter chart and motion chart.
 \end{description}
 
 \subsection{Models}
 
+Looking at Wikipedia's website as a system, visible items like pages, authors and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
+
+When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
+Once the data is retrieved, the attributes of each individual revision object are set which in turn triggers an event, telling a single revision model fetch the annotated wikitext from the WikiTrust API (see \nameref{sub:webservices}).
+While some events trigger the retrieval of more detailed information, others indicate that a model's data is fully populated ready for display in the application.
 
 \subsection{Views}
 
+The rendering of models is encapsulated in views.
+Following the publish-subscribe pattern, a view listens to changes in a certain model.
+When a change event is observed, the view renders itself.
+For example, the \emph{article view} is rendered multiple times because it draws data from different sources (the page ID is available sooner than, say, the first sentence of the article). 
+Most views, however, rely on several models as they analyze various aspects of an article and then display the results in a chart (see \nameref{sec:visualization}).
+
 \subsection{Operation}
 
-\begin{todos}
-    \item fetch article, wikitext and HTML
-    \item parse for dates and location (delegate to subpage) and evaluate article relevancy
-    \item fetch authors (toolserver)
-    \item fetch revisions
-    \item fetch first revision of each language
-    \item fetch page views
-    \item locate users
-    \item fetch annotated source from WikiTrust for selected revisions 
-    \item render/store results
-\end{todos}
+When loaded in a browser, the application expects an article title, a category or a template name as input.
+In the case of an article being entered, a click on ``Analyze!'' starts following routine, querying the various \nameref{sec:datasources}:
 
-\todo{group mode}
+\begin{enumerate}
+	\item \entity{query info} is being called to check if the article title is a valid title. 
+	A successful query also returns the wikitext of the article's latest revision.
+	\item A call to \entity{parse} retrieves the HTML version of the latest revision as well as the article's links to other language editions. 
+	Both the wikitext and the HTML are then being parsed for location and dates.
+	\item The SoNet Toolserver script is called to retrieve all authors of the article.
+	\item For all registered usernames in the author collection, a sub-routine is started to locate the users. 
+	\item \entity{query revisions} is being called to retrieve all revisions (excluding wikitext). 
+	\item The a subset of the revisions, the annotated wikitext is loaded using WikiTrust API.
+	\item For each day of the article's existence, the page view statistics are loaded.
+	\item For each language present in the language link collection, the first revision is loaded.
+	\item All loaded data is analyzed and the results are stored and rendered in the browser.
+\end{enumerate}
 
-\begin{todos}
-    \item fetch article list
-    \item analyze all articles
-    \item render group results
-\end{todos}
+Depending on the article, this process takes around one minute and involves 100--500 API calls, most of which are done in parallel. 
+During this process, data is rendered whenever it arrives and has been processed.
+However, when a category or template name has been entered, only the article overview will be rendered while still all of the above steps are being taken.
+On a high level, the group mode progresses as follows:
+
+\begin{enumerate}
+    \item Fetch a list of articles by calling \entity{query categorymembers} or \entity{query templateembedders}.
+    \item Run the analysis routing on all articles.
+    \item Compute group results and show them in the browser.
+\end{enumerate}
 
 
 \section{Algorithms}
@@ -371,7 +391,7 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
 \end{todos}
 
 
-\section{Visualization}
+\section{Visualization}\label{sec:visualization}
 
 %Auf Basis der strukturierten Daten in Form von Artikeln, Sätzen, Ländern, Koordinaten und Sprachen sollen nun Visualisierungen gefunden werden, welche die Fülle an Informationen zugänglich machen.
 
