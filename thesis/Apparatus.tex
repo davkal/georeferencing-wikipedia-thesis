@@ -507,13 +507,14 @@ For a sample of articles $S$ let $P = \{\rho : \rho \in S\}$ be the set all arti
 Then, $\eta(\rho,\alpha)$ is the contribution(s) of author $\rho$ to article $\alpha$ and $N(\alpha) = \{\eta(\rho,\alpha) : \rho \in P\}$ are all contribution(s) to article $\alpha$.
 Conversely, $P(\alpha) = \{\rho : \rho \in N(\alpha)\}$ are the author(s) who have made contributions to article $\alpha$.
 To calculate the relative work, let $w(\rho,\alpha) = |\eta(\rho,\alpha)| \div |N(\alpha)|$ be relative edit frequency for author $\rho$ on article $\alpha$. 
-Averaging the distances of authors weighted by their relative work leads to the signature distance $D(\alpha)$:
+Let further $\delta(\rho,\alpha)$ be the geodesic distance between author $\rho$ and article $\alpha$.
+Then, averaging the distances of authors weighted by their relative work leads to the signature distance $D(\alpha)$:
 \begin{eqnarray}
-D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\eta,\alpha)}{|N(\alpha)|} \\
- & = &  \sum_{\forall \rho \in P(\alpha)} \big\{w(\rho,\alpha) \cdot \delta(\eta,\alpha)\}
+D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\rho,\alpha)}{|N(\alpha)|} \\
+ & = &  \sum_{\forall \rho \in P(\alpha)} \big(w(\rho,\alpha) \cdot \delta(\rho,\alpha)\big)
 \end{eqnarray}
 
-Given that an article has a location and authors that have been located, my algorithmic calculation of the signature distance is done as follows:
+Given that an article has a location and authors that have been located, the function 4.2 was implemented as follows:
 
 \lstset{caption={Signature distance algorithm},label=signaturedistance,language=Python,numbers=left}
 \begin{lstlisting}
@@ -522,7 +523,7 @@ Given that an article has a location and authors that have been located, my algo
 	for author in article.authors:
 		if loc in author: # count only authors that have a location
 			dist = geodesic(author.loc, article.loc)
-			edits = author.count # work
+			edits = author.count # work is the edit count
 			total += edits # postpone relativization to last line 
 			sd += dist * edits
 	return sd / total
