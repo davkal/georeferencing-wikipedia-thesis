@@ -532,42 +532,55 @@ Given that an article has a location and authors that have been located, my algo
 
 \section{Visualization}\label{sec:visualization}
 
-%Auf Basis der strukturierten Daten in Form von Artikeln, Sätzen, Ländern, Koordinaten und Sprachen sollen nun Visualisierungen gefunden werden, welche die Fülle an Informationen zugänglich machen.
+\todo{find nicer intro}
+Visualizations should support the presentation of results and invite exploration.
+The results are in fact measurements, i.e. series of numbers, that can also be represented in graphical terms.
 
-
-\begin{todos}
-    \item \fullcite{kjellin2010evaluating}
-    \item Identify. Characteristics of an object.
-    \item Locate. Absolute or relative position.
-    \item Distinguish. Recognize as the same or different.
-    \item Categorize. Classify according to some property (e.g., color, position, or shape).
-    \item Cluster. Group same or related objects together.
-    \item Distribution. Describe the overall pattern.
-    \item Rank. Order objects of like types.
-    \item Compare. Evaluate different objects with each other.
-    \item Associate. Join in a relationship.
-    \item Correlate. A direct connection.
-\end{todos}
-
-\subsection{Maps}
-
-\begin{todos}
-    \item Darstellung der geographischen Analyse
-    \item per Wort, Satz, Artikel, Wort
-\end{todos}
+%\begin{todos}
+%    \item \fullcite{kjellin2010evaluating}
+%    \item Identify. Characteristics of an object.
+%    \item Locate. Absolute or relative position.
+%    \item Distinguish. Recognize as the same or different.
+%    \item Categorize. Classify according to some property (e.g., color, position, or shape).
+%    \item Cluster. Group same or related objects together.
+%    \item Distribution. Describe the overall pattern.
+%    \item Rank. Order objects of like types.
+%    \item Compare. Evaluate different objects with each other.
+%    \item Associate. Join in a relationship.
+%    \item Correlate. A direct connection.
+%\end{todos}
 
 \subsection{Maps}
 
-%\begin{labeling}{V2}
-%\item[V1] Revisionshistogramm à la Google Finance 
-%\item[V2] \emph{Heatmap} einer Landkarte mit Ursprüngen der Revisionen 
-%\item[V3] Netzwerkgrafik, die Metriken desselben Artikels in verschiedenen Sprachvarianten anzeigt
-%\item[V4] Dynamisches Blasendiagramm\footnote{\url{http://en.wikipedia.org/wiki/Motion_chart}} über die Entwicklung unterschiedlicher Sprachvarianten
-%\item[V5] \emph{Heatmap} des Artikels mit Stellen höchster Aktivität 
-%\item[V6] Landeskürzel für eine gegebene Textstelle
-%\item[V7] Edit wars on map, linking two or more places
-%\end{labeling}
-%
+To show the location that was extracted from an article, a simple world map is used.
+A marker shows the position of the location's geographic coordinates.
+
+\todo{article map}
+
+The author analysis groups the located authors by country. 
+For each country, the number of edits of its authors is counted, resulting in a mapping of country name to edit count.
+A choropleth map is used to show how this measure varies over different countries.
+
+However, this choropleth map only measures the edit counts and does not acknowledge the fact that contributions may disappear by edits in later revisions. 
+Therefor, a second choropleth map is shown below the first one, displaying edit count based on text survival.
+For this, the annotated markup provided by WikiTrust is parsed to extract the authors that introduced the text sequences that make up the final text.
+This subset of revisions is again grouped by the country of its author (if located):
+
+\lstset{caption={Edit weight for map},label=editweight,language=Python,numbers=left}
+\begin{lstlisting}
+	revision = article.revisions.last
+	total = revision.length
+	countries = {} # country name -> [length of sequence, ...]
+	edits = {} # country name -> proportion of whole text
+	for author in revision.authors:
+		if loc in author: # add only located authors
+			if loc.country not in countries:
+				countries[country] = []
+			countries[country].append(author.text.length)
+	for country in countries.keys:
+		edits[country] = sum(countries[country]) / total
+	return edits
+\end{lstlisting}
 
 \subsection{Line and scatter charts}
 
