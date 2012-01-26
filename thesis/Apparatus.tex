@@ -513,7 +513,22 @@ D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdo
  & = &  \sum_{\forall \rho \in P(\alpha)} \big\{w(\rho,\alpha) \cdot \delta(\eta,\alpha)\}
 \end{eqnarray}
 
+Given that an article has a location and authors that have been located, my algorithmic calculation of the signature distance is done as follows:
 
+\lstset{caption={Signature distance algorithm},label=signaturedistance,language=Python,numbers=left}
+\begin{lstlisting}
+	sd = 0 # signature distance
+	total = 0 # number of all edits
+	for author in article.authors:
+		if loc in author: # count only authors that have a location
+			dist = geodesic(author.loc, article.loc)
+			edits = author.count # work
+			total += edits # postpone relativization to last line 
+			sd += dist * edits
+	return sd / total
+\end{lstlisting}
+
+\todo{memoized version for all revisions}
 
 \section{Visualization}\label{sec:visualization}
 
