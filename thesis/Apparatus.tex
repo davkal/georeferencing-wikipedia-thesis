@@ -13,7 +13,7 @@ The bulk of Wikipedia's content like articles, revisions, discussions is stored 
 Unfortunately, these databases are not directly accessible over the Internet.
 The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
 
-\subsection{Wikipedia website}
+\subsection{Wikipedia website}\label{sub:wpwebsite}
 
 For a complete article analysis, navigating the website can be tedious as one would have to click through a complete revision history and parse the page's source which is formatted using the HyperText Markup Language (HTML).
 However, individual pages contain data that is static and can be used throughout the analysis process.
@@ -484,19 +484,35 @@ from the user page of \emph{Nightstallion}\footurl{http://en.wikipedia.org/wiki/
 
 \subsection{Geographic resolution}\label{sub:resolution}
 
-As accurate as the IP location services may appear, adding the results of the user page analysis to the set of located authors means settling for a country-level resolution.
+As accurate as the IP location services may appear, adding the results of the user page analysis to the set of located authors means having to settle for a country-level resolution.
 
-\begin{todos}
-    \item some examples on accuracy for different countries
-    \item clustering of origins: areas of influence
-\end{todos}
+Both the article location and the user page algorithms are searching for countries.
+The location for a country is looked up in the application's country list (see \entity{countries} in \nameref{sub:wpwebsite}).
+There each country name is mapped to the geographic coordinates present in its Wikipedia article.
+For bigger countries, the coordinates refer to the location of the capital, e.g. \emph{United States}\footurl{http://en.wikipedia.org/wiki/United_States}{2012}{01}{25} while for smaller ones a central point is denominated, e.g. Bahrain\footurl{http://en.wikipedia.org/wiki/Bahrain}{2012}{01}{25}.
 
+\todo{example calculation, with equip-distant circles, bahrain / europe / US, not so bad}
+
+\todo{locals are people less than 1000 miles or same country}
 % c = 0; l = $(".wikitable td:nth-child(5)").each(function(index){c += index ? parseInt($(this).text().replace(/,/g, "")) : 0}).length; c / l // average country size according to http://en.wikipedia.org/wiki/List_of_countries_by_area
-
 
 \subsection{Signature distance}
 
-\todo{formula}
+In his dissertation, \textcite{hardy2011volunteered} developed a proximity metric called \emph{signature distance}.
+This calculates the ``average distance between an article and all its contributing authors, weighted by the relative workper author''\footnote{See p. 52 for the complete development of the formula. For clarity, this quotation has been stripped of mathematical symbols.}.
+
+His formula for the signature distance is uses basic properties of articles and authors.
+Using the same notation, let $\rho$ be an author and $\alpha$ be an article.
+For a sample of articles $S$ let $P = \{\rho : \rho \in S\}$ be the set all articles in the sample and $A = \{\alpha : \alpha \in S\}$ be the set of all authors in the sample.
+Then, $\eta(\rho,\alpha)$ is the contribution(s) of author $\rho$ to article $\alpha$ and $N(\alpha) = \{\eta(\rho,\alpha) : \rho \in P\}$ are all contribution(s) to article $\alpha$.
+Conversely, $P(\alpha) = \{\rho : \rho \in N(\alpha)\}$ are the author(s) who have made contributions to article $\alpha$.
+To calculate the relative work, let $w(\rho,\alpha) = |\eta(\rho,\alpha)| \div |N(\alpha)|$ be relative edit frequency for author $\rho$ on article $\alpha$. 
+Averaging the distances of authors weighted by their relative work leads to the signature distance $D(\alpha)$:
+\begin{eqnarray}
+D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\eta,\alpha)}{|N(\alpha)|} \\
+ & = &  \sum_{\forall \rho \in P(\alpha)} \big\{w(\rho,\alpha) \cdot \delta(\eta,\alpha)\}
+\end{eqnarray}
+
 
 
 \section{Visualization}\label{sec:visualization}
