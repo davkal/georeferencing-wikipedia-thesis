@@ -150,24 +150,30 @@
 \newcommand{\weburl}[4]{\url{#1} (visited on \formatdate{#4}{#3}{#2})}
 \newcommand{\webhref}[5]{\href{#1}{#2} (visited on \formatdate{#5}{#4}{#3})}
 
-\newcommand{\img}[2]{
+\newcommand{\image}[3]{
 \begin{figure}[htb]
 \centering
-%\includegraphics[width=0.8\textwidth]{images/#1}
+%\includegraphics[width=#3\textwidth]{images/#1}
 \caption{#2}
 \label{fig:#1}
 \end{figure}
 }
 
 % apply same changes to \img
-\newcommand{\imgx}[2]{
+\newcommand{\imagex}[3]{
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.8\textwidth]{images/#1}
+\includegraphics[width=#3\textwidth]{images/#1}
 \caption{#2}
 \label{fig:#1}
 \end{figure}
 }
+
+\newcommand{\img}[3]{\image{#1}{#2}{0.8}}
+\newcommand{\imgx}[3]{\imagex{#1}{#2}{0.8}}
+\newcommand{\imgwide}[3]{\image{#1}{#2}{1.3}}
+\newcommand{\imgwidex}[3]{\imagex{#1}{#2}{1.3}}
+
 
 \newcommand{\imgref}[1]{see figure~\ref{fig:#1}}
 \newcommand{\dformat}[3]{\formatdate{#3}{#2}{#1}}

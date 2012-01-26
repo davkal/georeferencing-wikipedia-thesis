@@ -555,15 +555,22 @@ The results are in fact measurements, i.e. series of numbers, that can also be r
 To show the location that was extracted from an article, a simple world map is used.
 A marker shows the position of the location's geographic coordinates.
 
-\todo{article map}
+\img{articlelocation}{Article location for \emph{2011--2012 Bahraini uprising}}
 
 The author analysis groups the located authors by country. 
 For each country, the number of edits of its authors is counted, resulting in a mapping of country name to edit count.
-A choropleth map is used to show how this measure varies over different countries.
+A choropleth map (see figure \imgref{origins}) is used to show how this measure varies over different countries.
+The darker a country is rendered, the higher is its edit count.
+
+\img{origins}{Geographic origins by country for located authors of \emph{2011--2012 Bahraini uprising}}
 
 However, this choropleth map only measures the edit counts and does not acknowledge the fact that contributions may disappear by edits in later revisions. 
-Therefor, a second choropleth map is shown below the first one, displaying edit count based on text survival.
-For this, the annotated markup provided by WikiTrust is parsed to extract the authors that introduced the text sequences that make up the final text.
+Therefor, a second choropleth map (see figure \imgref{survival}) is shown below the first one, displaying text volume  based on text survival (see also \nameref{sec:contribution}).
+This allows for a direct comparison of contributor countries with a high activity (edit counts) versus contributor countries whose citizens write text that survives the scrutiny of other editors, e.g. Egypt gained intensity (darker green) in the second map.
+
+\img{survival}{Text survival in revision 471577075 grouped by country for located text of \emph{2011--2012 Bahraini uprising}}
+
+For the second choropleth map, the annotated markup provided by WikiTrust is parsed to extract the authors that introduced the text sequences that make up the final text.
 This subset of revisions is again grouped by the country of its author (if located):
 
 \lstset{caption={Edit weight for map},label=editweight,language=Python,numbers=left}
@@ -582,10 +589,26 @@ This subset of revisions is again grouped by the country of its author (if locat
 	return edits
 \end{lstlisting}
 
-\subsection{Line and scatter charts}
+\subsection{Line charts}
 
+A timeline chart is used to display the evolution of the several metrics over time: the signature distance, the distance of single revision, and the number of page views for that day, see figure \imgref{activity}.
+A peak in the orange line (page views) could signal elevated interest in the content while a tight zig-zag pattern in the red line (revision distance) could be an edit war between local and distant contributors.
+
+\imgwide{activity}{Activity chart for \emph{2011--2012 Bahraini uprising}}
 
 \subsection{Motion chart}
+
+The motion chart offers an alternative view on the metrics shown in the choropleth map.
+This chart type is ideal to follow the change in several indicators over time.
+Each country is represented by a bubble that, depending on the metric chosen, either moves along an axis or changes its size.
+Google's implementation of the motion chart is interactive and invites the user to explore the data by allowing to freely choose which metric should be represented by which axis.
+
+\img{evolution}{Temporal development of edit counts by country for \emph{2011--2012 Bahraini uprising}}
+
+Even clearer than the choropleth map, the motion chart identifies the main contributor countries, e.g. the big blue bubble (Bahrain) and the red one (United States) in figure \imgref{evolution}.
+In the example, changing the metric on the y-axis to show the proportion of located text reveals that contributions from Pakistan have a higher survival rate (the yellow bubble moved up), see figure \imgref{evolution2}. 
+
+\img{evolution2}{Temporal development of text proportion by country for \emph{2011--2012 Bahraini uprising}}
 
 
 \section{Hypotheses analysis}
