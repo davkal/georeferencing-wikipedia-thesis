@@ -698,34 +698,50 @@ An article lends support to the hypothesis when the number of anonymous contribu
 
 \subsection*{H9: After an event has ended, the spatial distribution of the contributors will become less local.}
 
+Articles qualify that have an event end date before the date they were analyzed and at least 10 located revisions (excluding bots) in the time after the event has ended.
+A shift in the spatial distribution from distant to local coincides with a decrease in signature distance.
+The hypothesis is supported if there is a linear dependence between the time passed after the end date and the signature distance.
+If overall the signature distance rises over time, the correlation coefficient will be positive.
+
 \todo{correlation enough?}
 
 \subsection*{H10: For the duration of the event the article text contains more local contributions than distant ones.}
 
+Articles qualify that have at least 10 located revisions during the event interval.
+An article lends support to the hypothesis when local (see H6) contributions during the event interval outnumber the non-local ones.
 
 \subsection*{H11: After an event has ended, the spatial distribution of the surviving contributions will become less local.}
 
+Articles qualify that have an event end date before the date they were analyzed and at least 10 revisions from after the time the event has ended and for which a text survival analysis has been done.
+Similar to H9, this hypothesis is supported if there is a linear dependence between the time passed after the end date and the revisions' signature distance.
+\todo{make this text ratio dependent}
+If overall the signature distance rises over time, the correlation coefficient will be positive.
 \todo{correlation enough?}
+
 
 \section{Possible enhancements}
 
+The previously mentioned algorithms can be improved in various ways.
+In this section I'll suggest starting points for enhancements.
+
 \subsection{Edit relevance}
 
-\todo{detect reverts, vandalism}
+Improvements regarding edit relevance aim to filter revisions that do not seem to change the meaning of an article.
+Currently, bar coming from bots, all revisions are being treated as relevant and revisions marked as minor edits\footnote{See \nameref{sub:revisionhistory}.} are being counted as full contributions.
+A detection of vandalism could also help in filtering for relevant edits, although it can be argued that vandalism is just another form of contribution, albeit a rather drastic one.
 
-\subsection{user page parsing}
+\subsection{User page parsing}
 
-\begin{todos}
-\item Automatic annotation of entities: \url{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/}, also has services for categories. Alternative: \url{http://tagme.di.unipi.it/}
-    \item if city is mentioned, determine country (needs disambiguation, e.g. Berlin)
-\end{todos}
+Parsing the user pages is a problem of information extraction.
+Currently, the pages are scanned for a fixed number patterns, e.g. ``lives in''.
+The list of patterns could be extended and tested against user pages.
+One candidate for this are the WikiProject\footurl{http://en.wikipedia.org/wiki/Wikipedia:WikiProject}{2012}{01}{27} info boxes which registered users can put on their user pages.
+From a box like \emph{Template:WikiProject New York City}\footurl{http://en.wikipedia.org/wiki/Template:WikiProject_New_York_City}{2012}{01}{27} an affiliation with New York City could be inferred.
+
+The current algorithm is scanning for links to Wikipedia and then checks if they appear in the right context.
+For prose that has not been formatted with links, e.g. ``I am from Warsaw.'' a web service like \entity{wikipediaminer}\footnote{Website: \weburl{http://wikipedia-miner.cms.waikato.ac.nz/}{2012}{01}{27}, Example ``I am from Warsaw.'': \weburl{http://wikipedia-miner.cms.waikato.ac.nz/demos/annotate/?source=I+am+from+Warsaw.}{2012}{01}{27}} could be used.
 
 \subsection{Geographic profiling}
 
-\begin{todos}
-    \item \fullcite{lieberman2009you}
-    \item \fullcite{hecht2010localness}
-    \item from other fields such as criminal research: \\ \fullcite{snook2005complexity}
-    \item feasibility, maybe just as enhancer
-\end{todos}
-
+\textcite{lieberman2009you} describes an algorithm to determine the location of a registered author based on the pages the author contributes to.
+An implementation would load a user's contribution (MediaWiki API query \entity{usercontribs}), fetch these pages and scan for coordinates, construct a convex hull around them and then determine the center.
