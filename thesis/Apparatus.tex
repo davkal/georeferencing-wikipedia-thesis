@@ -313,6 +313,9 @@ All of the following criteria have to be satisfied:
   \item The event (start) date is not before 2002 to make sure that Wikipedia was available as a medium. 
   \item The article does not use certain templates or is part of certain categories, e.g. \emph{Category:Living People}.
   This has been included for the purpose of filtering out articles that passed the previous tests but a clearly not an event article. 
+  \item The article has at least 100 revisions.
+  \item The article has at least 100 unique authors.
+  \item At least 25\% of authors can be located.
 \end{itemize}
 
 Even when all of the requirements above are met, some articles may not have a full set of results after their analysis.
@@ -370,6 +373,8 @@ Over a long iterative process, I identified the following tokens from which to c
 Using these tokens, I produced patterns to match all encountered date formats, e.g. the pattern for December 14--19, 2008 is \verb"MDTDY", or to capture the even less conform ``From 15 October 2011'' (meaning the event is ongoing) the pattern is \verb"FDMY".
 The patterns are ranked by accuracy so that ``12 May 2001 - present'' is matched before ``May 2001 - present''.
 The coarsest pattern to match is \verb"Y", a single year (4 digits).
+
+\todo{date resolution day, month, year}
 
 \subsection{Location parsing}
 
@@ -498,7 +503,8 @@ For bigger countries, the coordinates refer to the location of the capital, e.g.
 \subsection{Signature distance}
 
 In his dissertation, \textcite{hardy2011volunteered} developed a proximity metric called \emph{signature distance}.
-This calculates the ``average distance between an article and all its contributing authors, weighted by the relative workper author''\footnote{See p. 52 for the complete development of the formula. For clarity, this quotation has been stripped of mathematical symbols.}.
+This calculates the ``average distance between an article and all its contributing authors, weighted by the relative work
+per author''\footnote{See p. 52 for the complete development of the formula. For clarity, this quotation has been stripped of mathematical symbols.}.
 
 His formula for the signature distance is uses basic properties of articles and authors.
 Using the same notation, let $\rho$ be an author and $\alpha$ be an article.
@@ -639,28 +645,67 @@ In the example, changing the metric on the y-axis to show the proportion of loca
 The data gathered in the article analysis will be used to test the hypotheses.
 In addition to the basic requirements (see \nameref{sub:articlerequirements}) for each article to qualify, the following sections describe for each hypothesis which data from the content analysis is used in testing support for it.
 
+For hypotheses that rely on a correlation for their support, the Pearson product-moment correlation coefficient is used.
+\todo{outliers}
+
 \subsection*{H1: Articles are created with only a short delay after the start date of the event.}
+
+In case the date parsing algorithm finds a date, an article is assumed to treat an event.
+The parsing supports different resolutions however.
+Some events have a precise date-to-date interval, e.g. \emph{2011 Dohuk riots}\footurl{http://en.wikipedia.org/wiki/2011_Dohuk_riots}{2012}{01}{27} while others merely happened over the course of a month, e.g. \emph{February 2010 Australian cyberattacks}\footurl{http://en.wikipedia.org/wiki/February_2010_Australian_cyberattacks}{2012}{01}{27} or even a year.
+
+An article qualifies for this hypothesis if the date parsing resulted in dates in a day or month resolution.
+The hypothesis is supported when on average articles were created within a certain time after the event's start date.
+For an article start date with a day resolution this limit is 7 days, for articles with a month resolution the limit is 30 days.
 
 \subsection*{H2: The more recent an article, the shorter is the delay between the event start and article creation.}
 
+The qualification criteria are the same as for H1. 
+For each article the time difference between article creation and event start date is calculated. 
+The hypothesis is supported if there is a linear dependence between article creation date and the time difference, in the form of a negative correlation coefficient.
+
 \subsection*{H3: Articles are being created first in the English Wikipedia.}
+
+Only articles qualify that exist in multiple language editions.
+Articles lend support to the hypothesis if they have been created first in the English Wikipedia.
 
 \subsection*{H4: Articles about political events are created by people in the events' proximity.}
 
+Articles qualify if their creator has been located.
+An article lends support to the hypothesis if the country derived from the creator's location is the same as the country derived from the article location.
+
 \subsection*{H5: In the beginning of the event anonymous users contribute more than registered users.}
+
+Articles qualify that have at least 10 revisions (excluding bots) in the time interval after creation.
+The interval for event articles with day resolution is 7 days while the limit for articles with a month resolution is 30 days.
+An article lends support to the hypothesis when the number of anonymous contribution is bigger than the number of contributions done by registered users.
 
 \subsection*{H6: For the duration of the event there are more local contributions than distant ones.}
 
+Articles qualify when they have at least 10 revisions (where the author was located, excluding bots) for the duration of the event.
+A local contribution is one from the same country. \todo{limit geodesic distance?}
+An article lends support to the hypothesis when the number of local contribution is bigger than the number of distant, i.e. non-local, contributions.
+
 \subsection*{H7: Articles of a political event that has ended will continuously shrink in size.}
+
+Articles qualify that have an event end date before the date they were analyzed and have at least 10 revisions after their end date.
+The hypothesis is supported if there is a linear dependence between the time passed after the end date and the article size, in the form of a negative correlation coefficient.
 
 \subsection*{H8: After an event has ended, there will be more contributions from registered users than from anonymous ones.}
 
+Articles qualify that have an event end date before the date they were analyzed and at least 10 revisions (excluding bots) in the time after the event has ended.
+An article lends support to the hypothesis when the number of anonymous contribution is bigger than the number of contributions done by registered users.
+
 \subsection*{H9: After an event has ended, the spatial distribution of the contributors will become less local.}
+
+\todo{correlation enough?}
 
 \subsection*{H10: For the duration of the event the article text contains more local contributions than distant ones.}
 
+
 \subsection*{H11: After an event has ended, the spatial distribution of the surviving contributions will become less local.}
 
+\todo{correlation enough?}
 
 \section{Possible enhancements}
 
