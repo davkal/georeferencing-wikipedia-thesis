@@ -138,11 +138,15 @@
 %\newtheorem{hypothesis}{Hypothesis}
 \declaretheoremstyle[headfont=\normalfont\sc,headindent=-1em]{thesisstyle}
 
-\declaretheorem[style=thesisstyle,name=question]{thquestion}
-\newcommand{\question}[1]{\begin{quote}\vspace{-\baselineskip}\begin{thquestion}#1\end{thquestion}\end{quote}}
-
 \declaretheorem[style=thesisstyle,name=hypothesis]{thhypothesis}
-\newcommand{\hypothesis}[1]{\begin{quote}\vspace{-\baselineskip}\begin{thhypothesis}#1\end{thhypothesis}\end{quote}}
+\newcommand{\hypothesis}[2]{
+	\begin{quote}
+		\vspace{-\baselineskip}
+		\begin{thhypothesis}[#1]\label{#1}
+		#2
+		\end{thhypothesis}
+	\end{quote}
+}
 
 \newcommand{\cn}{[\todo{citation needed}]}
 

@@ -301,7 +301,7 @@ The individual algorithms described mostly deal with extracting data from the va
 To classify an article as treating an event, the article had to be parsed for a location and a date or date interval.
 All algorithms will be written in a Python-esque pseudo-code.
 
-\subsection{Article requirements}
+\subsection{Article requirements}\label{sub:articlerequirements}
 
 The presence of a date and a location is a direct requirement for an article to qualify for further analysis when the application is in group mode.
 All of the following criteria have to be satisfied:
@@ -316,8 +316,7 @@ All of the following criteria have to be satisfied:
 \end{itemize}
 
 Even when all of the requirements above are met, some articles may not have a full set of results after their analysis.
-They will however be included in the computations for which results are present.
-\todo{link to group analysis}
+They will however be included in the computations for which results are present, see \nameref{hypothesesanalysis}.
 
 \subsection{Date parsing}
 
@@ -635,31 +634,32 @@ In the example, changing the metric on the y-axis to show the proportion of loca
 \img{evolution2}{Temporal development of text proportion by country for \emph{2011--2012 Bahraini uprising}}
 
 
-\section{Hypotheses analysis}
+\section{Hypotheses analysis}\label{hypothesesanalysis}
 
-\todo{for each hypothesis, what data is gathers, how is it crunched}
+The data gathered in the article analysis will be used to test the hypotheses.
+In addition to the basic requirements (see \nameref{sub:articlerequirements}) for each article to qualify, the following sections describe for each hypothesis which data from the content analysis is used in testing support for it.
 
-\subsection*{H1}
+\subsection*{H1: Articles are created with only a short delay after the start date of the event.}
 
-\subsection*{H2}
+\subsection*{H2: The more recent an article, the shorter is the delay between the event start and article creation.}
 
-\subsection*{H3}
+\subsection*{H3: Articles are being created first in the English Wikipedia.}
 
-\subsection*{H4}
+\subsection*{H4: Articles about political events are created by people in the events' proximity.}
 
-\subsection*{H5}
+\subsection*{H5: In the beginning of the event anonymous users contribute more than registered users.}
 
-\subsection*{H6}
+\subsection*{H6: For the duration of the event there are more local contributions than distant ones.}
 
-\subsection*{H7}
+\subsection*{H7: Articles of a political event that has ended will continuously shrink in size.}
 
-\subsection*{H8}
+\subsection*{H8: After an event has ended, there will be more contributions from registered users than from anonymous ones.}
 
-\subsection*{H9}
+\subsection*{H9: After an event has ended, the spatial distribution of the contributors will become less local.}
 
-\subsection*{H10}
+\subsection*{H10: For the duration of the event the article text contains more local contributions than distant ones.}
 
-\subsection*{H11}
+\subsection*{H11: After an event has ended, the spatial distribution of the surviving contributions will become less local.}
 
 
 \section{Possible enhancements}
