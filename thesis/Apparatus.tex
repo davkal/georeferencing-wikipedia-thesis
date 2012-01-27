@@ -529,7 +529,29 @@ Given that an article has a location and authors that have been located, the fun
 	return sd / total
 \end{lstlisting}
 
-\todo{memoized version for all revisions}
+The algorithm in listing \refname{signaturedistance} relies on the preprocessed edit counts by SoNet's Toolserver script and provides the signature distance only for the latest revision. 
+The computation of the signature distance for all revision is more expensive.
+Given at least two differently located authors the signature distance changes with each new revision that has a locatable author.
+That means for each revision, all previously located edits have to be counted.
+As the computation for revision $\eta_{n}$ would have to go over the same edits as the computation for $\eta_{n+1}$, the algorithm (see listing \ref{signaturedistanceall}) uses a technique called \emph{memoization} where previous results are stored within the function for later use.
+
+\lstset{caption={Signature distance algorithm for all revisions},label=signaturedistanceall,language=Python,numbers=left}
+\begin{lstlisting}
+	function compute(i, located):
+		revision = located[i]
+		dist = geodesic(revision.author.loc, article.loc)
+		if i == 0:
+			return dist
+		return (dist + (i - 1) * compute(i - 1, located)) / i;
+		
+	memoized = memoize(compute)
+	# only revisions that have a located author
+	located = revisions.filter_location() 
+	sd = 0
+	for revision, index in located:
+		sd = memoized(index, located)
+		revisions.set(sd)
+\end{lstlisting}
 
 \section{Visualization}\label{sec:visualization}
 
@@ -602,7 +624,8 @@ A peak in the orange line (page views) could signal elevated interest in the con
 The motion chart offers an alternative view on the metrics shown in the choropleth map.
 This chart type is ideal to follow the change in several indicators over time.
 Each country is represented by a bubble that, depending on the metric chosen, either moves along an axis or changes its size.
-Google's implementation of the motion chart is interactive and invites the user to explore the data by allowing to freely choose which metric should be represented by which axis.
+The application uses Google's implementation of the motion chart\footurl{http://code.google.com/apis/chart/interactive/docs/gallery/motionchart.html}{2012}{01}{25}.
+It is interactive and invites the user to explore the data by allowing to freely choose which metric should be represented by which axis.
 
 \img{evolution}{Temporal development of edit counts by country for \emph{2011--2012 Bahraini uprising}}
 
