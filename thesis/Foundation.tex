@@ -12,14 +12,14 @@ Wikipedia is a phenomenon that has attracted researchers across all fields, nota
 \end{description}
 
 This thesis falls into the first category, content production, as it examines the geography of article contributions that will become part of the Wikipedia's corpus.
-After a short overview of Wikipedia from a user's perspective, I will introduce its model of collective authorship and present prior research of concerning location and geography. 
+After a short overview of Wikipedia from a user's perspective, I will introduce its model of collective authorship and present prior research concerning location and geography. 
 
 \section{Wikipedia}\label{sec:wikipedia}
 
 Wikipedia is an online encyclopedia with editions in over 260 languages.
 Counting 3.6 million articles, the English version is by far the biggest.
 However, other language editions differ sharply in size and usage.\cite{wikistats}
-If articles covering the same topic exist in other language editions, these can be connected by interlanguage links.
+If articles covering the same topic exist in other language editions, they can be connected by interlanguage links.\footnote{As these links are in fact links between different wikis, they are also called \term{interwiki} links.}
 
 \subsection{History}
 
@@ -29,15 +29,15 @@ However, the speed of content production was extremely low.
 Wikipedia was founded as a feeder project to collectively write on articles before these entered Nupedia's review process.
 Wikipedia then quickly created other language editions and dwarfed its predecessor\footnote{Only 24 articles were completed in Nupedia's review process. The project was officially ended in 2003.}.\cite{wphistory}
 
-After being mentioned on Slashdot, a technology news website, in March 2001 Wikipedia quickly attracted new users.
-This tech-savvy folk created new articles at a staggering rate of 1,500 articles per month in the first year.
+After being mentioned on Slashdot, a technology news website, in March 2001, Wikipedia quickly attracted new users.
+This tech-savvy group of people created new articles at a staggering rate of 1,500 articles per month in the first year.
 These articles then quickly started showing up in Google's search results, attracting even more new users.
 The non-English editions grew slower but as a group accounted for 75\% of all articles in 2007.
 By 2011 the combined article count passed 20 million.\cite{wphistory}
 
 \subsection{Wikimedia Foundation}\label{sub:wmf}
 
-Wikipedia is operated by the Wikimedia Foundation, a non-profit organization, founded in Florida on June 20, 2003.
+Wikipedia is operated by the Wikimedia Foundation, a non-profit organization founded in Florida on June 20, 2003.
 It is completely financed by public contributions, such as donations and grants.
 Individual grants can be quite substantial---among the most generous donors are Google and the Stanton Foundation handing out respectively \$2 million and \$3.6 million in single donations.\cite{wmf}
 
@@ -61,9 +61,9 @@ For these cases, Wikipedia has a redirecting mechanism that forwards the visitor
 Occasionally the content section can be topped by one or more warning boxes to inform the visitor that the article is violating an editing policy, e.g. the information of the article may be outdated because it is subject to current events.
 When an article spans several sections a table of contents is added below the first introductory paragraphs.
 In addition to prose, some articles feature info boxes on the right hand side.
-Theses boxes show information in a structured way and can be found on articles of similar topics giving the visitor a quick glance on key information without having to read the text.
+Theses boxes show information in a structured way and can be found on articles of similar topics, giving the visitor a quick glance on key information without having to read the text.
 
-These information may include dates and geographic coordinates.
+This information may include dates and geographic coordinates.
 E.g. the article \emph{2011--2012 Bahraini uprising} has the time interval ``14 February 2011 – ongoing'' and is tagged with the coordinates 26°01'39''N 50°33'00''E, pointing to the centre of Bahrain.
 Even when no coordinates are present in the article, it still may be associated to a location.
 In that case the info box just presents the place, e.g. \todo{Bahrain}, \todo{find article}, instead of providing the geographic coordinates. 
@@ -73,8 +73,8 @@ In that case the info box just presents the place, e.g. \todo{Bahrain}, \todo{fi
 At the bottom of each article is an optional list of categories that the article belongs to, e.g. the article \term{2011-2012 Bahraini uprising} belongs, among others, to ``Arab Spring by country''\footurl{http://en.wikipedia.org/wiki/Category:Arab_Spring_by_country}{2012}{01}{23} and ``2011 protests''\footurl{http://en.wikipedia.org/wiki/Category:2011_protests}{2012}{01}{23}.
 
 Categories can not only consist of pages but also of sub-categories, e.g. ``Arab Spring by country'' has the sub-category ``2011 Libyan civil war''\footurl{http://en.wikipedia.org/wiki/Category:2011_Libyan_civil_war}{2012}{01}{23} which in turn has 5 sub-categories and 55 pages.
-When looked at as a graph, the system of categories does not form a tree, however, for there is no restriction on the inclusion of categories---even circular inclusions are possible.
-As liberal as the topology is inclusion of articles into a category.
+When looked at as a graph, the system of categories does not form a tree, however, for there is no restriction on the inclusion of categories---even cycle-creating inclusions are possible.
+The set of articles in a category can be as arbitrary as its topology.
 The category ``Arab Spring by country'' does not only contain articles covering the Arab Spring by country, but also articles about killed individuals, e.g. ``Zakariya Rashid Hassan al-Ashiri''\footurl{http://en.wikipedia.org/wiki/Zakariya_Rashid_Hassan_al-Ashiri}{2012}{01}{23}. 
 
 \section{MediaWiki and editing}
@@ -91,10 +91,10 @@ The syntax is explicitly kept simple to keep the entry barrier to editing low, e
 Wikitext has a special syntax for templates\footurl{http://en.wikipedia.org/wiki/Help:Template}{2012}{01}{23}. 
 These are reusable containers for text snippets and repetitive material like the info boxes described in \nameref{sub:article}.
 When a template is used in a page, the server software replaces the template placeholder---the template name surrounded by curly brackets---with the template's content.
-The content can be parameterized with key/value pairs so that, for example, an info box about countries can be used by several countries.
+The content can be parameterized with key-value pairs so that, for example, an info box about countries can be used by several countries' articles.
 
-By using templates, the information is likely to be more structured than prose.
-Each invocation of a template also renders in the same way allowing for and encouraging more consistency\footnote{E.g. when an editor notices that an info box supports the parameter ``location'' but does not have one yet, the user may feel encouraged to complete it.}.
+By using templates, the information is likely to be more structured than simple, free-form text.
+Each invocation of a template also renders its content in the same way, allowing for and encouraging more consistency\footnote{E.g. when an editor notices that an info box supports the parameter ``location'' but does not have one yet, the user may feel encouraged to complete it.}.
 More importantly, the usage of a template in an article lets that article become a member of the group of articles that embed this template.
 This is an alternative mechanism to group articles that is likely to yield more homogenous results than the category system, see \nameref{sub:categories}.
 
@@ -109,7 +109,7 @@ Each entry in the revision history consists of the new wikitext, the date of sub
 In addition, authors have to possibility to mark an edit as \emph{minor}.
 In doing so, they suggest that the submitted change is only superficial, e.g. correcting typography or moving passages of text, and does not change the meaning of the article.\cite{wpminor}
 
-Each revision can not only be examined by other users but also be reverted. 
+Each revision can not only be examined by other users but also reverted. 
 Especially in the case of vandalism this mechanism can be used to restore the previous state of the article.
 Reverts may also appear when different views on the same topic collide.
 To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges its users to discuss controversial topics on the article's talk page.
@@ -120,17 +120,17 @@ To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges i
 Contributions to an article can be done anonymously or as a registered user.
 A registered user gains privileges like the ability to create articles or the use of the social network features in Wikipedia.
 With the initial registration a \emph{user page} is created where the user is allowed to publish a profile and interact with other registered users.\cite{wikiwhyaccount}
-The majority of edits comes from registered users, anonymous edits account for a quarter of all edits.\cite{wpanonstats}
+The majority of edits come from registered users; anonymous edits account for a quarter of all edits.\cite{wpanonstats}
 
 A third group of editors are automatic programs known as \term{bots}.
-They perform routine tasks ranging from spell-checking over curse word detection to automatic reverts on vandalism.
+They perform routine tasks ranging from spell-checking, to curse word detection, to automatic reverts on vandalism.
 Currently the English Wikipedia alone has nearly approved 1,500 bot tasks running, either automatically or manually triggered by a real user.\cite{wpbots}
 
 \subsection{User pages}\label{sub:userpages}
 
 When a Wikipedia user decides to register, a \emph{user page} is created for him on Wikipedia's website. 
 This is a special page that can be edited like any other article.
-The user can publish personal information either in prose or reuse a template (see \nameref{sub:templates}).
+The user can publish personal information in prose, or reuse a template (see \nameref{sub:templates}).
 The templates available to decorate one's user page include the following: 
 \begin{itemize}
   \item Spoken languages, e.g. ``This user is a native speaker of English.''\footurl{http://en.wikipedia.org/wiki/Wikipedia:Babel}{2012}{01}{23}
@@ -147,8 +147,8 @@ Like any other article, each user page has a discussion page that can be used to
 \section{Contributions}\label{sec:contribution}
 
 Wikipedia's articles are continuously edited by its users.
-The nature of an edit can range from simple spelling or grammar correction, over improving the content of a sentence to writing or removing of paragraphs or even whole articles. 
-This collective authorship makes it difficult to determine an individual author's contributions, in other words, it is not easy to tell who wrote what.
+The nature of an edit can range from simple spelling or grammar correction, to improving the content of a sentence, to writing or removing whole articles. 
+This collective authorship makes it difficult to determine an individual author's contributions; in other words, it is not easy to tell who wrote what.
 
 Research in this area tends to be motivated by the desire to identify individual authors with a good reputation in order to assign a trust score to them.
 This is based on the assumption that trusted authors consistently produce high quality contributions that outlive contributions of lower quality.
@@ -173,8 +173,8 @@ Various methods to determine the geographic location from a given \ac{IP} addres
 Various visualizations\footurl{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}{2011}{10}{31} \footurl{http://sonetlab.fbk.eu/wikitrip/}{2011}{10}{31} of edit distributions use geolocation databases like MaxMind\footurl{http://www.maxmind.com}{2011}{10}{31} and Quova\footurl{http://www.quova.com}{2011}{10}{31}.
 
 For registered users, the \ac{IP} address is not stored with the revision.
-Therefor \ac{IP} geolocation services cannot be used.
-\textcite{lieberman2009you} found an interesting approach by assuming users prefer to edit geographic articles in their proximity.
+Therefore \ac{IP} geolocation services cannot be used.
+\textcite{lieberman2009you} found a novel approach by assuming users prefer to edit geographic articles in their proximity.
 The approximated user location was derived from the center of the convex hull around those articles.
 
 The user pages offer another source for finding the author's location.

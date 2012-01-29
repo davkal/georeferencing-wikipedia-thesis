@@ -18,7 +18,7 @@ The Wikimedia Foundation, however, makes a lot of the data available in the form
 
 \subsection{Wikipedia website}\label{sub:wpwebsite}
 
-For a complete article analysis, navigating the website can be tedious as one would have to click through a complete revision history and parse the page's source which is formatted using the \ac{HTML}.
+For a complete article analysis, navigating the website can be tedious, as one would have to click through a complete revision history and parse the page's source which is formatted in \ac{HTML}.
 However, individual pages contain data that is static and can be used throughout the analysis process.
 This makes it worth writing a specific parser for a technique known as \emph{screen scraping} to extract the information.
 On a high level, it involves the following steps:
@@ -39,7 +39,8 @@ There are unregistered bots, however, which do not appear on the list.
 For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
 \item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
-In a second pass, the Wikipedia article of each country was retrieved to extract the country's for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \nameref{sub:resolution}.}
+In a second pass, the Wikipedia article of each country was retrieved to extract the country's for geographic coordinates\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates.}.
+For a discussion on countries and coordinates, see \nameref{sub:resolution}.
 \end{description}
 
 Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
@@ -53,7 +54,7 @@ The dump files of the database tables \emph{users} and the \emph{watchlist} are 
 
 The dump files can be quite large, e.g. a compressed dump of all articles of the English Wikipedia in their current revision has a size 7.3 GB.\footnote{The uncompressed size is 31.0 GB, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:Database_download}{2011}{12}{11}}
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
-When analyzing only a single article or a category articles, the MediaWiki \ac{API} can deliver the same information contained in the dumps in a much more targeted manner. 
+When analyzing only a single article or a category of articles, the MediaWiki \ac{API} can deliver the same information contained in the dumps in a much more targeted manner. 
 
 \subsection{MediaWiki \ac{API}}\label{sub:mediawikiapi}
 
@@ -120,9 +121,9 @@ However, the deployment of self-made software scripts is restricted and requires
 
 Some scripts that are already deployed can be accessed freely, allowing them to be reused.
 One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group based in Italy, for a project called WikiTrip (see \nameref{sub:analysisprojects}).
-It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/\ac{PHP}}{2011}{12}{12}} to get simple article statistics like article \abbr{ID}, text length, as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.\ac{PHP}?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
+It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/\ac{PHP}}{2011}{12}{12}} to get simple article statistics like article \abbr{ID}, text length, as well as complex data structures like a list of unique editors including their gender, if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.\ac{PHP}?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
-In effect, calling the SoNet \ac{API} replaces several calls to the original MediaWiki \ac{API} and therefor speeds up the information retrieval, especially when the number of revisions or authors is high.
+In effect, calling the SoNet \ac{API} replaces several calls to the original MediaWiki \ac{API} and thereby speeds up the information retrieval, especially when the number of revisions or authors is high.
 The returned data object has the following structure:
 
 \lstset{caption={SoNet \ac{API} response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
@@ -225,13 +226,13 @@ These are purpose built applications that have a much narrower focus but are ver
 
 \section{Application design}\label{sec:application}
 
-For the analysis of articles I developed an application that could draw data from the different sources and process them in a timely fashion.
+For the analysis of articles I developed an application that could draw data from the different sources and process that data in a timely fashion.
 Following the impressive WikiTrip application design (see \nameref{sub:analysisprojects}) I decided to build a web application that runs entirely in a web browser.\footnote{Application development was done mainly using the Google Chrome browser. The application should run in any \ac{HTML}5-capable browser.}
 
 \subsection{Technologies}
 
 As a web application the software heavily relies on \ac{HTML} version 5, \ac{JS}, and \ac{CSS}. 
-It uses a range of open-source toolkits and libraries for a variety purposes:
+It uses a range of open-source toolkits and libraries for a variety of purposes:
 
 \begin{description}
   \item[Bootstrap] Twitter's web application toolkit\footurl{http://twitter.github.com/bootstrap/}{2012}{01}{25} controls the basic layout, the styling of sections and form fields, and the navigation bar at the top.
@@ -254,8 +255,8 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
 Looking at Wikipedia's website as a system, visible items like pages, authors, and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
 
 When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
-Once the data is retrieved, the attributes of each individual revision object are set which in turn triggers an event, telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).
-While some events trigger the retrieval of more detailed information, others indicate that a model's data is fully populated ready for display in the application.
+Once the data is retrieved, the attributes of each individual revision object are set, which in turn triggers an event telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).
+While some events trigger the retrieval of more detailed information, others indicate that a model's data is fully populated and ready for display in the application.
 
 \subsection{Views}
 
@@ -267,10 +268,11 @@ Most views, however, rely on several models as they analyze various aspects of a
 
 \subsection{Main routine}
 
-This section describes an application run on a high level, for noteworthy algorithms for the sub-routines, see \nameref{sec:algorithms}.
+This section describes an application run on a high level.
+For noteworthy algorithms for the sub-routines, see \nameref{sec:algorithms}.
 
 When loaded in a browser, the application expects an article title, a category or a template name as input.
-In the case of an article being entered, a click on ``Analyze!'' starts following routine, querying the various \nameref{sec:datasources}:
+In the case of an article being entered, a click on ``Analyze!'' starts the following routine, querying the various \nameref{sec:datasources}:
 
 \begin{enumerate}
 	\item \entity{query info} is being called to check if the article title is a valid title. 
@@ -287,8 +289,8 @@ In the case of an article being entered, a click on ``Analyze!'' starts followin
 \end{enumerate}
 
 Depending on the article's number of revisions, this process takes around one minute and involves 100--500 \ac{API} calls, most of which are done in parallel. 
-During this process, data is rendered whenever it has been arrived and processed.
-However, when a category or template name has been entered, only the article overview will be rendered while still all of the above steps are being taken.
+During this process, data is rendered whenever it has arrived and been processed.
+However, when a category or template name has been entered, only the article overview will be rendered while all of the above steps are being executed.
 On a high level, this \emph{group mode} works as follows:
 
 \begin{enumerate}
@@ -313,9 +315,9 @@ All of the following criteria have to be satisfied:
   \item The article has a location in the form of geographic coordinates or by name, e.g. Cairo.
   \item The article has a date, e.g. 9 November 1989, or a date interval, e.g. May 2007 - August 2007.
   \item The article was created after the event started (with a 3 day tolerance) to sort out events that have been scheduled.
-  \item The event (start) date is not before 2002 to make sure that Wikipedia was available as a medium. 
+  \item The event (start) date is not before 2002, to make sure that Wikipedia was available as a medium. 
   \item The article does not use certain templates or is part of certain categories, e.g. \emph{Category:Living People}.
-  This has been included for the purpose of filtering out articles that passed the previous tests but a clearly not an event article. 
+  This has been included for the purpose of filtering out articles that passed the previous tests but are clearly not treating an event. 
   \item The article has at least 100 revisions.
   \item The article has at least 100 unique authors.
   \item At least 25\% of authors can be located.
@@ -355,7 +357,7 @@ As a last resort, the first sentence and paragraph are scanned for dates to not 
 \end{lstlisting}
 
 The custom parser then checks for a range of formats including lazy ones like December 14--19, 2008.
-Over a long iterative process, I \abbr{ID}entified the following tokens from which to construct the date patterns as regular expressions:
+Over a long iterative process, I identified the following tokens from which to construct the date patterns as regular expressions:
 
 \lstset{caption={Date tokens},label=datetokens,language=Python,numbers=left}
 \begin{lstlisting}
@@ -382,10 +384,10 @@ When a date was extracted using my custom parser, its accuracy is also stored as
 \subsection{Location parsing}
 
 Like dates, locations and even coordinates can be codified in numerous ways. 
-Most of the coordinate templates used in the info boxes produce annotated markup, thereby making machine-readable.
+Most of the coordinate templates used in the info boxes produce annotated markup, thereby making the coordinates machine-readable.
 I still wrote a custom parser for all the cases where the marker (\verb"geo") is not produced.
 
-Some event articles however, do not have coordinates are clearly describing actions at a location, e.g. \emph{Maspero demonstrations}\footurl{http://en.wikipedia.org/wiki/Maspero_demonstrations}{2012}{01}{25}.
+Some articles do not have coordinates, although they clearly describe an event, e.g. \emph{Maspero demonstrations}\footurl{http://en.wikipedia.org/wiki/Maspero_demonstrations}{2012}{01}{25}.
 From articles like these, location candidates are scraped and then resolved:
 
 \lstset{caption={Article's locate algorithm},label=articlelocation,language=Python,numbers=left}
@@ -475,7 +477,7 @@ The parser looks for links with country names and then checks if they appear in 
 \end{lstlisting}
 
 Plainly parsing for locations and flags, as done in the article's location parsing, yields too many false positives as some user pages are flooded with flags of countries the user professes to have visited.
-However, looking at the context of where a link is appears helps in parsing prose such as:
+However, looking at the context of where a link appears, helps in parsing prose such as:
 \begin{quotation}
  ``...and live in a rather small town close to \\\verb"<a title='Austria'>"my country's\verb"</a>" capital''.
 \end{quotation}
@@ -522,7 +524,7 @@ D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdo
  & = &  \sum_{\forall \rho \in P(\alpha)} \big(w(\rho,\alpha) \cdot \delta(\rho,\alpha)\big)
 \end{eqnarray}
 
-Given that an article has a location and authors that have been located, the function 4.2 was implemented as follows:
+Given that an article has a location and its authors have been located, their signature distance (equation 4.2) can be calculated using the following implementation:
 
 \lstset{caption={Signature distance algorithm},label=signaturedistance,language=Python,numbers=left}
 \begin{lstlisting}
@@ -537,9 +539,9 @@ Given that an article has a location and authors that have been located, the fun
 	return sd / total
 \end{lstlisting}
 
-The algorithm in listing \refname{signaturedistance} relies on the preprocessed edit counts by SoNet's Toolserver script and provides the signature distance only for the latest revision. 
-The computation of the signature distance for all revision is more expensive.
-Given at least two differently located authors the signature distance changes with each new revision that has a locatable author.
+The algorithm in listing \ref{signaturedistance} relies on the preprocessed edit counts by SoNet's Toolserver script and provides the signature distance only for the latest revision. 
+The computation of the signature distance for all revisions is more expensive.
+Given at least two differently-located authors, the signature distance changes with each new revision that has a locatable author.
 That means for each revision, all previously located edits have to be counted.
 As the computation for revision $\eta_{n}$ would have to go over the same edits as the computation for $\eta_{n+1}$, the algorithm (see listing \ref{signaturedistanceall}) uses a technique called \emph{memoization} where previous results are stored within the function for later use.
 
@@ -563,7 +565,7 @@ As the computation for revision $\eta_{n}$ would have to go over the same edits 
 
 \section{Visualization}\label{sec:visualization}
 
-The algorithmic analyses of the articles are in fact measurements, i.e. series of numbers, that can also be represented in graphical terms.
+The algorithmic analyses of the articles are in fact measurements, i.e. multiple series of numbers, that can also be represented in graphical terms.
 Following the maxim ``The purpose of visualization is insight, not pictures.''\cite[6]{card1999readings}, the application's diagrams aim to support the presentation of results and to invite exploration.
 
 %\begin{todos}
@@ -595,7 +597,7 @@ The darker a country is rendered, the higher is its edit count.
 \img{origins}{Geographic origins by country for located authors of \emph{2011--2012 Bahraini uprising}}
 
 However, this choropleth map only measures the edit counts and does not acknowledge the fact that contributions may disappear by edits in later revisions. 
-Therefor, a second choropleth map (see figure \imgref{survival}) is shown below the first one, displaying text volume  based on text survival (see also \nameref{sec:contribution}).
+Therefore, a second choropleth map (\imgref{survival}) is shown below the first one, displaying text volume  based on text survival (see also \nameref{sec:contribution}).
 This allows for a direct comparison of contributor countries with a high activity (edit counts) versus contributor countries whose citizens write text that survives the scrutiny of other editors, e.g. Egypt gained intensity (darker green) in the second map.
 
 \img{survival}{Text survival in revision 471577075 grouped by country for located text of \emph{2011--2012 Bahraini uprising}}
@@ -621,7 +623,7 @@ This subset of revisions is again grouped by the country of its author (if locat
 
 \subsection{Line charts}
 
-A timeline chart is used to display the evolution of the several metrics over time: the signature distance, the distance of single revision, and the number of page views for that day, see figure \imgref{activity}.
+A timeline chart is used to display the evolution of the several metrics over time: the signature distance, the distance of single revision, and the number of page views for that day, \imgref{activity}.
 A peak in the orange line (page views) could signal elevated interest in the content while a tight zig-zag pattern in the red line (revision distance) could be an edit war between local and distant contributors.
 
 \imgwide{activity}{Activity chart for \emph{2011--2012 Bahraini uprising}}
@@ -629,20 +631,20 @@ A peak in the orange line (page views) could signal elevated interest in the con
 \subsection{Motion chart}
 
 The motion chart offers an alternative view on the metrics shown in the choropleth map.
-This chart type is \abbr{ID}eal to follow the change in several indicators over time.
+This chart type is ideal to follow the change in several indicators over time.
 Each country is represented by a bubble that, depending on the metric chosen, either moves along an axis or changes its size.
 The application uses Google's implementation of the motion chart\footurl{http://code.google.com/apis/chart/interactive/docs/gallery/motionchart.html}{2012}{01}{25}.
-It is interactive and invites the user to explore the data by allowing to freely choose which metric should be represented by which axis.
+It is interactive and invites the user to explore the data by allowing the user to freely choose which metric should be represented by which axis.
 
 \img{evolution}{Temporal development of edit counts by country for \emph{2011--2012 Bahraini uprising}}
 
-Even clearer than the choropleth map, the motion chart \abbr{ID}entifies the main contributor countries, e.g. the big blue bubble (Bahrain) and the red one (United States) in figure \imgref{evolution}.
-In the example, changing the metric on the y-axis to show the proportion of located text reveals that contributions from Pakistan have a higher survival rate (the yellow bubble moved up), see figure \imgref{evolution2}. 
+Even clearer than the choropleth map, the motion chart identifies the main contributor countries, e.g. the big blue bubble (Bahrain) and the red one (United States), \imgref{evolution}.
+In the example, changing the metric on the y-axis to show the proportion of located text reveals that contributions from Pakistan have a higher survival rate (the yellow bubble moved up), \imgref{evolution2}. 
 
 \img{evolution2}{Temporal development of text proportion by country for \emph{2011--2012 Bahraini uprising}}
 
 
-\section{Hypotheses analysis}\label{hypothesesanalysis}
+\section{Hypothesis analysis}\label{hypothesesanalysis}
 
 The data gathered in the article analysis will be used to test the hypotheses.
 In addition to the basic requirements (see \nameref{sub:articlerequirements}) for each article to qualify, the following sections describe for each hypothesis which data from the content analysis is used in testing support for it.
@@ -652,9 +654,9 @@ For hypotheses that rely on a correlation for their support, the Pearson product
 
 \subsection*{H1: Articles are created with only a short delay after the start date of the event.}
 
-In case the date parsing algorithm finds a date, an article is assumed to treat an event.
-The parsing supports different resolutions however.
-Some events have a precise date-to-date interval, e.g. \emph{2011 Dohuk riots}\footurl{http://en.wikipedia.org/wiki/2011_Dohuk_riots}{2012}{01}{27} while others merely happened over the course of a month, e.g. \emph{February 2010 Australian cyberattacks}\footurl{http://en.wikipedia.org/wiki/February_2010_Australian_cyberattacks}{2012}{01}{27} or even a year.
+When the date parsing algorithm finds a date, an article is assumed to treat an event.
+Moreover, the parser supports different time resolutions.
+Some events have a precise date-to-date interval, e.g. \emph{2011 Dohuk riots}\footurl{http://en.wikipedia.org/wiki/2011_Dohuk_riots}{2012}{01}{27} while others merely happened over the course of a month, e.g. \emph{February 2010 Australian cyberattacks}\footurl{http://en.wikipedia.org/wiki/February_2010_Australian_cyberattacks}{2012}{01}{27}, or even years, e.g. \term{Oyster Wars}\footurl{http://en.wikipedia.org/wiki/Oyster_Wars}{2012}{01}{29}.
 
 An article qualifies for this hypothesis if the date parsing resulted in dates in a day or month resolution.
 The hypothesis is supported when on average articles were created within a certain time after the event's start date.
