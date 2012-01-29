@@ -15,13 +15,13 @@ The Wikimedia Foundation, however, makes a lot of the data available in the form
 
 \subsection{Wikipedia website}\label{sub:wpwebsite}
 
-For a complete article analysis, navigating the website can be tedious as one would have to click through a complete revision history and parse the page's source which is formatted using the HyperText Markup Language (HTML).
+For a complete article analysis, navigating the website can be tedious as one would have to click through a complete revision history and parse the page's source which is formatted using the \ac{HTML}.
 However, individual pages contain data that is static and can be used throughout the analysis process.
 This makes it worth writing a specific parser for a technique known as \emph{screen scraping} to extract the information.
 On a high level, it involves the following steps:
 
 \begin{enumerate}
-  \item Looking at the HTML source of the page and identifying how the HTML tags and attributes that are used to structure the information.
+  \item Looking at the HTML source of the page and identifying how the \ac{HTML} tags and attributes that are used to structure the information.
   \item Writing a parser that addresses the identifying tags and thereby tokenizes the data.
   \item Converting the found tokens into an output format, e.g. JSON.
 \end{enumerate}

@@ -19,7 +19,7 @@ After a short overview of Wikipedia from a user's perspective, I will introduce 
 Wikipedia is an online encyclopedia with editions in over 260 languages.
 Counting 3.6 million articles, the English version is by far the biggest.
 However, other language editions differ sharply in size and usage.\cite{wikistats}
-If articles covering the same topic exist in other language editions, these are connected by interwiki links.
+If articles covering the same topic exist in other language editions, these can be connected by interlanguage links.
 
 \subsection{History}
 
@@ -39,9 +39,9 @@ By 2011 the combined article count passed 20 million.\cite{wphistory}
 
 Wikipedia is operated by the Wikimedia Foundation, a non-profit organization, founded in Florida on June 20, 2003.
 It is completely financed by public contributions, such as donations and grants.
-Individual grants can be quite substantial --- among the most generous donors are Google and the Stanton Foundation handing out respectively \$2 million and \$3.6 million in single donations.\cite{wmf}
+Individual grants can be quite substantial---among the most generous donors are Google and the Stanton Foundation handing out respectively \$2 million and \$3.6 million in single donations.\cite{wmf}
 
-In the Wikimedia Foundation's 2010-11 fiscal year, \$8.9 million was spent on website operations, including server hosting and software maintenance.
+In the Wikimedia Foundation's 2010--11 fiscal year, \$8.9 million was spent on website operations, including server hosting and software maintenance.
 The rest of the \$20.0 million of total expenditures went into complementary activities such as fund raising, administration, and the support of local chapters.\cite{wmf201011}
 
 The local chapters are self-dependent organizations set up in countries around the globe to locally promote the foundation's cause and collect donations.
@@ -56,7 +56,7 @@ All Wikipedia articles share a similar layout: a large content area topped by th
 Article titles can change over time, e.g. \emph{2011 Bahraini uprising} was renamed to \emph{2011-2012 Bahraini uprising}\footurl{http://en.wikipedia.org/wiki/2011-2012_Bahraini_uprising}{2012}{01}{23}. 
 For these cases, Wikipedia has a redirecting mechanism that forwards the visitor to the final article and displays a small note below the title (\imgref{article}).
 
-\img{article}{The article \emph{2011-2012 Bahraini uprising} viewed in a web browser on \dformat{2012}{01}{23}.}
+\img{article}{The article \emph{2011--2012 Bahraini uprising} viewed in a web browser on \dformat{2012}{01}{23}.}
 
 Occasionally the content section can be topped by one or more warning boxes to inform the visitor that the article is violating an editing policy, e.g. the information of the article may be outdated because it is subject to current events.
 When an article spans several sections a table of contents is added below the first introductory paragraphs.
@@ -64,7 +64,7 @@ In addition to prose, some articles feature info boxes on the right hand side.
 Theses boxes show information in a structured way and can be found on articles of similar topics giving the visitor a quick glance on key information without having to read the text.
 
 These information may include dates and geographic coordinates.
-E.g. the article \term{2011-2012 Bahraini uprising} has the time interval ``14 February 2011 – ongoing'' and is tagged with the coordinates 26°01'39''N 50°33'00''E, pointing to the centre of Bahrain.
+E.g. the article \emph{2011--2012 Bahraini uprising} has the time interval ``14 February 2011 – ongoing'' and is tagged with the coordinates 26°01'39''N 50°33'00''E, pointing to the centre of Bahrain.
 Even when no coordinates are present in the article, it still may be associated to a location.
 In that case the info box just presents the place, e.g. \todo{Bahrain}, \todo{find article}, instead of providing the geographic coordinates. 
 
@@ -72,8 +72,8 @@ In that case the info box just presents the place, e.g. \todo{Bahrain}, \todo{fi
 
 At the bottom of each article is an optional list of categories that the article belongs to, e.g. the article \term{2011-2012 Bahraini uprising} belongs, among others, to ``Arab Spring by country''\footurl{http://en.wikipedia.org/wiki/Category:Arab_Spring_by_country}{2012}{01}{23} and ``2011 protests''\footurl{http://en.wikipedia.org/wiki/Category:2011_protests}{2012}{01}{23}.
 
-Categories can not only have pages but also sub-categories, e.g. ``Arab Spring by country'' has the sub-category ``2011 Libyan civil war''\footurl{http://en.wikipedia.org/wiki/Category:2011_Libyan_civil_war}{2012}{01}{23} which in turn has 5 sub-categories and 55 pages.
-The categories do not form a tree, however, for there is no restriction on the inclusion of categories --- even circular inclusions are possible.
+Categories can not only consist of pages but also of sub-categories, e.g. ``Arab Spring by country'' has the sub-category ``2011 Libyan civil war''\footurl{http://en.wikipedia.org/wiki/Category:2011_Libyan_civil_war}{2012}{01}{23} which in turn has 5 sub-categories and 55 pages.
+When looked at as a graph, the system of categories does not form a tree, however, for there is no restriction on the inclusion of categories---even circular inclusions are possible.
 As liberal as the topology is inclusion of articles into a category.
 The category ``Arab Spring by country'' does not only contain articles covering the Arab Spring by country, but also articles about killed individuals, e.g. ``Zakariya Rashid Hassan al-Ashiri''\footurl{http://en.wikipedia.org/wiki/Zakariya_Rashid_Hassan_al-Ashiri}{2012}{01}{23}. 
 
@@ -82,7 +82,7 @@ The category ``Arab Spring by country'' does not only contain articles covering 
 Anyone with a browser and internet access can edit Wikipedia's articles\footnote{Some articles can be locked because of sustained vandalism or content disputes.\cite{wpprotectionpolicy}}.
 In collaboration, people all over the world contribute and improve the content. 
 This is made possible by MediaWiki, the server software that makes Wikipedia a wiki. 
-The software allows website visitors to add and modify the page content in the browser using \emph{wikitext}, simplified markup language.\footnote{For the syntax see \weburl{http://en.wikipedia.org/wiki/Help:Wiki_markup}{2011}{12}{12}.}
+The software allows website visitors to add and modify the page content in the browser using \term{wikitext}, simplified markup language.\footnote{For the syntax see \weburl{http://en.wikipedia.org/wiki/Help:Wiki_markup}{2011}{12}{12}.}
 Its syntax can be used to structure a text into sections, embed images and links to other pages, similar to \ac{HTML}.
 The syntax is explicitly kept simple to keep the entry barrier to editing low, e.g. adding an article  to a category is as easy as putting the category name at the end of the wikitext.
 
@@ -90,7 +90,7 @@ The syntax is explicitly kept simple to keep the entry barrier to editing low, e
 
 Wikitext has a special syntax for templates\footurl{http://en.wikipedia.org/wiki/Help:Template}{2012}{01}{23}. 
 These are reusable containers for text snippets and repetitive material like the info boxes described in \nameref{sub:article}.
-When a template is used in a page, the server software replaces the template placeholder --- the template name surrounded by curly brackets --- with the template's content.
+When a template is used in a page, the server software replaces the template placeholder---the template name surrounded by curly brackets---with the template's content.
 The content can be parameterized with key/value pairs so that, for example, an info box about countries can be used by several countries.
 
 By using templates, the information is likely to be more structured than prose.
@@ -122,7 +122,7 @@ A registered user gains privileges like the ability to create articles or the us
 With the initial registration a \emph{user page} is created where the user is allowed to publish a profile and interact with other registered users.\cite{wikiwhyaccount}
 The majority of edits comes from registered users, anonymous edits account for a quarter of all edits.\cite{wpanonstats}
 
-A third group of editors are automatic programs known as \emph{bots}.
+A third group of editors are automatic programs known as \term{bots}.
 They perform routine tasks ranging from spell-checking over curse word detection to automatic reverts on vandalism.
 Currently the English Wikipedia alone has nearly approved 1,500 bot tasks running, either automatically or manually triggered by a real user.\cite{wpbots}
 
@@ -141,7 +141,7 @@ Of course, a user can publish just about anything.
 As a result, the information on a user page may not be accurate.\footnote{See user Lihaas, who seems to hail both from India and from Pakistan: \weburl{http://en.wikipedia.org/wiki/User:Lihaas}{2012}{01}{23}}
 
 Like any other article, each user page has a discussion page that can be used to communicate with that user by leaving a message.
-According to \textcite{Viegas2007talk} these pages ``hold much of the community interaction''.
+\textcite{Viegas2007talk} looked at how contributors coordinate their actions and found that these pages ``hold much of the community interaction''.
 
 
 \section{Contributions}\label{sec:contribution}
@@ -177,9 +177,7 @@ Therefor \ac{IP} geolocation services cannot be used.
 \textcite{lieberman2009you} found an interesting approach by assuming users prefer to edit geographic articles in their proximity.
 The approximated user location was derived from the center of the convex hull around those articles.
 
-\todo{duplicate content}
 The user pages offer another source for finding the author's location.
-The user can choose prose or structured boxes to reveal information like his general interests, spoken languages, but also his location.
-When entity names can be extracted from location information they can lead to coordinates as shown by \textcite{hecht2010localness}.
+Entity names like a city or a country can be extracted from both the prose or the info boxes that the users put on their page.
 
-\todo{hecht2010localness what are they doing}
+Building on this foundation, I will formulate a set of \nameref{ch:hypotheses} in the next section.
