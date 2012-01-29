@@ -59,7 +59,7 @@ When analyzing only a single article or a category articles, the MediaWiki \ac{A
 
 Wikipedia runs on the open source software MediaWiki, written in \ac{PHP}.
 It offers a well documented \ac{API}\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the \ac{API} can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
-For analysis of articles, the \ac{API} offers queries directed at a variety of article properties, e.g. revisions, categories and links.
+For analysis of articles, the \ac{API} offers queries directed at a variety of article properties, e.g. revisions, categories and, links.
 Among the output formats for the responses are \ac{JSON} and \ac{XML}.
 Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the \ac{API} also offers an article export that includes all revisions.
 \lstset{caption={Example \ac{JSON} response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
@@ -105,7 +105,7 @@ The following \ac{API} calls will be important for this thesis:
     This query can be used to construct groups of articles for analysis in this thesis.
     \item[query templateembedders] For a given template name, this request lists all pages that embed it.
     This query can also be used to build a group of articles. 
-    \item[open search] A method to suggest articles, categories and templates that contain a term. 
+    \item[open search] A method to suggest articles, categories, and templates that contain a term. 
     It can be attached to an input field where a user is supposed to enter the name of an article.
     \item[parse] This special query returns the \ac{HTML} version of the article's wikitext.
     The content that is returned is exactly the \ac{HTML} source that is sent to a browser when a visitor looks at this article or user page.
@@ -116,11 +116,11 @@ The following \ac{API} calls will be important for this thesis:
 
 The Germany based Wikimedia Deutschland e.V. runs Toolserver\footurl{http://toolserver.org}{2011}{12}{11}, a platform for software tools that can access a continuously updated copy of Wikipedia's databases. 
 Among these replicated databases is the English Wikipedia and other major language editions.
-However, the deployment of self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.\footnote{I applied for a Toolserver account outlining my necessary database queries, usage profile as well as my affiliation with the Freie Universit\"at Berlin. The application was submitted on 2011-12-21 and has not been processed yet (2012-01-23).}
+However, the deployment of self-made software scripts is restricted and requires an account on Wikimedia's Toolserver.\footnote{I applied for a Toolserver account outlining my necessary database queries, usage profile, as well as my affiliation with the Freie Universit\"at Berlin. The application was submitted on 2011-12-21 and has not been processed yet (2012-01-23).}
 
 Some scripts that are already deployed can be accessed freely, allowing them to be reused.
 One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group based in Italy, for a project called WikiTrip (see \nameref{sub:analysisprojects}).
-It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/\ac{PHP}}{2011}{12}{12}} to get simple article statistics like article \abbr{ID}, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.\ac{PHP}?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
+It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/\ac{PHP}}{2011}{12}{12}} to get simple article statistics like article \abbr{ID}, text length, as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.\ac{PHP}?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
 In effect, calling the SoNet \ac{API} replaces several calls to the original MediaWiki \ac{API} and therefor speeds up the information retrieval, especially when the number of revisions or authors is high.
 The returned data object has the following structure:
@@ -156,7 +156,7 @@ The returned data object has the following structure:
 This high density of preprocessed information shows the power of the Toolserver and its direct access to the database.
 The property \emph{editors} lists all unique authors of an article and their edit count (property \emph{all}).
 The second exhaustive collection is under the property \emph{anons}. 
-There, all anonymous contributors are listed with their \ac{IP} address, their geographic region and coordinates.
+There, all anonymous contributors are listed with their \ac{IP} address, as well as their geographic region and coordinates.
 The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
 
 \subsection{Third-party sources/Web services}\label{sub:webservices}
@@ -230,7 +230,7 @@ Following the impressive WikiTrip application design (see \nameref{sub:analysisp
 
 \subsection{Technologies}
 
-As a web application the software heavily relies on \ac{HTML} version 5, \ac{JS} and \ac{CSS}. 
+As a web application the software heavily relies on \ac{HTML} version 5, \ac{JS}, and \ac{CSS}. 
 It uses a range of open-source toolkits and libraries for a variety purposes:
 
 \begin{description}
@@ -240,18 +240,18 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
   \item[Underscore] Underscore\footurl{http://documentcloud.github.com/underscore/}{2012}{01}{25} is a ``utility-belt library'' for functional programming in JS. 
   Its \emph{map} and \emph{groupBy} methods are being heavily used in the analysis of content.
   \item[Backbone] Built upon Underscore, Backbone\footurl{http://documentcloud.github.com/backbone/}{2012}{01}{25} provides a way to structure a \ac{JS} application.
-  All models, collections and views in the application are encapsulated by Backbone objects that can communicate with each other via events.
+  All models, collections, and views in the application are encapsulated by Backbone objects that can communicate with each other via events.
   \item[datejs] Date.js\footurl{http://www.datejs.com/}{2012}{01}{25} is a library that was being used to parse dates in articles about events.
   \item[lz77] A \ac{JS} implementation\footurl{https://github.com/olle/lz77-kit}{2012}{01}{25} of the LZ77 text compression algorithm\footurl{http://en.wikipedia.org/wiki/LZ77_and_LZ78}{2012}{01}{25}. 
   It is used to shrink the size of results when stored in the browser's limited data store\footnote{See \weburl{http://dev.w3.org/html5/webstorage/}{2012}{01}{25} for the limitations.}.
   \item[d3.js] Data-driven documents (d3)\footurl{http://mbostock.github.com/d3/}{2012}{01}{25} is a library to visualize big data sets. 
   This application uses d3's box plots\footurl{http://mbostock.github.com/d3/ex/box.html}{2012}{01}{25} to summarize the quantitive distribution of analysis results.
-  \item[Google Chart Tools] Google's\footnote{Although not open source, some of the charts are developed by the open-source community.} chart tools\footurl{http://code.google.com/apis/chart/interactive/docs/index.html}{2012}{01}{25} provide a wide range of chart types that I used in the application, including line chart, scatter chart and motion chart.
+  \item[Google Chart Tools] Google's\footnote{Although not open source, some of the charts are developed by the open-source community.} chart tools\footurl{http://code.google.com/apis/chart/interactive/docs/index.html}{2012}{01}{25} provide a wide range of chart types that I used in the application, including line chart, scatter chart, and motion chart.
 \end{description}
 
 \subsection{Models}
 
-Looking at Wikipedia's website as a system, visible items like pages, authors and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
+Looking at Wikipedia's website as a system, visible items like pages, authors, and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
 
 When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
 Once the data is retrieved, the attributes of each individual revision object are set which in turn triggers an event, telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).

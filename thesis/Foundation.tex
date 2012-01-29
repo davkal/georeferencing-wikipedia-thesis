@@ -5,9 +5,9 @@
 Wikipedia is a phenomenon that has attracted researchers across all fields, notably computer science and sociology, who have written over 1,000 reports on the subject to date.
 \textcite{nielsen2011wikipedia} compiled an overview of Wikipedia research\footnote{Another resource is the Wikimedia Foundation's own directory of Wikipedia research projects at \weburl{http://meta.wikimedia.org/wiki/Research:Projects}{2011}{10}{12}.} and divides these publications into four categories: 
 \begin{description}
-\item[Content production] Covering all aspects of voluntary production such as motivation, collaboration, coverage and bias, quality and vandalism, actuality and geography.
-\item[Information use] Treating how the resulting corpus is being used, e.g. Wikipedia citation in research, use in court, trend-spotting, natural language processing and automatic translation tools, thesaurus construction or categorization.
-\item[Improvement] These are studies concerned with the improvement of both the software used by Wikipedia and the content, e.g. automatic linking, improved editors as well as quality and trust indicators. 
+\item[Content production] Covering all aspects of voluntary production such as motivation, collaboration, coverage and bias, quality and vandalism, actuality, and geography.
+\item[Information use] Treating how the resulting corpus is being used, e.g. Wikipedia citation in research, use in court, trend-spotting, natural language processing and automatic translation tools, thesaurus construction, or categorization.
+\item[Improvement] These are studies concerned with the improvement of both the software used by Wikipedia and the content, e.g. automatic linking, improved editors, as well as quality and trust indicators. 
 \item[Communication] Studies in this category look at Wikipedia as an online collaboration tool for education and research. 
 \end{description}
 
@@ -83,7 +83,7 @@ Anyone with a browser and internet access can edit Wikipedia's articles\footnote
 In collaboration, people all over the world contribute and improve the content. 
 This is made possible by MediaWiki, the server software that makes Wikipedia a wiki. 
 The software allows website visitors to add and modify the page content in the browser using \term{wikitext}, simplified markup language.\footnote{For the syntax see \weburl{http://en.wikipedia.org/wiki/Help:Wiki_markup}{2011}{12}{12}.}
-Its syntax can be used to structure a text into sections, embed images and links to other pages, similar to \ac{HTML}.
+Its syntax can be used to structure a text into sections, embed images, and links to other pages, similar to \ac{HTML}.
 The syntax is explicitly kept simple to keep the entry barrier to editing low, e.g. adding an article  to a category is as easy as putting the category name at the end of the wikitext.
 
 \subsection{Templates}\label{sub:templates}
@@ -105,7 +105,7 @@ Naturally, each article available today started from an empty page and is the re
 
 \img{history}{Revision history of the article \emph{2011-2012 Bahraini uprising} on \dformat{2012}{01}{23}.}
 
-Each entry in the revision history consists of the new wikitext, the date of submission, the user and an optional comment explaining the change.
+Each entry in the revision history consists of the new wikitext, the date of submission, the user name, and an optional comment explaining the change.
 In addition, authors have to possibility to mark an edit as \emph{minor}.
 In doing so, they suggest that the submitted change is only superficial, e.g. correcting typography or moving passages of text, and does not change the meaning of the article.\cite{wpminor}
 
@@ -159,7 +159,7 @@ The author who first wrote a sentence gets the credit for that phrase and will g
 A similar approach of calculating the longevity of text chunks was followed by \textcite{adler2007content}.
 They adapted standard text-diff algorithms to the peculiarities of the wiki revision system, e.g. keeping track of text chunks that were removed at one point and then reinserted in later revisions.
 Based on these algorithms a reputation system was implemented by \textcite{adler2008assigning} which offers an \ac{API}\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} that can annotate a Wikipedia article.
-The annotated text is the result of splitting the original text into chunks and attributing them with their respective authors, the number of the revision where the chunk was added and a trust value for the author.\footnote{\citeauthor{adler2008assigning} also released a Firefox add-on that highlights untrustworthy passages when viewing Wikipedia articles: \weburl{https://addons.mozilla.org/en-US/firefox/addon/wikitrust/}{2011}{11}{15}.}
+The annotated text is the result of splitting the original text into chunks and attributing them with their respective authors, the number of the revision where the chunk was added, and a trust value for the author.\footnote{\citeauthor{adler2008assigning} also released a Firefox add-on that highlights untrustworthy passages when viewing Wikipedia articles: \weburl{https://addons.mozilla.org/en-US/firefox/addon/wikitrust/}{2011}{11}{15}.}
 
 
 \section{Georeferences}\label{sec:georeference}
