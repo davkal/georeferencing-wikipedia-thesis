@@ -2,16 +2,19 @@
 \chapter{Apparatus}\label{ch:apparatus}
 %************************************************
 
-This chapter describes data sources to get Wikipedia content like articles and revision history as well as tools to retrieve and analyze those.
+This chapter describes the application designed to test the hypotheses.
+The first section describes the \nameref{sec:datasources} and how they can be used to provide the content for the article analysis.
+In \nameref{sec:application}, I will give an overview of the application's architecture as well as the technologies being employed.
+The section \nameref{sec:algorithms} describes with how an article's eligibility for analysis is being determined as well as other key methods regarding information extraction, e.g. date and location parsing. 
+In \nameref{sec:visualization} I give an quick introduction into the charts being used to present the data, and that will be featured more prominently in the following chapter \nameref{ch:experiment}. 
 
-\todo{Intro aspects of apparatus}
 
 \section{Data sources}\label{sec:datasources}
 
 For an automated analysis, simply browsing Wikipedia's website is not really feasible. 
 The bulk of Wikipedia's content, e.g. articles, revisions, and discussions, is stored on its database servers.
 Unfortunately, these databases are not directly accessible over the Internet.
-The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
+The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an \ac{API}.
 
 \subsection{Wikipedia website}\label{sub:wpwebsite}
 
@@ -21,12 +24,12 @@ This makes it worth writing a specific parser for a technique known as \emph{scr
 On a high level, it involves the following steps:
 
 \begin{enumerate}
-  \item Looking at the HTML source of the page and identifying how the \ac{HTML} tags and attributes that are used to structure the information.
+  \item Looking at the \ac{HTML} source of the page and identifying how the \ac{HTML} tags and attributes that are used to structure the information.
   \item Writing a parser that addresses the identifying tags and thereby tokenizes the data.
-  \item Converting the found tokens into an output format, e.g. JSON.
+  \item Converting the found tokens into an output format, e.g. \ac{JSON}.
 \end{enumerate}
 
-For a simple HTML table, a parser can be written in a few lines of code.
+For a simple \ac{HTML} table, a parser can be written in a few lines of code.
 Using this technique, the following static information was gathered:
 
 \begin{description}
@@ -36,31 +39,30 @@ There are unregistered bots, however, which do not appear on the list.
 For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
 \item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
-\todo{rewrite parse/extract}
-In a second pass, the Wikipedia article of each country was parsed for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \nameref{sub:resolution}.}
+In a second pass, the Wikipedia article of each country was retrieved to extract the country's for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \nameref{sub:resolution}.}
 \end{description}
 
 Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
 
 \subsection{Database dumps}\label{sub:dumps}
 
-Monthly database snapshots of all wikis run by the Wikimedia Foundation, including Wikipedia,  are publicly available\footurl{http://dumps.wikimedia.org}{2011}{12}{11} as database dump files in the XML file format.
-For each of the wikis a variety of dumps is available that include all articles and, optionally, their revision history, all categories, interwiki-links, etc.
+Monthly database snapshots of all wikis run by the Wikimedia Foundation, including Wikipedia,  are publicly available\footurl{http://dumps.wikimedia.org}{2011}{12}{11} as database dump files in the \ac{XML} file format.
+For each of the wikis a variety of dumps is available that include all articles and, optionally, their revision history, all categories, interlanguage links, etc.
 Despite this openness, some database tables are not publicly available.
 The dump files of the database tables \emph{users} and the \emph{watchlist} are kept private.
 
 The dump files can be quite large, e.g. a compressed dump of all articles of the English Wikipedia in their current revision has a size 7.3 GB.\footnote{The uncompressed size is 31.0 GB, see \weburl{http://en.wikipedia.org/wiki/Wikipedia:Database_download}{2011}{12}{11}}
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
-When analyzing only a single article or a category articles, the MediaWiki API can deliver the same information contained in the dumps in a much more targeted manner. 
+When analyzing only a single article or a category articles, the MediaWiki \ac{API} can deliver the same information contained in the dumps in a much more targeted manner. 
 
-\subsection{MediaWiki API}\label{sub:mediawikiapi}
+\subsection{MediaWiki \ac{API}}\label{sub:mediawikiapi}
 
-Wikipedia runs on the open source software MediaWiki.
-This PHP-based wiki package offers a well documented API\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the API can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
-For analysis of articles, the API offers queries directed at a variety of article properties, e.g. revisions, categories and links.
-Among the output formats for the responses is the JavaScript Object Notation (JSON).
-Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the API also offers an article export that includes all revisions.
-\lstset{caption={Example JSON response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
+Wikipedia runs on the open source software MediaWiki, written in \ac{PHP}.
+It offers a well documented \ac{API}\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the \ac{API} can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
+For analysis of articles, the \ac{API} offers queries directed at a variety of article properties, e.g. revisions, categories and links.
+Among the output formats for the responses are \ac{JSON} and \ac{XML}.
+Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the \ac{API} also offers an article export that includes all revisions.
+\lstset{caption={Example \ac{JSON} response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
 \begin{lstlisting}
 
 	{
@@ -94,10 +96,10 @@ Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.
 
 Some of the queries have a limit on how many results they return on a single request.
 When there are more results, the response contains a \emph{query-continue} attribute that can be sent with following query so that the next result set can be returned.
-The following API calls will be important for this thesis:
+The following \ac{API} calls will be important for this thesis:
 
 \begin{description}
-    \item[query info] This basic query is returns essential information like the article ID, the last revision ID, but also the full wikitext of the last revision.
+    \item[query info] This basic query is returns essential information like the article \abbr{ID}, the last revision \abbr{ID}, but also the full wikitext of the last revision.
     \item[query revisions] Lists all revisions for an article and for each includes a timestamp and the user as well as the comment for the text change.
     \item[query categorymembers] For a given category, this query lists the articles and subcategories belong to it.
     This query can be used to construct groups of articles for analysis in this thesis.
@@ -105,9 +107,9 @@ The following API calls will be important for this thesis:
     This query can also be used to build a group of articles. 
     \item[open search] A method to suggest articles, categories and templates that contain a term. 
     It can be attached to an input field where a user is supposed to enter the name of an article.
-    \item[parse] This special query returns the HTML version of the article's wikitext.
-    The content that is returned is exactly the HTML source that is sent to a browser when a visitor looks at this article or user page.
-    This query will be used in cases where it is easier to parse the HTML markup than the wikitext, e.g. the \nameref{sub:userpages}.
+    \item[parse] This special query returns the \ac{HTML} version of the article's wikitext.
+    The content that is returned is exactly the \ac{HTML} source that is sent to a browser when a visitor looks at this article or user page.
+    This query will be used in cases where it is easier to parse the \ac{HTML} markup than the wikitext, e.g. the \nameref{sub:userpages}.
 \end{description}
 
 \subsection{Toolserver}\label{sub:toolserver}
@@ -118,12 +120,12 @@ However, the deployment of self-made software scripts is restricted and requires
 
 Some scripts that are already deployed can be accessed freely, allowing them to be reused.
 One of these was developed by SoNet\footurl{http://sonetlab.fbk.eu/}{2011}{12}{12}, a social networking research group based in Italy, for a project called WikiTrip (see \nameref{sub:analysisprojects}).
-It offers an API\footnote{The API is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/php}{2011}{12}{12}} to get simple article statistics like article ID, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.php?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
+It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://github.com/volpino/toolserver-scripts/tree/master/\ac{PHP}}{2011}{12}{12}} to get simple article statistics like article \abbr{ID}, text length as well as complex data structures like a list of unique editors including their gender if they are registered users and chose to reveal their gender in their Wikipedia account.\footnote{Try \weburl{http://toolserver.org/~sonet/api_gender.\ac{PHP}?article=Egypt&lang=en}{2011}{12}{11} to get a list of all registered users who edited the article \emph{Egypt} of the English Wikipedia.}
 
-In effect, calling the SoNet API replaces several calls to the original MediaWiki API and therefor speeds up the information retrieval, especially when the number of revisions or authors is high.
+In effect, calling the SoNet \ac{API} replaces several calls to the original MediaWiki \ac{API} and therefor speeds up the information retrieval, especially when the number of revisions or authors is high.
 The returned data object has the following structure:
 
-\lstset{caption={SoNet API response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
+\lstset{caption={SoNet \ac{API} response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
 \begin{lstlisting}
 	{
 		"first_edit": {"timestamp":1297734917,"user":"Master&Expert"},
@@ -154,8 +156,8 @@ The returned data object has the following structure:
 This high density of preprocessed information shows the power of the Toolserver and its direct access to the database.
 The property \emph{editors} lists all unique authors of an article and their edit count (property \emph{all}).
 The second exhaustive collection is under the property \emph{anons}. 
-There, all anonymous contributors are listed with their IP address, their geographic region and coordinates.
-The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/php/api.php}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
+There, all anonymous contributors are listed with their \ac{IP} address, their geographic region and coordinates.
+The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
 
 \subsection{Third-party sources/Web services}\label{sub:webservices}
 
@@ -164,18 +166,18 @@ Depending on the project's goal, a variety of preprocessed data is available:
 
 \begin{description}
 \item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a web service that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
-These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or queried through an API \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
+These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or queried through an \ac{API} \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
 \item[CatScan] This web service, offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13}, finds articles that belong to a given category and its sub-categories (see \nameref{sub:categories} on why this is non-trivial).
-It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.php?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
-The results are presented in the browser or can be downloaded as a file containing comma-separated values (CSV format). 
-\item[Poor man's checkuser] The project \emph{Poor Man's Check User}\footnote{Project website: \weburl{http://wikiwatcher.virgil.gr/pmcu}{2012}{01}{2}. The project's name is a reference to the \emph{checkuser} permission that a community-elected group of registered users possesses. It allows a de-masking of the IP addresses for each of a registered user's edit.} mapped registered users to IP addresses based on a bug in the session management of the MediaWiki software.\footnote{When a user exceeded a certain time while editing an article without submitting the current changes, the user's session expired on the server. When the edit was submitted after the expiration the user appeared as an anonymous author, being only known by his IP address. When the user then logged in again, the same change was sent again. Scanning all revisions for the same change set therefor allowed for a matching between user name and IP address. This loophole has been closed, however.} 
+It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.\ac{PHP}?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
+The results are presented in the browser or can be downloaded as a file in the \ac{CSV} format. 
+\item[Poor man's checkuser] The project \emph{Poor Man's Check User}\footnote{Project website: \weburl{http://wikiwatcher.virgil.gr/pmcu}{2012}{01}{2}. The project's name is a reference to the \emph{checkuser} permission that a community-elected group of registered users possesses. It allows a de-masking of the \ac{IP} addresses for each of a registered user's edit.} mapped registered users to \ac{IP} addresses based on a bug in the session management of the MediaWiki software.\footnote{When a user exceeded a certain time while editing an article without submitting the current changes, the user's session expired on the server. When the edit was submitted after the expiration the user appeared as an anonymous author, being only known by his \ac{IP} address. When the user then logged in again, the same change was sent again. Scanning all revisions for the same change set therefor allowed for a matching between user name and \ac{IP} address. This loophole has been closed, however.} 
 For the period the bug has been active, some usernames could be mapped.
 Naturally, the more edits a user did in this period, the more likely is an appearance in this list.
 For the purpose of this thesis, I screen-scraped the entire table and condensed\footnote{Some usernames have multiple entries as each occurrence of the bug created a unique ``evidence''. Among those, some have been manually verified and ranked. When multiple entries exist, my algorithm picks the top ranked.} it to 14,171 unique users.
-\item[Quova] This geo-location web service maps an IP address to a geographic location, see \nameref{sec:georeference}.
+\item[Quova] This geo-location web service maps an \ac{IP} address to a geographic location, see \nameref{sec:georeference}.
 \item[WikiTrust] Based on \textcite{adler2008assigning} an open source online reputation system\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} was set up by the University of California, Santa Cruz, to allow for easy vandalism detection (see \nameref{sec:contribution}).
-Given an article ID and a revision ID, the API method \emph{wikimarkup} returns an annotated version of the wikitext of that revision.
-An annotation consists of a trust value, the revision ID the text got introduced into the article as well as the authors user name or IP address, e.g. revision 473029564 of the article \emph{2011-2012 Bahraini uprising}\footurl{http://en.collaborativetrust.com/WikiTrust/RemoteAPI?method=wikimarkup&pageid=30876395&revid=473029564}{2012}{01}{23}:
+Given an article \abbr{ID} and a revision \abbr{ID}, the \ac{API} method \emph{wikimarkup} returns an annotated version of the wikitext of that revision.
+An annotation consists of a trust value, the revision \abbr{ID} the text got introduced into the article as well as the authors user name or \ac{IP} address, e.g. revision 473029564 of the article \emph{2011-2012 Bahraini uprising}\footurl{http://en.collaborativetrust.com/WikiTrust/RemoteAPI?method=wikimarkup&pageid=30876395&revid=473029564}{2012}{01}{23}:
 \lstset{language=HTML,caption={Excerpt of the annotated markup for the revision \\473029564 of the article \emph{2011-2012 Bahraini uprising}},label=wikitrustapicall}
 \begin{lstlisting}
 	{{#t:7,468889105,Kudzu1}}The 
@@ -221,26 +223,26 @@ These are purpose built applications that have a much narrower focus but are ver
 \end{description}
 
 
-\section{Application design}
+\section{Application design}\label{sec:application}
 
 For the analysis of articles I developed an application that could draw data from the different sources and process them in a timely fashion.
-Following the impressive WikiTrip application design (see \nameref{sub:analysisprojects}) I decided to build a web application that runs entirely in a web browser.\footnote{Application development was done mainly using the Google Chrome browser. The application should run in any HTML5-capable browser.}
+Following the impressive WikiTrip application design (see \nameref{sub:analysisprojects}) I decided to build a web application that runs entirely in a web browser.\footnote{Application development was done mainly using the Google Chrome browser. The application should run in any \ac{HTML}5-capable browser.}
 
 \subsection{Technologies}
 
-As a web application the software heavily relies on HTML version 5, JavaScript (JS) and Cascading Stylesheets (CSS). 
+As a web application the software heavily relies on \ac{HTML} version 5, \ac{JS} and \ac{CSS}. 
 It uses a range of open-source toolkits and libraries for a variety purposes:
 
 \begin{description}
   \item[Bootstrap] Twitter's web application toolkit\footurl{http://twitter.github.com/bootstrap/}{2012}{01}{25} controls the basic layout, the styling of sections and form fields, and the navigation bar at the top.
-  \item[jquery] The JS library jQuery\footurl{http://jquery.com/}{2012}{01}{25} is used to asynchronously retrieve data from the various data sources, dynamically insert elements into the layout as well as parsing screen-scraped webpages by making use of its selectors for addressing elements.
+  \item[jquery] The \ac{JS} library jQuery\footurl{http://jquery.com/}{2012}{01}{25} is used to asynchronously retrieve data from the various data sources, dynamically insert elements into the layout as well as parsing screen-scraped webpages by making use of its selectors for addressing elements.
   The \entity{autocomplete}\footurl{http://jqueryui.com/demos/autocomplete/}{2012}{01}{25} widget of jQuery's UI library is used to display article suggestions based on what has been entered into the article search field.
   \item[Underscore] Underscore\footurl{http://documentcloud.github.com/underscore/}{2012}{01}{25} is a ``utility-belt library'' for functional programming in JS. 
   Its \emph{map} and \emph{groupBy} methods are being heavily used in the analysis of content.
-  \item[Backbone] Built upon Underscore, Backbone\footurl{http://documentcloud.github.com/backbone/}{2012}{01}{25} provides a way to structure a JS application.
+  \item[Backbone] Built upon Underscore, Backbone\footurl{http://documentcloud.github.com/backbone/}{2012}{01}{25} provides a way to structure a \ac{JS} application.
   All models, collections and views in the application are encapsulated by Backbone objects that can communicate with each other via events.
   \item[datejs] Date.js\footurl{http://www.datejs.com/}{2012}{01}{25} is a library that was being used to parse dates in articles about events.
-  \item[lz77] A JS implementation\footurl{https://github.com/olle/lz77-kit}{2012}{01}{25} of the LZ77 text compression algorithm\footurl{http://en.wikipedia.org/wiki/LZ77_and_LZ78}{2012}{01}{25}. 
+  \item[lz77] A \ac{JS} implementation\footurl{https://github.com/olle/lz77-kit}{2012}{01}{25} of the LZ77 text compression algorithm\footurl{http://en.wikipedia.org/wiki/LZ77_and_LZ78}{2012}{01}{25}. 
   It is used to shrink the size of results when stored in the browser's limited data store\footnote{See \weburl{http://dev.w3.org/html5/webstorage/}{2012}{01}{25} for the limitations.}.
   \item[d3.js] Data-driven documents (d3)\footurl{http://mbostock.github.com/d3/}{2012}{01}{25} is a library to visualize big data sets. 
   This application uses d3's box plots\footurl{http://mbostock.github.com/d3/ex/box.html}{2012}{01}{25} to summarize the quantitive distribution of analysis results.
@@ -252,7 +254,7 @@ It uses a range of open-source toolkits and libraries for a variety purposes:
 Looking at Wikipedia's website as a system, visible items like pages, authors and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
 
 When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
-Once the data is retrieved, the attributes of each individual revision object are set which in turn triggers an event, telling a single revision model fetch the annotated wikitext from the WikiTrust API (see \nameref{sub:webservices}).
+Once the data is retrieved, the attributes of each individual revision object are set which in turn triggers an event, telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).
 While some events trigger the retrieval of more detailed information, others indicate that a model's data is fully populated ready for display in the application.
 
 \subsection{Views}
@@ -260,7 +262,7 @@ While some events trigger the retrieval of more detailed information, others ind
 The rendering of models is encapsulated in views.
 Following the publish-subscribe pattern, a view listens to changes in a certain model.
 When a change event is observed, the view renders itself.
-For example, the \emph{article view} is rendered multiple times because it draws data from different sources (the page ID is available sooner than, say, the first sentence of the article). 
+For example, the \emph{article view} is rendered multiple times because it draws data from different sources (the page \abbr{ID} is available sooner than, say, the first sentence of the article). 
 Most views, however, rely on several models as they analyze various aspects of an article and then display the results in a chart (see \nameref{sec:visualization}).
 
 \subsection{Main routine}
@@ -273,18 +275,18 @@ In the case of an article being entered, a click on ``Analyze!'' starts followin
 \begin{enumerate}
 	\item \entity{query info} is being called to check if the article title is a valid title. 
 	A successful query also returns the wikitext of the article's latest revision.
-	\item A call to \entity{parse} retrieves the HTML version of the latest revision as well as the article's links to other language editions. 
-	Both the wikitext and the HTML are then being parsed for location and dates.
+	\item A call to \entity{parse} retrieves the \ac{HTML} version of the latest revision as well as the article's links to other language editions. 
+	Both the wikitext and the \ac{HTML} are then being parsed for location and dates.
 	\item The SoNet Toolserver script is called to retrieve all authors of the article.
 	\item For all registered usernames in the author collection, a sub-routine is started to locate the users. 
 	\item \entity{query revisions} is being called to retrieve all revisions (excluding wikitext). 
-	\item The a subset of the revisions, the annotated wikitext is loaded using WikiTrust API.
+	\item The a subset of the revisions, the annotated wikitext is loaded using WikiTrust \ac{API}.
 	\item For each day of the article's existence, the page view statistics are loaded.
 	\item For each language present in the language link collection, the first revision is loaded.
 	\item All loaded data is analyzed and the results are stored and rendered in the browser.
 \end{enumerate}
 
-Depending on the article's number of revisions, this process takes around one minute and involves 100--500 API calls, most of which are done in parallel. 
+Depending on the article's number of revisions, this process takes around one minute and involves 100--500 \ac{API} calls, most of which are done in parallel. 
 During this process, data is rendered whenever it has been arrived and processed.
 However, when a category or template name has been entered, only the article overview will be rendered while still all of the above steps are being taken.
 On a high level, this \emph{group mode} works as follows:
@@ -329,7 +331,7 @@ And when it comes to date intervals, e.g. May 8--12 2007, even a specialized dat
 I wrote a custom parser that for a given text returns first occurrence of an interval or a single date, i.e. if no interval could be found, the parsing is repeated for a single date.
 
 Some articles embed info box templates (see \nameref{sub:templates}) that produce annotated markup using the \entity{hcard}\footurl{http://en.wikipedia.org/wiki/HCard}{2012}{01}{25} microformat.
-The annotations can be easily addressed with CSS selectors\footnote{This requires the template to be properly programmed. Some templates mistakenly mark start and end of an interval with the same annotation: \verb"dtstart". On other pages the error lies with the authors who misused the date template, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908 possibly due to a mixup in the order, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, ISO 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
+The annotations can be easily addressed with \ac{CSS} selectors\footnote{This requires the template to be properly used by the authors, e.g. \weburl{http://en.wikipedia.org/wiki/Eastern_Front_(World_War_II)}{2012}{01}{29} where  the template \term{Start date} is used for the start and the end date, producing the two dates with the same annotation: \verb"dtstart". Another source of error is the order of year, month, and date, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, \ac{ISO} 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
 In listing \ref{datecandidates} the first block tries to parse the microformat annotations.
 When they are not present, the first info box is checked for a date field.
 As a last resort, the first sentence and paragraph are scanned for dates to not filter out eligible articles like \emph{2007 Georgian demonstrations}\footnote{The article does not contain an info box and a date is only mentioned in the second sentence: ``The demonstrations peaked on November 2, 2007,...'' with more dates to follow in the same paragraph. This particular example already shows how idiosyncratic dates can be codified. See \weburl{http://en.wikipedia.org/wiki/2007_Georgian_demonstrations}{2012}{01}{25}.}
@@ -353,7 +355,7 @@ As a last resort, the first sentence and paragraph are scanned for dates to not 
 \end{lstlisting}
 
 The custom parser then checks for a range of formats including lazy ones like December 14--19, 2008.
-Over a long iterative process, I identified the following tokens from which to construct the date patterns as regular expressions:
+Over a long iterative process, I \abbr{ID}entified the following tokens from which to construct the date patterns as regular expressions:
 
 \lstset{caption={Date tokens},label=datetokens,language=Python,numbers=left}
 \begin{lstlisting}
@@ -375,7 +377,7 @@ Using these tokens, I produced patterns to match all encountered date formats, e
 The patterns are ranked by accuracy so that ``12 May 2001 - present'' is matched before ``May 2001 - present''.
 The coarsest pattern to match is \verb"Y", a single year (4 digits).
 
-\todo{date resolution day, month, year}
+When a date was extracted using my custom parser, its accuracy is also stored as the \term{date resolution} with one of the following values: \term{day}, \term{month}, \term{year}.
 
 \subsection{Location parsing}
 
@@ -413,10 +415,10 @@ They are checked until an article with coordinates is found, in this case after 
 
 \subsection{Collective authorship}
 
-Most of the authorship processing is being done by SoNet's Toolserver script\footurl{https://github.com/volpino/toolserver-scripts/blob/master/php/api.php}{2012}{01}{25}, see \nameref{sub:toolserver}.
-The PHP-script directly queries a live copy of the Wikipedia database for all revisions of the requested article.
-For each revision's author, an edit counter is incremented, and if the author was anonymous, the IP is being resolved to a geographic location.
-A collection of authors and all resolved locations are then returned in a JSON object. 
+Most of the authorship processing is being done by SoNet's Toolserver script\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{25}, see \nameref{sub:toolserver}.
+The \ac{PHP}-script directly queries a live copy of the Wikipedia database for all revisions of the requested article.
+For each revision's author, an edit counter is incremented, and if the author was anonymous, the \ac{IP} is being resolved to a geographic location.
+A collection of authors and all resolved locations are then returned in a \ac{JSON} object. 
 
 From the response, my application then creates an author collection.
 If an author is a registered bot, the author is excluded.
@@ -437,19 +439,19 @@ Barring bots, all edits are considered relevant, i.e. reverts or blanking\footno
 
 The location of all anonymous authors has already been determined by SoNet's Toolserver script.
 For each of the remaining (registered) users, it is first checked if the user is included in the \emph{Poor man's checkuser} list (see \nameref{sub:webservices}).
-In that case, the username can be resolved to an IP address which, in turn, can be resolved to an accurate location, see \nameref{sub:iplookup}.
+In that case, the username can be resolved to an \ac{IP} address which, in turn, can be resolved to an accurate location, see \nameref{sub:iplookup}.
 For all remaining authors, their user page is parsed for a location, see \nameref{sub:parsinguserpages}.
 
 
 \subsection{IP Look-up}\label{sub:iplookup}
 
-Resolving the location\footnote{Regarding their accuracy and coverage, their website is rather vague, but coverage is at least 99.8\% on a state level, see \weburl{http://www.quova.com/what/}{2012}{01}{25}} for a given IP address is a simple call to Quova's IP-lookup API.\footnote{For the API call, a registered account is needed. This provides a secret key which has to be used to sign each request.}
+Resolving the location\footnote{Regarding their accuracy and coverage, their website is rather vague, but coverage is at least 99.8\% on a state level, see \weburl{http://www.quova.com/what/}{2012}{01}{25}} for a given \ac{IP} address is a simple call to Quova's IP-lookup \ac{API}.\footnote{For the \ac{API} call, a registered account is needed. This provides a secret key which has to be used to sign each request.}
 The limits of the non-commercial license --- 2 requests per second and a maximum of 1,000 requests per day --- have been overcome by a caching server proxy.
 
 
 \subsection{Parsing user pages}\label{sub:parsinguserpages}
 
-A user page is scanned for possible locations by parsing its HTML content.
+A user page is scanned for possible locations by parsing its \ac{HTML} content.
 This is easier than parsing the wikitext, since embedded templates can be inconsistent\footnote{See \weburl{http://en.wikipedia.org/wiki/Category:Nation_of_origin_user_templates}{2012}{01}{25}}.
 The parser looks for links with country names and then checks if they appear in a certain context:
 
@@ -472,7 +474,7 @@ The parser looks for links with country names and then checks if they appear in 
 	return country
 \end{lstlisting}
 
-Plainly parsing for locations and flags, as done in the article's location parsing, yields too many false positives as some userpages are flooded with flags of countries the user professes to have visited.
+Plainly parsing for locations and flags, as done in the article's location parsing, yields too many false positives as some user pages are flooded with flags of countries the user professes to have visited.
 However, looking at the context of where a link is appears helps in parsing prose such as:
 \begin{quotation}
  ``...and live in a rather small town close to \\\verb"<a title='Austria'>"my country's\verb"</a>" capital''.
@@ -489,7 +491,7 @@ from the user page of \emph{Nightstallion}\footurl{http://en.wikipedia.org/wiki/
 
 \subsection{Geographic resolution}\label{sub:resolution}
 
-As accurate as the IP location services may appear, adding the results of the user page analysis to the set of located authors means having to settle for a country-level resolution.
+As accurate as the \ac{IP} location services may appear, adding the results of the user page analysis to the set of located authors means having to settle for a country-level resolution.
 
 Both the article location and the user page algorithms are searching for countries.
 The location for a country is looked up in the application's country list (see \entity{countries} in \nameref{sub:wpwebsite}).
@@ -561,13 +563,12 @@ As the computation for revision $\eta_{n}$ would have to go over the same edits 
 
 \section{Visualization}\label{sec:visualization}
 
-\todo{Nice intro: ``The purpose of visualization is insight, not pictures.''\cite[6]{card1999readings}}
-Visualizations should support the presentation of results and invite exploration.
-The results are in fact measurements, i.e. series of numbers, that can also be represented in graphical terms.
+The algorithmic analyses of the articles are in fact measurements, i.e. series of numbers, that can also be represented in graphical terms.
+Following the maxim ``The purpose of visualization is insight, not pictures.''\cite[6]{card1999readings}, the application's diagrams aim to support the presentation of results and to invite exploration.
 
 %\begin{todos}
 %    \item \fullcite{kjellin2010evaluating}
-%    \item Identify. Characteristics of an object.
+%    \item \abbr{ID}entify. Characteristics of an object.
 %    \item Locate. Absolute or relative position.
 %    \item Distinguish. Recognize as the same or different.
 %    \item Categorize. Classify according to some property (e.g., color, position, or shape).
@@ -628,14 +629,14 @@ A peak in the orange line (page views) could signal elevated interest in the con
 \subsection{Motion chart}
 
 The motion chart offers an alternative view on the metrics shown in the choropleth map.
-This chart type is ideal to follow the change in several indicators over time.
+This chart type is \abbr{ID}eal to follow the change in several indicators over time.
 Each country is represented by a bubble that, depending on the metric chosen, either moves along an axis or changes its size.
 The application uses Google's implementation of the motion chart\footurl{http://code.google.com/apis/chart/interactive/docs/gallery/motionchart.html}{2012}{01}{25}.
 It is interactive and invites the user to explore the data by allowing to freely choose which metric should be represented by which axis.
 
 \img{evolution}{Temporal development of edit counts by country for \emph{2011--2012 Bahraini uprising}}
 
-Even clearer than the choropleth map, the motion chart identifies the main contributor countries, e.g. the big blue bubble (Bahrain) and the red one (United States) in figure \imgref{evolution}.
+Even clearer than the choropleth map, the motion chart \abbr{ID}entifies the main contributor countries, e.g. the big blue bubble (Bahrain) and the red one (United States) in figure \imgref{evolution}.
 In the example, changing the metric on the y-axis to show the proportion of located text reveals that contributions from Pakistan have a higher survival rate (the yellow bubble moved up), see figure \imgref{evolution2}. 
 
 \img{evolution2}{Temporal development of text proportion by country for \emph{2011--2012 Bahraini uprising}}
@@ -747,4 +748,4 @@ For prose that has not been formatted with links, e.g. ``I am from Warsaw.'' a w
 \subsection{Geographic profiling}
 
 \textcite{lieberman2009you} describes an algorithm to determine the location of a registered author based on the pages the author contributes to.
-An implementation would load a user's contribution (MediaWiki API query \entity{usercontribs}), fetch these pages and scan for coordinates, construct a convex hull around them and then determine the center.
+An implementation would load a user's contribution (MediaWiki \ac{API} query \entity{usercontribs}), fetch these pages and scan for coordinates, construct a convex hull around them and then determine the center.
