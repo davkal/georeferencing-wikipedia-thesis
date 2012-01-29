@@ -563,6 +563,34 @@ As the computation for revision $\eta_{n}$ would have to go over the same edits 
 		revisions.set(sd)
 \end{lstlisting}
 
+\subsection{Localness}\label{sub:localness}
+
+An essential part of the authorship analysis deals with the question whether an author is \term{local}.
+If the geographic coordinates are available for an author's location, the geodesic distance can be used to determine the proximity. 
+In this case the users are regarded as local if their geodesic distance to the article location does not exceed a limit.
+The distance has to be in the lower quartile of all author distances and not be more than 500km.
+
+When the user's location could only be determined by parsing the user page, the user is considered local when the parsed country is the same as the country of the event article.
+
+\lstset{caption={Localness of an author},label=localness,language=Python,numbers=left}
+\begin{lstlisting}
+	function is_local(author, article, authorship):
+		if author.location:
+			if author.location.coordinates:
+				# coordinates found via IP lookup
+				distance = geodesic(author.location, article.location)
+				# quartiles of all author distances
+				distance_distribution = distance_quartiles(authorship) 
+				# within lower quartile or hard limit of 500 km
+				return distance <= min(500, 
+					distance_distribution.1st_quartile)
+			else: 
+				# country from user pages
+				return author.location.country == article.location.country
+		else:
+			return null	 # third state, localness is unknown
+\end{lstlisting}
+
 \section{Visualization}\label{sec:visualization}
 
 The algorithmic analyses of the articles are in fact measurements, i.e. multiple series of numbers, that can also be represented in graphical terms.
@@ -658,9 +686,9 @@ When the date parsing algorithm finds a date, an article is assumed to treat an 
 Moreover, the parser supports different time resolutions.
 Some events have a precise date-to-date interval, e.g. \emph{2011 Dohuk riots}\footurl{http://en.wikipedia.org/wiki/2011_Dohuk_riots}{2012}{01}{27} while others merely happened over the course of a month, e.g. \emph{February 2010 Australian cyberattacks}\footurl{http://en.wikipedia.org/wiki/February_2010_Australian_cyberattacks}{2012}{01}{27}, or even years, e.g. \term{Oyster Wars}\footurl{http://en.wikipedia.org/wiki/Oyster_Wars}{2012}{01}{29}.
 
-An article qualifies for this hypothesis if the date parsing resulted in dates in a day or month resolution.
-The hypothesis is supported when on average articles were created within a certain time after the event's start date.
-For an article start date with a day resolution this limit is 7 days, for articles with a month resolution the limit is 30 days.
+An article qualifies for this hypothesis if the date parsing resulted in dates with a day or month resolution.
+The hypothesis is supported when articles were created within a certain time after the event's start date.
+For an article start date with a day resolution this limit is 7 days; for articles with a month resolution the limit is 30 days.
 
 \subsection*{H2: The more recent an article, the shorter is the delay between the event start and article creation.}
 
@@ -670,27 +698,25 @@ The hypothesis is supported if there is a linear dependence between article crea
 
 \subsection*{H3: Articles are being created first in the English Wikipedia.}
 
-Only articles qualify that exist in multiple language editions.
+Only articles that exist in multiple language editions qualify.
+\todo{articles where english is not an official language}
 Articles lend support to the hypothesis if they have been created first in the English Wikipedia.
 
 \subsection*{H4: Articles about political events are created by people in the events' proximity.}
 
 Articles qualify if their creator has been located.
-An article lends support to the hypothesis if the country derived from the creator's location is the same as the country derived from the article location.
-
-\todo{A distance measure is not feasible at this point, because article creation is reserved for registered users, the user page parsing yields only a country OR rewrite hypothesis to reflect change from proximity to country}
+An article lends support to the hypothesis if the creator is considered local, see \nameref{sub:localness}.
 
 \subsection*{H5: In the beginning of the event anonymous users contribute more than registered users.}
 
 Articles qualify that have at least 10 revisions (excluding bots) in the time interval after creation.
-The interval for event articles with day resolution is 7 days while the limit for articles with a month resolution is 30 days.
+The interval for event articles with day resolution is 7 days; the limit for articles with a month resolution is 30 days.
 An article lends support to the hypothesis when the number of anonymous contribution is bigger than the number of contributions done by registered users.
 
-\subsection*{H6: For the duration of the event there are more local contributions than distant ones.}
+\subsection*{H6: For the duration of the event the majority of contributions are local.}
 
 Articles qualify when they have at least 10 revisions (where the author was located, excluding bots) for the duration of the event.
-A local contribution is one from the same country. \todo{limit geodesic distance?}
-An article lends support to the hypothesis when the number of local contribution is bigger than the number of distant, i.e. non-local, contributions.
+An article lends support to the hypothesis when the number of local contribution is bigger than the number of distant, i.e. non-local, contributions (see \nameref{sub:localness}).
 
 \subsection*{H7: Articles of a political event that has ended will continuously shrink in size.}
 
@@ -711,10 +737,11 @@ If overall the signature distance rises over time, the correlation coefficient w
 
 \todo{correlation enough?}
 
-\subsection*{H10: For the duration of the event the article text contains more local contributions than distant ones.}
+\subsection*{H10: For the duration of the event the majority of located article content comes from local contributions.}
 
 Articles qualify that have at least 10 located revisions during the event interval.
-An article lends support to the hypothesis when local (see H6) contributions during the event interval outnumber the non-local ones.
+An article lends support to the hypothesis when local (see H6) contributions during the event interval outnumber the non-local ones (see \nameref{sub:localness}).
+
 
 \subsection*{H11: After an event has ended, the spatial distribution of the surviving contributions will become less local.}
 
@@ -733,13 +760,14 @@ In this section I'll suggest starting points for enhancements.
 \subsection{Edit relevance}
 
 Improvements regarding edit relevance aim to filter revisions that do not seem to change the meaning of an article.
-Currently, bar coming from bots, all revisions are being treated as relevant and revisions marked as minor edits\footnote{See \nameref{sub:revisionhistory}.} are being counted as full contributions.
-A detection of vandalism could also help in filtering for relevant edits, although it can be argued that vandalism is just another form of contribution, albeit a rather drastic one.
+Barring revisions coming from bots, all revisions are being treated as relevant.
+It may be worth investigating whether revisions marked as minor edits\footnote{See \nameref{sub:revisionhistory}.} should be counted as full contributions.
+Also, detecting vandalism could help in filtering for relevant edits, although it can be argued that vandalism is just another form of contribution, albeit a rather drastic one.
 
 \subsection{User page parsing}
 
 Parsing the user pages is a problem of information extraction.
-Currently, the pages are scanned for a fixed number patterns, e.g. ``lives in''.
+Currently, the pages are scanned for a fixed number of patterns, e.g. ``lives in\ldots''.
 The list of patterns could be extended and tested against user pages.
 One candidate for this are the WikiProject\footurl{http://en.wikipedia.org/wiki/Wikipedia:WikiProject}{2012}{01}{27} info boxes which registered users can put on their user pages.
 From a box like \emph{Template:WikiProject New York City}\footurl{http://en.wikipedia.org/wiki/Template:WikiProject_New_York_City}{2012}{01}{27} an affiliation with New York City could be inferred.
