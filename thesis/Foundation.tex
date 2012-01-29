@@ -27,7 +27,7 @@ Wikipedia was officially started on 15 January 2001 by Jimmy Wales and Larry San
 Wales previously founded Nupedia, a free and peer-reviewed online encyclopedia written only by experts.
 However, the speed of content production was extremely low.
 Wikipedia was founded as a feeder project to collectively write on articles before these entered Nupedia's review process.
-Wiki\-pedia then quickly created other language editions and dwarfed its predecessor\footnote{Only 24 articles were completed in Nupedia's review process. The project was officially ended in 2003.}.\cite{wphistory}
+Wikipedia then quickly created other language editions and dwarfed its predecessor\footnote{Only 24 articles were completed in Nupedia's review process. The project was officially ended in 2003.}.\cite{wphistory}
 
 After being mentioned on Slashdot, a technology news website, in March 2001 Wikipedia quickly attracted new users.
 This tech-savvy folk created new articles at a staggering rate of 1,500 articles per month in the first year.
@@ -81,9 +81,9 @@ The category ``Arab Spring by country'' does not only contain articles covering 
 
 Anyone with a browser and internet access can edit Wikipedia's articles\footnote{Some articles can be locked because of sustained vandalism or content disputes.\cite{wpprotectionpolicy}}.
 In collaboration, people all over the world contribute and improve the content. 
-This is made possible by MediaWiki, the the server software that makes Wikipedia a wiki. 
+This is made possible by MediaWiki, the server software that makes Wikipedia a wiki. 
 The software allows website visitors to add and modify the page content in the browser using \emph{wikitext}, simplified markup language.\footnote{For the syntax see \weburl{http://en.wikipedia.org/wiki/Help:Wiki_markup}{2011}{12}{12}.}
-Its syntax can be used to structure a text into sections, embed images and links to other pages, much like HTML.
+Its syntax can be used to structure a text into sections, embed images and links to other pages, similar to \ac{HTML}.
 The syntax is explicitly kept simple to keep the entry barrier to editing low, e.g. adding an article  to a category is as easy as putting the category name at the end of the wikitext.
 
 \subsection{Templates}\label{sub:templates}
@@ -95,7 +95,7 @@ The content can be parameterized with key/value pairs so that, for example, an i
 
 By using templates, the information is likely to be more structured than prose.
 Each invocation of a template also renders in the same way allowing for and encouraging more consistency\footnote{E.g. when an editor notices that an info box supports the parameter ``location'' but does not have one yet, the user may feel encouraged to complete it.}.
-More importantly, the usage of a template in an article is lets that article become a member of the group of articles that embed this template.
+More importantly, the usage of a template in an article lets that article become a member of the group of articles that embed this template.
 This is an alternative mechanism to group articles that is likely to yield more homogenous results than the category system, see \nameref{sub:categories}.
 
 \subsection{Revision history}\label{sub:revisionhistory}
@@ -109,7 +109,7 @@ Each entry in the revision history consists of the new wikitext, the date of sub
 In addition, authors have to possibility to mark an edit as \emph{minor}.
 In doing so, they suggest that the submitted change is only superficial, e.g. correcting typography or moving passages of text, and does not change the meaning of the article.\cite{wpminor}
 
-Each revision can not only be examined by other users and but also be reverted. 
+Each revision can not only be examined by other users but also be reverted. 
 Especially in the case of vandalism this mechanism can be used to restore the previous state of the article.
 Reverts may also appear when different views on the same topic collide.
 To minimize the potential for \term{edit wars}\cite{suh2007us} Wikipedia urges its users to discuss controversial topics on the article's talk page.
@@ -138,7 +138,7 @@ The templates available to decorate one's user page include the following:
   \item Expression of personal views, e.g. ``This user opposes Imperialism.''\footurl{http://en.wikipedia.org/wiki/User:Serouj/UserBox/Against_Imperialism}{2012}{01}{23}
 \end{itemize}
 Of course, a user can publish just about anything.
-As a result, the information on a user page has to be taken with a grain of salt.\footnote{See user Lihaas, who seems to hail both from India and Pakistan: \weburl{http://en.wikipedia.org/wiki/User:Lihaas}{2012}{01}{23}}
+As a result, the information on a user page may not be accurate.\footnote{See user Lihaas, who seems to hail both from India and from Pakistan: \weburl{http://en.wikipedia.org/wiki/User:Lihaas}{2012}{01}{23}}
 
 Like any other article, each user page has a discussion page that can be used to communicate with that user by leaving a message.
 According to \textcite{Viegas2007talk} these pages ``hold much of the community interaction''.
@@ -158,7 +158,7 @@ The author who first wrote a sentence gets the credit for that phrase and will g
 
 A similar approach of calculating the longevity of text chunks was followed by \textcite{adler2007content}.
 They adapted standard text-diff algorithms to the peculiarities of the wiki revision system, e.g. keeping track of text chunks that were removed at one point and then reinserted in later revisions.
-Based on these algorithms a reputation system was implemented by \textcite{adler2008assigning} which offers an API\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} that can annotate a Wikipedia article.
+Based on these algorithms a reputation system was implemented by \textcite{adler2008assigning} which offers an \ac{API}\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} that can annotate a Wikipedia article.
 The annotated text is the result of splitting the original text into chunks and attributing them with their respective authors, the number of the revision where the chunk was added and a trust value for the author.\footnote{\citeauthor{adler2008assigning} also released a Firefox add-on that highlights untrustworthy passages when viewing Wikipedia articles: \weburl{https://addons.mozilla.org/en-US/firefox/addon/wikitrust/}{2011}{11}{15}.}
 
 
@@ -168,15 +168,18 @@ In order to analyze the localness of contributions, it is necessary to geotag th
 In his doctoral thesis \textcite{hardy2011volunteered} used the Wikipedia corpora to study the spatial behavior of article production.
 The dataset was limited to anonymous users and articles that were geotagged.
 
-For each anonymous contribution an IP address, belonging to the point of Internet access, is stored in the revision that is created.
-Various methods to determine the geographic location from a given IP address have been studied by \textcite{muir2009internet}.
+For each anonymous contribution an \ac{IP} address, belonging to the point of Internet access, is stored in the revision that is created.
+Various methods to determine the geographic location from a given \ac{IP} address have been studied by \textcite{muir2009internet}.
 Various visualizations\footurl{http://infodisiac.com/blog/2011/05/wikipedia-edits-visualized/}{2011}{10}{31} \footurl{http://sonetlab.fbk.eu/wikitrip/}{2011}{10}{31} of edit distributions use geolocation databases like MaxMind\footurl{http://www.maxmind.com}{2011}{10}{31} and Quova\footurl{http://www.quova.com}{2011}{10}{31}.
 
-For registered users, the IP address is not stored with the revision.
-Therefor IP geolocation services cannot be used.
+For registered users, the \ac{IP} address is not stored with the revision.
+Therefor \ac{IP} geolocation services cannot be used.
 \textcite{lieberman2009you} found an interesting approach by assuming users prefer to edit geographic articles in their proximity.
 The approximated user location was derived from the center of the convex hull around those articles.
 
-Registered users are also given the opportunity to create a personal profile in their \emph{user page}.
+\todo{duplicate content}
+The user pages offer another source for finding the author's location.
 The user can choose prose or structured boxes to reveal information like his general interests, spoken languages, but also his location.
 When entity names can be extracted from location information they can lead to coordinates as shown by \textcite{hecht2010localness}.
+
+\todo{hecht2010localness what are they doing}

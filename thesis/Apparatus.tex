@@ -9,7 +9,7 @@ This chapter describes data sources to get Wikipedia content like articles and r
 \section{Data sources}\label{sec:datasources}
 
 For an automated analysis, simply browsing Wikipedia's website is not really feasible. 
-The bulk of Wikipedia's content like articles, revisions, discussions is stored on its database servers.
+The bulk of Wikipedia's content, e.g. articles, revisions, and discussions, is stored on its database servers.
 Unfortunately, these databases are not directly accessible over the Internet.
 The Wikimedia Foundation, however, makes a lot of the data available in the form of database dumps or through an application programming interface (API).
 
@@ -31,11 +31,12 @@ Using this technique, the following static information was gathered:
 
 \begin{description}
 \item[bots] A list of bots was built based on the Wikipedia page \emph{List of bots by number of edits}\footurl{http://en.wikipedia.org/wiki/Wikipedia:List_of_bots_by_number_of_edits}{2012}{01}{24}. 
-This list is used to distinguish bots from real authors as contributions done by bots are excluded from the analysis.
-There are unregistered bots, however, that appear not in the list.
+This list is used to distinguish bots from real authors, as contributions done by bots are excluded from the analysis.
+There are unregistered bots, however, which do not appear on the list.
 For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
 \item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
+\todo{rewrite parse/extract}
 In a second pass, the Wikipedia article of each country was parsed for coordinates.\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates. For a discussion on geographic resolution, see \nameref{sub:resolution}.}
 \end{description}
 
@@ -560,7 +561,7 @@ As the computation for revision $\eta_{n}$ would have to go over the same edits 
 
 \section{Visualization}\label{sec:visualization}
 
-\todo{find nicer intro}
+\todo{Nice intro: ``The purpose of visualization is insight, not pictures.''\cite[6]{card1999readings}}
 Visualizations should support the presentation of results and invite exploration.
 The results are in fact measurements, i.e. series of numbers, that can also be represented in graphical terms.
 
@@ -673,6 +674,8 @@ Articles lend support to the hypothesis if they have been created first in the E
 
 Articles qualify if their creator has been located.
 An article lends support to the hypothesis if the country derived from the creator's location is the same as the country derived from the article location.
+
+\todo{A distance measure is not feasible at this point, because article creation is reserved for registered users, the user page parsing yields only a country OR rewrite hypothesis to reflect change from proximity to country}
 
 \subsection*{H5: In the beginning of the event anonymous users contribute more than registered users.}
 
