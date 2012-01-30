@@ -270,10 +270,10 @@ When a change event is observed, the view renders itself.
 For example, the \emph{article view} is rendered multiple times because it draws data from different sources (the page \abbr{ID} is available sooner than, say, the first sentence of the article). 
 Most views, however, rely on several models as they analyze various aspects of an article and then display the results in a chart (see \nameref{sec:visualization}).
 
-\subsection{Main routine}
+\subsection{Article analyzer}
 
 This section describes an application run on a high level.
-For noteworthy algorithms for the sub-routines, see \nameref{sec:algorithms}.
+For noteworthy algorithms in the sub-routines, see \nameref{sec:algorithms}.
 
 When loaded in a browser, the application expects an article title, a category or a template name as input.
 In the case of an article being entered, a click on ``Analyze!'' starts the following routine, querying the various \nameref{sec:datasources}:
@@ -294,14 +294,21 @@ In the case of an article being entered, a click on ``Analyze!'' starts the foll
 
 Depending on the article's number of revisions, this process takes around one minute and involves 100--500 \ac{API} calls, most of which are done in parallel. 
 During this process, data is rendered whenever it has arrived and been processed.
-However, when a category or template name has been entered, only the article overview will be rendered while all of the above steps are being executed.
-On a high level, this \emph{group mode} works as follows:
+
+\subsection{Group analyzer}
+
+When a category or template name has been entered, the application switches to \emph{group mode}.
+On a high level, the group analysis works as follows:
 
 \begin{enumerate}
     \item Fetch a list of articles by calling \entity{query categorymembers} or \entity{query templateembedders}.
-    \item Run the analysis routing on all articles.
+    \item Run the article analyzer routine on all articles.
     \item Compute group results and show them in the browser.
 \end{enumerate}
+
+During the group analysis only the article overview will be rendered while all of the article analyzer's steps are being executed.
+While \entity{query templateembedders} returns a one-dimensional list, \entity{query categorymembers} can return sub-categories.
+For a category that has been entered into the input field, the pages of its first-level sub-categories will be retrieved as well.
 
 
 \section{Algorithms}\label{sec:algorithms}
