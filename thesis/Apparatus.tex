@@ -41,6 +41,10 @@ For a lack of automated distinction, these are counted as normal authors.\footno
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
 In a second pass, the Wikipedia article of each country was retrieved to extract the country's for geographic coordinates\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates.}.
 For a discussion on countries and coordinates, see \nameref{sub:resolution}.
+\item[official languages] For each entry in the list of countries, the country's official languages were added.
+From the \term{List of ISO 639-1 codes}\footurl{http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes}{2012}{01}{29}, all languages including their two-letter codes were extracted.
+In a second step, the \term{List of official languages by state}\footurl{http://en.wikipedia.org/wiki/List_of_official_languages_by_state}{2012}{01}{29} was scraped and merged with first list by matching the language name.\footnote{Not all countries have official languages---including the United States of America. In that case, the \term{de facto} official languages were used, e.g. English and Spanish for the United States of America.}
+The result is a mapping from a country's name to a list of two-letter codes of that country's official languages.
 \end{description}
 
 Making both of these sets static was a design decision recognizing the trade-off between having them in memory and querying for each article.
@@ -699,8 +703,11 @@ The hypothesis is supported if there is a linear dependence between article crea
 \subsection*{H3: Articles are being created first in the English Wikipedia.}
 
 Only articles that exist in multiple language editions qualify.
-\todo{articles where english is not an official language}
-Articles lend support to the hypothesis if they have been created first in the English Wikipedia.
+Further, the event's location parsing must yield a country where English is not an official language.
+Then, articles lend support to the hypothesis if they have been created first in the English Wikipedia.
+
+The language codes used to identify Wikipedia's language editions ``mostly correspond to the language codes defined by \ac{ISO} 639-1''.\cite{wplist} 
+This allows to test whether a language edition corresponds to one of a country's official languages (see \entity{official languages} in \nameref{sub:wpwebsite}).
 
 \subsection*{H4: Articles about political events are created by people in the events' proximity.}
 
