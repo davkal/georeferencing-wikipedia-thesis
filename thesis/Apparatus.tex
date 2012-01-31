@@ -456,13 +456,13 @@ In that case, the username can be resolved to an \ac{IP} address which, in turn,
 For all remaining authors, their user page is parsed for a location, see \nameref{sub:parsinguserpages}.
 
 
-\subsection{IP Look-up}\label{sub:iplookup}
+\subsubsection{IP Look-up}\label{sub:iplookup}
 
 Resolving the location\footnote{Regarding their accuracy and coverage, their website is rather vague, but coverage is at least 99.8\% on a state level, see \weburl{http://www.quova.com/what/}{2012}{01}{25}} for a given \ac{IP} address is a simple call to Quova's IP-lookup \ac{API}.\footnote{For the \ac{API} call, a registered account is needed. This provides a secret key which has to be used to sign each request.}
 The limits of the non-commercial license --- 2 requests per second and a maximum of 1,000 requests per day --- have been overcome by a caching server proxy.
 
 
-\subsection{Parsing user pages}\label{sub:parsinguserpages}
+\subsubsection{Parsing user pages}\label{sub:parsinguserpages}
 
 A user page is scanned for possible locations by parsing its \ac{HTML} content.
 This is easier than parsing the wikitext, since embedded templates can be inconsistent\footnote{See \weburl{http://en.wikipedia.org/wiki/Category:Nation_of_origin_user_templates}{2012}{01}{25}}.
@@ -502,19 +502,20 @@ from the user page of \emph{Nightstallion}\footurl{http://en.wikipedia.org/wiki/
 %2. Country part of RegExp (no link)
 %3. Container around country link contained RegExp. e.g. "and live in a rather small town close to <a>my country's</a> capital"
 
-\subsection{Geographic resolution}\label{sub:resolution}
+\subsubsection{Geographic resolution}\label{sub:resolution}
 
-As accurate as the \ac{IP} location services may appear, adding the results of the user page analysis to the set of located authors means having to settle for a country-level resolution.
+As accurate as the coordinates from the \ac{IP} location services may appear, adding the results of the user page analysis to the set of located authors means having to settle for a country-level resolution.
 
-Both the article location and the user page algorithms are searching for countries.
+Both the article location and the user page parsing algorithms are searching for countries.
 The location for a country is looked up in the application's country list (see \entity{countries} in \nameref{sub:wpwebsite}).
-There each country name is mapped to the geographic coordinates present in its Wikipedia article.
+There, each country name is mapped to the geographic coordinates present in its Wikipedia article.
 For bigger countries, the coordinates refer to the location of the capital, e.g. \emph{United States}\footurl{http://en.wikipedia.org/wiki/United_States}{2012}{01}{25} while for smaller ones a central point is denominated, e.g. Bahrain\footurl{http://en.wikipedia.org/wiki/Bahrain}{2012}{01}{25}.
+An any case, the coordinates still refer to a point on the globe and, by definition, cannot describe an area.
+Despite this shortcoming, coordinates are the primary means to reference places in Wikipedia.
 
-\todo{example calculation, with equip-distant circles, bahrain / europe / US, not so bad}
-
-\todo{locals are people less than 1000 miles or same country}
-% c = 0; l = $(".wikitable td:nth-child(5)").each(function(index){c += index ? parseInt($(this).text().replace(/,/g, "")) : 0}).length; c / l // average country size according to http://en.wikipedia.org/wiki/List_of_countries_by_area
+As a result, all users that were located by user page parsing, are referenced with coordinates of a country.
+This has the potential to grossly bias seemingly accurate metrics like the signature distance, described in the next section.
+For a political analysis, however, it may be less important that all user that have been located in the US by user page parsing, share the same coordinates.
 
 \subsection{Signature distance}
 
@@ -655,6 +656,9 @@ In this case the users are regarded as local if their geodesic distance to the a
 The distance has to be in the lower quartile of all author distances and not be more than 500km.
 
 When the user's location could only be determined by parsing the user page, the user is considered local when the parsed country is the same as the country of the event article.
+
+% c = 0; l = $(".wikitable td:nth-child(5)").each(function(index){c += index ? parseInt($(this).text().replace(/,/g, "")) : 0}).length; c / l // average country size according to http://en.wikipedia.org/wiki/List_of_countries_by_area
+
 
 \lstset{caption={Localness of an author},label=localness,language=Python,numbers=left}
 \begin{lstlisting}
