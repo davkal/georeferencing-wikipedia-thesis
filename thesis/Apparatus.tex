@@ -60,14 +60,14 @@ The dump files can be quite large, e.g. a compressed dump of all articles of the
 This huge size makes processing them rather slow.\footnote{The project WikiHadoop addresses this problem by offering a stream task format to be used in Hadoop (MapReduce) infrastructure, see \weburl{https://github.com/whym/wikihadoop}{2011}{12}{11}.}
 When analyzing only a single article or a category of articles, the MediaWiki \ac{API} can deliver the same information contained in the dumps in a much more targeted manner. 
 
-\subsection{MediaWiki \ac{API}}\label{sub:mediawikiapi}
+\subsection{MediaWiki \abbr{API}}\label{sub:mediawikiapi}
 
 Wikipedia runs on the open source software MediaWiki, written in \ac{PHP}.
 It offers a well documented \ac{API}\footurl{http://www.mediawiki.org/wiki/API:Main_page}{2012}{01}{24} which can be used by other programs to remotely use the wiki's features such as changing content and restoring revisions.\footnote{The full capability of the \ac{API} can be seen at tried at the \emph{Sandbox} at \weburl{https://en.wikipedia.org/wiki/Special:ApiSandbox}{2012}{01}{24}, a recent addition to the MediaWiki software.}
 For analysis of articles, the \ac{API} offers queries directed at a variety of article properties, e.g. revisions, categories and, links.
 Among the output formats for the responses are \ac{JSON} and \ac{XML}.
 Similar to MediaWiki's Special:Export page\footnote{The page \weburl{https://en.wikipedia.org/wiki/Special:Export}{2011}{12}{11} allows for exporting of articles from the English Wikipedia.}, the \ac{API} also offers an article export that includes all revisions.
-\lstset{caption={Example \ac{JSON} response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
+\lstset{caption={Example \abbr{JSON} response to a query to list all bots that edited the article \emph{2011-2012 Bahraini uprising}},label=apicall}
 \begin{lstlisting}
 
 	{
@@ -130,7 +130,7 @@ It offers an \ac{API}\footnote{The \ac{API} is documented here: \weburl{https://
 In effect, calling the SoNet \ac{API} replaces several calls to the original MediaWiki \ac{API} and thereby speeds up the information retrieval, especially when the number of revisions or authors is high.
 The returned data object has the following structure:
 
-\lstset{caption={SoNet \ac{API} response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
+\lstset{caption={SoNet \abbr{API} response to a query for the article \emph{2011-2012 Bahraini uprising}},label=sonetapicall}
 \begin{lstlisting}
 	{
 		"first_edit": {"timestamp":1297734917,"user":"Master&Expert"},
