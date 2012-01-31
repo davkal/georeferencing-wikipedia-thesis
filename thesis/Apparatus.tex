@@ -426,7 +426,7 @@ The above mentioned \emph{Maspero demonstrations} article is exemplary for the c
 Its info box's location field offers three links to articles of a place: Maspiro, Cairo, Egypt.
 They are checked until an article with coordinates is found, in this case after the second try, Cairo\footurl{http://en.wikipedia.org/wiki/Cairo}{2012}{01}{25}.
 
-\subsection{Collective authorship}
+\subsection{Collective authorship}\label{sub:authorshipalgorithm}
 
 Most of the authorship processing is being done by SoNet's Toolserver script\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{25}, see \nameref{sub:toolserver}.
 The \ac{PHP}-script directly queries a live copy of the Wikipedia database for all revisions of the requested article.
@@ -522,20 +522,91 @@ In his dissertation, \textcite{hardy2011volunteered} developed a proximity metri
 This calculates the ``average distance between an article and all its contributing authors, weighted by the relative work
 per author''\footnote{See p. 52 for the complete development of the formula. For clarity, this quotation has been stripped of mathematical symbols.}.
 
-His formula for the signature distance is uses basic properties of articles and authors.
+\citeauthor{hardy2011volunteered} 's formula for the signature distance uses basic properties of articles and authors.
 Using the same notation, let $\rho$ be an author and $\alpha$ be an article.
-For a sample of articles $S$ let $P = \{\rho : \rho \in S\}$ be the set all articles in the sample and $A = \{\alpha : \alpha \in S\}$ be the set of all authors in the sample.
-Then, $\eta(\rho,\alpha)$ is the contribution(s) of author $\rho$ to article $\alpha$ and $N(\alpha) = \{\eta(\rho,\alpha) : \rho \in P\}$ are all contribution(s) to article $\alpha$.
-Conversely, $P(\alpha) = \{\rho : \rho \in N(\alpha)\}$ are the author(s) who have made contributions to article $\alpha$.
-To calculate the relative work, let $w(\rho,\alpha) = |\eta(\rho,\alpha)| \div |N(\alpha)|$ be relative edit frequency for author $\rho$ on article $\alpha$. 
+For a sample of articles $S$ let $A$ be the set all articles in the sample and $P$ be the set of all located authors in the sample:
+\begin{align*}
+A &= \{\alpha : \alpha \in S\} &P &= \{\rho : \rho \in S\}
+\end{align*}
+Then, $\eta(\rho,\alpha)$ are the contribution(s) of author $\rho$ to article $\alpha$ and $N(\alpha)$ are all contribution(s) to article $\alpha$:
+\begin{align*}
+N(\alpha) &= \{\eta(\rho,\alpha) : \rho \in P\}
+\end{align*}
+Conversely, $P(\alpha)$ are the author(s) who have made contributions to article $\alpha$:
+\begin{align*}
+P(\alpha) &= \{\rho : \rho \in N(\alpha)\}
+\end{align*}
+To calculate the relative work, let $w(\rho,\alpha)$ be relative edit frequency for author $\rho$ on article $\alpha$:
+\begin{align*}
+w(\rho,\alpha) &= \frac{|\eta(\rho,\alpha)|}{|N(\alpha)|}
+\end{align*}
 Let further $\delta(\rho,\alpha)$ be the geodesic distance between author $\rho$ and article $\alpha$.
 Then, averaging the distances of authors weighted by their relative work leads to the signature distance $D(\alpha)$:
-\begin{eqnarray}
-D(\alpha) & = & \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\rho,\alpha)}{|N(\alpha)|} \\
- & = &  \sum_{\forall \rho \in P(\alpha)} \big(w(\rho,\alpha) \cdot \delta(\rho,\alpha)\big)
-\end{eqnarray}
+\begin{equation}\label{eqn:sigdist}
+\begin{split}
+D(\alpha) &= \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\rho,\alpha)}{|N(\alpha)|} \\
+ &=  \sum_{\forall \rho \in P(\alpha)} \big(w(\rho,\alpha) \cdot \delta(\rho,\alpha)\big)
+ \end{split}
+\end{equation}
 
-Given that an article has a location and its authors have been located, their signature distance (equation 4.2) can be calculated using the following implementation:
+\citeauthor{hardy2011volunteered} weighted the author distances by their edit frequency and thereby treated all contributions as equal.
+With more data available, the namely attribution of text to individual authors (see \nameref{sub:authorshipalgorithm}), I can provide two variations of the signature distance metric.
+Given a sequence of revisions, these metrics provide a distance metric that was calculated using only those revisions that produced the text a visitor sees when reading the article.
+
+\subsubsection{Edit survival}
+
+Following the previously used notation, I will develop the \term{e.surv signature distance} metric.
+For a given revision, it counts only those contributions that have provided text still present in that revision.
+Let $\Pi$ be the set of all revisions in the sample $S$:
+\begin{align*}
+\Pi &= \{\pi : \pi \in S\}
+\end{align*}
+Let $\epsilon(\rho,\alpha,\pi)$ denote the contribution(s) of located author $\rho$ to article $\alpha$ that are still present in revision $\pi$.
+$E(\alpha,\pi)$ are all contribution(s) to article $\alpha$ that are still present in revision $\pi$:
+\begin{align*}
+E(\alpha,\pi) &= \{\epsilon(\rho,\alpha,\pi) : \rho \in P\}
+\end{align*}
+Thus the modified weight function $w_{\text{e.surv}}$: 
+\begin{align*}
+w_{\text{e.surv}}(\rho,\alpha,\pi) &= \frac{|\epsilon(\rho,\alpha,\pi)|}{|E(\alpha,\pi)|}
+\end{align*}
+This leads to the survivor signature distance :
+\begin{equation}\label{eqn:sigdistsurvival}
+\begin{split}
+D_{\text{e.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\epsilon(\rho,\alpha,\pi)| \cdot \delta(\rho,\alpha)}{|E(\alpha,\pi)|} \\
+ & =  \sum_{\forall \rho \in P(\alpha)} \big(w_{\text{e.surv}}(\rho,\alpha,\pi) \cdot \delta(\rho,\alpha)\big)
+ \end{split}
+\end{equation}
+ 
+
+\subsubsection{Text survival}
+
+The second variation, the \term{t.surv signature distance} metric, makes one further adjustment.
+It weighs the contributions by the length of their text that survived.
+For a given revision, it counts how much text can be attributed to which contribution.
+
+Let $\tau(\rho,\alpha,\pi)$ denote the text of contribution(s) of located author $\rho$ to article $\alpha$ that are still present in revision $\pi$.
+$T(\alpha,\pi)$ is all text from contribution(s) to article $\alpha$ that are still present in revision $\pi$:
+\begin{align*}
+T(\alpha,\pi) &= \{\tau(\rho,\alpha,\pi) : \rho \in P\}
+\end{align*}
+In other words, $T$ is the part of the text in a revision that could be located.
+The modified weight function then determines an author's share of the located text $w_{\text{t.surv}}$: 
+\begin{align*}
+w_{\text{t.surv}}(\rho,\alpha,\pi) &= \frac{|\tau(\rho,\alpha,\pi)|}{|T(\alpha,\pi)|}
+\end{align*}
+This leads to the t.surv signature distance :
+\begin{equation}\label{eqn:sigdistsurvivaltext}
+\begin{split}
+D_{\text{t.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\tau(\rho,\alpha,\pi)| \cdot \delta(\rho,\alpha)}{|T(\alpha,\pi)|} \\
+ & =  \sum_{\forall \rho \in P(\alpha)} \big(w_{\text{t.surv}}(\rho,\alpha,\pi) \cdot \delta(\rho,\alpha)\big)
+ \end{split}
+\end{equation}
+
+
+\subsubsection{Implementation of the signature distance}
+
+Given that an article has a location and its authors have been located, their signature distance (equation \ref{eqn:sigdist}) can be calculated using the following implementation:
 
 \lstset{caption={Signature distance algorithm},label=signaturedistance,language=Python,numbers=left}
 \begin{lstlisting}
@@ -573,6 +644,8 @@ As the computation for revision $\eta_{n}$ would have to go over the same edits 
 		sd = memoized(index, located)
 		revisions.set(sd)
 \end{lstlisting}
+
+The other two variations of the signature distance have been implemented in a similar way.\footnote{Below, in listing \ref{editweight}, another algorithm based on text survival is presented.}
 
 \subsection{Localness}\label{sub:localness}
 
