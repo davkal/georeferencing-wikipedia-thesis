@@ -8,8 +8,56 @@ For a quantitative analysis testing the hypotheses on a set of articles, see the
 
 \section{Application run}
 
+The experimental runs will be done on the following articles:
+
+\begin{description}
+  \item[Egypt-Rev] The article \term{2011 Egyptian revolution} details the protests leading to the overthrow of the government.
+  According to the article, this event is still \term{ongoing}.
+  \item[Orange-Rev] The \term{Orange Revolution} refers to the events surrounding the flawed Ukrainian presidential election in 2004. 
+  This is an article that treats an event that has ended (November 2004 -- January 2005).
+  \item[NYC] This article about the biggest city of the United States was included to represent articles that simply treat a place---with a lesser political dimension.
+\end{description}
+
+The general metrics of the three runs are shown in table \ref{examplearticles}.
+The rows \emph{Located contributors} show the effectiveness of the georeferencing algorithm using different data sources.
+The combined techniques of using the Poor Man's Checkuser database and the parsing of user pages increase the share of located contributors by 20\% to around 60\%.
+
+It is also worth comparing the proximity metrics in the lower two groups of rows.
+The values from the \emph{cumulative} group are based on the edit counts of all contributions.
+For the second group of rows, only contributions were counted that provided text still \term{present in the latest revision}.
+Regarding the distribution of unique The measures for the survived text show that contributions from some countries get edited away.
+Far countries seem to be the 
+
+\ctable[    caption = Example articles,    label   = examplearticles,pos=h,doinside=\small ]{Xrrr}{    \tnote{Contributors are all authors excluding bots.}    \tnote[b]{Poor man's checkuser} }{\toprule         \tableheadline{} 
+    	& \tableheadline{Egypt-Rev} 
+    				& \tableheadline{Orange-Rev} 
+							&  \tableheadline{NYC}\\ \midrule
+    Size (\kb)			& 153.9 	&  42.6& 172.4 \\
+    Created 		& 2011-01-25 	&  2004-11-25 & 2001-03-27 \\
+    First in language 	& English 	&  Ukrainian & English \\
+    Revisions 		& 7,039 	&  880 & 15,953 \\
+    Contributors\tmark		& 1,539 	&  382 & 5,125 \\
+     -- anonymous	& 748 	&  166 & 2,644 \\
+    \midrule
+    Located contributors (\%) 	& 58.3 & 59.2 & 61.4 \\
+    -- anonymous (\%)		& 48.6 & 43.5 & 51.6 \\
+    -- by \abbr{PMCU}\tmark[b]	(\%)		& 4.5 & 9.9 & 5.7 \\
+    -- by user page (\%)	& 5.1 & 5.8 & 4.1 \\
+    \midrule
+    \emph{Cumulative} \\
+    Unique countries of origin	& 72 & 38 & 83 \\
+    Signature distance (km) 	& 4,731.5 & 6,090.4 & 2,922.5 \\
+    \midrule
+    \emph{Present in latest revision} \\
+    Unique countries of origin 	& 36 & 24 & 23 \\
+    Signature dist. e.surv (km) 	& 3,109.4 & 6,226.3 & 1,242.6 \\
+    Signature dist. t.surv (km) 	& 367.9 & 3,825.9 & 721.8 \\
+    Located text (\%) 	& 17.1 & 17.6 & 15.1 \\
+    \bottomrule
+}
+
 \todo{
-describe one run, 
+image after a complete run with markers
 time it takes, 
 requests made, 
 small article, 
@@ -44,3 +92,7 @@ and sd, sd-esurv, sd-tsurf
    \item move up and down for each group
     \item clustering of origins: areas of influence
 \end{todos}
+
+\section{hypotheses analysis}
+
+\todo{short table on the results for each, rows are hypothesis, columns are articles}
