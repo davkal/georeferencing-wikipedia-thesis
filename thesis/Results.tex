@@ -2,6 +2,76 @@
 \chapter{Results}\label{ch:results}
 %************************************************
 
+\todo{
+difficulties in picking data sets
+performance results on locating algorithm
+}
+
+\section{Data sets}
+
+Unfortunately, \term{political events} are a rather vague concept judging by the contents of the Wikipedia category of the same name\footurl{http://en.wikipedia.org/wiki/Category:Political_events}{2012}{02}{01}.
+It includes only one page, \term{No Berlusconi day}, but a numerous sub-categories ranging from \term{Political riots} and \term{Protests} to \term{Political party assemblies}.
+
+\todo{
+more homogenous are article groups formed by template embedders,
+like Infobox civil conflict.
+}
+
+\todo{
+acknowledging that there is no ``right'' categorry or template
+goal is to find a group of articles
+using event definition, together with handpicked categories and templateembedders in the English Wikipedia.
+categories contain articles that are handpickked by wikipedians
+}
+
+\todo{
+shortcomings, not random, statistics derived cannot be representative to all articles treating political events   let alone the all of wikipedia
+misses arcticles that are not part of category, template embedders
+}
+% Military conflict 606/10290
+
+
+\subsection{By category}
+
+\todo{
+categories can go deep pretty quickly (over-categorition) but also have to potential to lead astray (Protest Songs in Protest)
+sub-categories the same pages in different tree structure, e.g. protests by country and protests by year.
+the same article appears in different depths of the resulting sub-tree.
+category list will go only one level deep
+Protests and its sub-categories are exhaustive and prime candidate.
+they yield: (and combine)
+Protests by year
+Protests by country
+21st-century conflicts
+2000s riots by year
+2010s riots by year
+footnote Revolutions categories, e.g. Revolutions by country, contain too many articles about individuals and not events
+}
+\todo{link to appendix with complete list}
+
+
+\subsection{By template}
+
+\todo{
+info box civil conflict as a reference, arab springs as well as the occupy movement favorite. 
+numbers by filtering
+second set: info box election, big set 4485 articles
+}
+\todo{link to appendix with complete list}
+
+
+\subsection{Political article vs. place article}
+
+\todo{
+To compare the date with spatial articles preferred in previous studies, a reference group is introduced
+template info box settlement is used by towns all over the world
+population is big 261,000+ articles, pick a random sample
+compare locating performance, sd metrics.
+}
+\todo{link to appendix with complete list}
+
+
+
 \begin{todos}
     \item for each set, show hypothesis results, values
     \item box charts
