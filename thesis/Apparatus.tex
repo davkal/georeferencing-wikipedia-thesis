@@ -551,8 +551,8 @@ D(\alpha) &= \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \
 \end{equation}
 
 \citeauthor{hardy2011volunteered} weighted the author distances by their edit frequency and thereby treated all contributions as equal.
-With more data available, the namely attribution of text to individual authors (see \nameref{sub:authorshipalgorithm}), I can provide two variations of the signature distance metric.
-Given a sequence of revisions, these metrics provide a distance metric that was calculated using only those revisions that produced the text a visitor sees when reading the article.
+With more data available, namely the attribution of text to individual authors (see \nameref{sub:authorshipalgorithm}), I can provide two variations of the signature distance metric.
+Given a sequence of revisions, these metrics provide a proximity metric that was calculated using only those revisions that produced the text a visitor sees when reading the article.
 
 \subsubsection{Edit survival}
 
@@ -571,7 +571,7 @@ Thus the modified weight function $w_{\text{e.surv}}$:
 \begin{align*}
 w_{\text{e.surv}}(\rho,\alpha,\pi) &= \frac{|\epsilon(\rho,\alpha,\pi)|}{|E(\alpha,\pi)|}
 \end{align*}
-This leads to the survivor signature distance :
+This restriction on edit survival leads to the \term{e.surv signature distance}:
 \begin{equation}\label{eqn:sigdistsurvival}
 \begin{split}
 D_{\text{e.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\epsilon(\rho,\alpha,\pi)| \cdot \delta(\rho,\alpha)}{|E(\alpha,\pi)|} \\

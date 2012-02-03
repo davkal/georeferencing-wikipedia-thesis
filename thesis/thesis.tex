@@ -133,10 +133,14 @@
 \newcommand{\abbr}[1]{{\scshape\lowercase{#1}}}
 \newcommand{\titlequote}[2]{{\flushright{\slshape#1} \\  \medskip--- #2\\}\vspace{\baselineskip}}
 \newcommand{\kb}{k\sc{B}}
+\newcommand{\HT}{\ensuremath{\bullet}\,\,}
+\newcommand{\HF}{\ensuremath{\circ}\,\,}
+
 
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{ctable}
+\usepackage{subfig}
 
 %\newtheorem{hypothesis}{Hypothesis}
 \declaretheoremstyle[headfont=\normalfont\sc,headindent=-1em]{thesisstyle}
@@ -160,7 +164,7 @@
 \newcommand{\image}[3]{
 \begin{figure}[htb]
 \centering
-%\includegraphics[width=#3\textwidth]{images/#1}
+\includegraphics[width=#3\textwidth]{images/#1}
 \caption{#2}
 \label{fig:#1}
 \end{figure}
@@ -176,10 +180,31 @@
 \end{figure}
 }
 
-\newcommand{\img}[3]{\image{#1}{#2}{0.8}}
-\newcommand{\imgx}[3]{\imagex{#1}{#2}{0.8}}
-\newcommand{\imgwide}[3]{\image{#1}{#2}{1.125}}
-\newcommand{\imgwidex}[3]{\imagex{#1}{#2}{1.125}}
+
+\newcommand{\subimage}[6]{
+\begin{figure}
+\centering
+\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
+\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
+\caption{#6}
+\label{fig:#5}
+\end{figure}
+}
+
+\newcommand{\subimagex}[6]{
+\begin{figure}
+\centering
+\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
+\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
+\caption{#6}
+\label{fig:#5}
+\end{figure}
+}
+
+\newcommand{\img}[2]{\image{#1}{#2}{0.8}}
+\newcommand{\imgx}[2]{\imagex{#1}{#2}{0.8}}
+\newcommand{\imgwide}[2]{\image{#1}{#2}{1.125}}
+\newcommand{\imgwidex}[2]{\imagex{#1}{#2}{1.125}}
 
 
 \newcommand{\imgref}[1]{see figure~\ref{fig:#1}}

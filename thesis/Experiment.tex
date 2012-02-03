@@ -5,8 +5,10 @@
 The application described in \nameref{ch:apparatus} will now be fed with articles. 
 This chapter will demonstrate results for individual articles and give pointers to how they can be interpreted.
 For a quantitative analysis testing the hypotheses on a set of articles, see the next chapter \nameref{ch:results}.
+\vspace{3em}
+\imgwide{egypt-rev}{Sample run for article \term{2011 Egyptian revolution}}
 
-\section{Application run}
+\section{Example articles}
 
 The experimental runs will be done on the following articles:
 
@@ -18,23 +20,22 @@ The experimental runs will be done on the following articles:
   \item[NYC] This article about the biggest city of the United States was included to represent articles that simply treat a place---with a lesser political dimension.
 \end{description}
 
+The application analyzes the articles' contributions and presents the results in a report with different sections, \imgref{egypt-rev}.
+
+\section{Analysis}
+
 The general metrics of the three runs are shown in table \ref{examplearticles}.
 The rows \emph{Located contributors} show the effectiveness of the georeferencing algorithm using different data sources.
 The combined techniques of using the Poor Man's Checkuser database and the parsing of user pages increase the share of located contributors by 20\% to around 60\%.
-
-It is also worth comparing the proximity metrics in the lower two groups of rows.
-The values from the \emph{cumulative} group are based on the edit counts of all contributions.
-For the second group of rows, only contributions were counted that provided text still \term{present in the latest revision}.
-Regarding the distribution of unique The measures for the survived text show that contributions from some countries get edited away.
-Far countries seem to be the 
 
 \ctable[    caption = Example articles,    label   = examplearticles,pos=h,doinside=\small ]{Xrrr}{    \tnote{Contributors are all authors excluding bots.}    \tnote[b]{Poor man's checkuser} }{\toprule         \tableheadline{} 
     	& \tableheadline{Egypt-Rev} 
     				& \tableheadline{Orange-Rev} 
 							&  \tableheadline{NYC}\\ \midrule
-    Size (\kb)			& 153.9 	&  42.6& 172.4 \\
     Created 		& 2011-01-25 	&  2004-11-25 & 2001-03-27 \\
     First in language 	& English 	&  Ukrainian & English \\
+    Latest revision		& 474305051 	&472144068& 474353739 \\
+    Size (\kb)			& 153.9 	&  42.6& 172.4 \\
     Revisions 		& 7,039 	&  880 & 15,953 \\
     Contributors\tmark		& 1,539 	&  382 & 5,125 \\
      -- anonymous	& 748 	&  166 & 2,644 \\
@@ -56,43 +57,97 @@ Far countries seem to be the
     \bottomrule
 }
 
-\todo{
-image after a complete run with markers
-time it takes, 
-requests made, 
-small article, 
-big article, 
-images
-}
-
-\todo{table of runs with metrics}
-
-\subsection{Georeferencing performance}
-
-\todo{baseline: IP anonymous, PMCU, user page parsing}
-
-
-\subsection{Distribution of origins vs survival}
-
-\todo{
-compare distribution of each group
-pick an article from each group
-}
-
 \subsection{Proximity metrics}
 
+It is also worth comparing the proximity metrics in the lower two groups of rows in table \ref{examplearticles}.
+The values from the \emph{cumulative} group are based on the edit counts of all contributions.
+For the second group of rows, only contributions were counted that provided text still \term{present in the latest revision}.
+Over time, all three articles collected contributions from a number of countries. 
+However, during the collective editing process, up to two thirds of them were removed as can be observed in the \abbr{NYC} article. 
+
+The different signature distance variants can hint which countries' contributions did not survive.
+A lower \term{e.surv} value compared to the original signature distance suggests that contributions from distant countries did not survive as well as local contributions.
+For the \abbr{NYC} article, the \term{e.surv} distance is less than half the original signature distance, suggesting that a lot of distant contributions were either removed or replaced by local ones.
+Conversely, a relatively higher \term{e.surv} value suggests that local contributions did less well---the article \abbr{orange-rev} shows this behavior but the difference is negligible.
+
+More strikingly, comparing the \term{t.surv} distance to the other distance metrics reveals how misleading metrics based on edit count can be.
+The \term{t.surv} distance weighs an author's distance to the article's location by the relative amount of text that survived.
+A low \term{t.surv} distance means that texts from local contributions dominate the article---despite the other metrics suggesting numerous contributions from more distant countries.
+This behavior is at its starkest in the \abbr{egypt-rev} article where the signature distance shrank from 4,731.5km to 367.9km when weighed by survival of text from located contributions. 
+This last qualification is important, however.
+If only few of the surviving contributions can be located, the \term{t.surv} distance becomes less representative---for the example articles only around 17\% of the text passages could be located.
+
+
+\section{Distribution of edit counts vs text survival}
+
+\img{egypt-rev-origins}{Distribution of origins by cumulative edit count for article \abbr{egypt-rev}.}
+The change in the distribution of countries can also be observed in the choropleth maps. 
+Figure \ref{fig:egypt-rev-origins} shows the map for the cumulative edit count for the article \abbr{egypt-rev}.
+The number of edits per country is used to determine the intensity of the shade, e.g. 991 edits could be attributed to the United States. 
+
+\img{egypt-rev-text}{Distribution of origins by text survival for article \abbr{egypt-rev}.}
+Figure \ref{fig:egypt-rev-text} shows the map for text survival; the shader value is the number of characters originating from a country, e.g. of all located survived text, 16,655 characters could be attributed to Egypt.
+
+Differences in shade when comparing both maps, can be revealing.
+Both the United States and Egypt have a similar cumulative edit count, 991 and 924, respectively.
+However, the United States pale in the text survival map as the located text seems to be clearly dominated by Egypt, with 4,267 and 16,655 characters, respectively.
+This suggests, the article was equally ``worked on'' by authors from both countries, but contributions from one country were more likely to prevail.
+It should be noted again, as only 17\% of the text could be located, no firm conclusions can be drawn.
+
+For the article \abbr{orange-rev}, the differences in shading are less noticeable, see figures \ref{fig:orange-rev-origins} and \ref{fig:orange-rev-text}.
+However, placed 2nd by edit counts, Ukraine ranks 5th in text survival.
+\img{orange-rev-origins}{Distribution of origins by cumulative edit count for article \abbr{orange-rev}.}
+\img{orange-rev-text}{Distribution of origins by text survival for article \abbr{orange-rev}.}
+
+The maps for the article \abbr{NYC} are even less suggestive, as the United States dominate both distributions, \imgref{nyc-maps}.
+
+\subimage{nyc-origins}{By edit count}{nyc-text}{By text survival}{nyc-maps}{Distribution of origins for article \abbr{nyc}.}
+
+%for all three articles, here are the biggest changes in share of edit count vs share of survived text.
+
+\section{Temporal development}
+
 \todo{
-compare signature distance measures for each group
-and sd, sd-esurv, sd-tsurf
+motion chart offers to see the evolution of key metrics over time. 
+cumulative edit count, survived edits, share of survived text, all be plotted against distance to article or against each other.
+plotted against distance, cumulative edits rise over time, upper right means lots of edits from afar. 
+
+changing axis to text survival against cumulative edits, upper right means hard earned, upper left: most efficient.
+lower right is where you don't want to be, a lot of effort, nothing is sticking.
+
+strong western culture bias means USA is usually one of the big ones.
+text survival metric needs log view, the chart axis scale according to max value, that was 100 \% at some point usually early in age, or later done by vandalism (blanking)
 }
 
-\subsection{Motion chart}
 
-\begin{todos}
-   \item move up and down for each group
-    \item clustering of origins: areas of influence
-\end{todos}
+\section{Hypotheses analysis}
 
-\section{hypotheses analysis}
+The two political articles \abbr{egypt-rev} and \abbr{orange-rev} were checked for hypothesis support.
+The results are in table \ref{exampleresults}.
 
-\todo{short table on the results for each, rows are hypothesis, columns are articles}
+\ctable[    caption = Hypothesis support of example articles \\ \HT article lends support; \HF  article does not lend support,
+	cap = Hypothesis support of example articles,    label   = exampleresults,pos=h,doinside=\small ]{Xll}{    \tnote{Only applicable to a group of articles.}    \tnote[b]{Unable to locate creator.}    \tnote[c]{Share of located contributions.}    \tnote[d]{No revisions after event, still ongoing.} }{\toprule         \tableheadline{Hypothesis} 
+    			& \tableheadline{Egypt-Rev} 
+    					& \tableheadline{Orange-Rev}\\ \midrule
+    H1 Created after short time		& \HT 1d	&  \HF 25d   \\
+    H2 Recent articles sooner\tmark 	& n/a 	&  n/a \\
+    H3 First in English		& \HT 	&\HF  Ukrainian \\
+    H4 Creator was local			& \HT 	&  n/a\tmark[b] \\
+    H5 Early: more anonymous 		& \HF 23\% anon. 	&  \HF 37\% anon.  \\
+    H6 During: local authors\tmark		& \HF 27\% local\tmark[c] 	&  \HF all distant  \\
+    H7 After: text shrinks	& n/a\tmark[d] 	&  \HF R = 0.9  \\
+    H8 After: authors registered 	& n/a\tmark[d] & \HT 73\%\\
+    H9 After: less local		& n/a\tmark[d] & \HF R = 0.1\\
+    H10 During:  local text 	& \HF & \HF  \\
+    H11 After: text less local	& n/a\tmark[d] & \HT R = 0.6  \\
+    \bottomrule
+}
+
+Since  \abbr{egypt-rev} is an article about an event that is still ongoing, hypotheses 7--9 and 11 can not be tested. 
+
+\todo{
+charts of signature distance
+contributor localness H10 different?
+signature distance after event
+}
+
