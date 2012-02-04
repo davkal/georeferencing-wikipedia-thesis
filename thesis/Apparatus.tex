@@ -2,10 +2,13 @@
 \chapter{Apparatus}\label{ch:apparatus}
 %************************************************
 
-This chapter describes the application designed to test the hypotheses.
-The first section describes the \nameref{sec:datasources} and how they can be used to provide the content for the article analysis.
+This chapter describes the application I designed to test the hypotheses.
+The first section lists the \nameref{sec:datasources} and shows what type of content they provide for the article analysis.
 In \nameref{sec:application}, I will give an overview of the application's architecture as well as the technologies being employed.
-The section \nameref{sec:algorithms} describes with how an article's eligibility for analysis is being determined as well as other key methods regarding information extraction, e.g. date and location parsing. 
+
+The section \nameref{sec:algorithms} describes the article requirements to qualify for an analysis. 
+More importantly, the same section features the algorithms for the proximity metric, locating users, and information extraction, e.g. date and location parsing.
+
 In \nameref{sec:visualization} I give an quick introduction into the charts being used to present the data, and that will be featured more prominently in the following chapter \nameref{ch:experiment}. 
 
 
@@ -108,7 +111,7 @@ The following \ac{API} calls will be important for this thesis:
     \item[query revisions] Lists all revisions for an article and for each includes a timestamp and the user as well as the comment for the text change.
     \item[query categorymembers] For a given category, this query lists the articles and subcategories belong to it.
     This query can be used to construct groups of articles for analysis in this thesis.
-    \item[query templateembedders] For a given template name, this request lists all pages that embed it.
+    \item[query embeddedin] For a given template name, this query lists all pages that embed it.
     This query can also be used to build a group of articles. 
     \item[open search] A method to suggest articles, categories, and templates that contain a term. 
     It can be attached to an input field where a user is supposed to enter the name of an article.
@@ -171,10 +174,10 @@ Depending on the project's goal, a variety of preprocessed data is available:
 
 \begin{description}
 \item[Article traffic] Wikipedia user Henrik\footurl{http://en.wikipedia.org/wiki/User:Henrik}{2011}{12}{12} provides a web service that processes Wikipedia's log files\footnote{These are available at \weburl{http://dumps.wikimedia.org/other/pagecounts-raw/}{2011}{12}{12}} to calculate the number page views per article for a given time.
-These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or queried through an \ac{API} \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}. 
+These statistics can be viewed through a browser\footnote{E.g. \weburl{http://stats.grok.se/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}} or queried through an \ac{API} \footnote{E.g. \weburl{http://stats.grok.se/json/en/201105/2011_Egyptian_Revolution}{2011}{12}{12}}.\footnote{I built support for this data source into the application. It is disabled, however, as page views are out of scope regarding the content analysis.}
 \item[CatScan] This web service, offered by Toolserver administrator Duesentrieb\footurl{http://meta.wikimedia.org/wiki/User:Duesentrieb}{2011}{12}{13}, finds articles that belong to a given category and its sub-categories (see \nameref{sub:categories} on why this is non-trivial).
 It also offers to limit the search to an intersection of categories, e.g. German politicians who are also physicists\footurl{https://toolserver.org/~daniel/WikiSense/CategoryIntersect.\ac{PHP}?wikilang=de&wikifam=.wikipedia.org&basecat=Politiker+(Deutschland)&basedeep=3&mode=cs&tagcat=Physiker&tagdeep=2}{2011}{12}{13}.
-The results are presented in the browser or can be downloaded as a file in the \ac{CSV} format. 
+The results are presented in the browser or can be downloaded as a file in the \ac{CSV} format.\footnote{This data source is not available in my application.}
 \item[Poor man's checkuser] The project \emph{Poor Man's Check User}\footnote{Project website: \weburl{http://wikiwatcher.virgil.gr/pmcu}{2012}{01}{2}. The project's name is a reference to the \emph{checkuser} permission that a community-elected group of registered users possesses. It allows a de-masking of the \ac{IP} addresses for each of a registered user's edit.} mapped registered users to \ac{IP} addresses based on a bug in the session management of the MediaWiki software.\footnote{When a user exceeded a certain time while editing an article without submitting the current changes, the user's session expired on the server. When the edit was submitted after the expiration the user appeared as an anonymous author, being only known by his \ac{IP} address. When the user then logged in again, the same change was sent again. Scanning all revisions for the same change set therefor allowed for a matching between user name and \ac{IP} address. This loophole has been closed, however.} 
 For the period the bug has been active, some usernames could be mapped.
 Naturally, the more edits a user did in this period, the more likely is an appearance in this list.
@@ -256,7 +259,7 @@ It uses a range of open-source toolkits and libraries for a variety of purposes:
 
 \subsection{Models}
 
-Looking at Wikipedia's website as a system, visible items like pages, authors, and revisions can be abstracted into classes of objects that can be modeled using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
+Treating Wikipedia's website as a system of pages, authors, and revisions, I modeled these as classes of objects using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
 
 When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
 Once the data is retrieved, the attributes of each individual revision object are set, which in turn triggers an event telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).
@@ -287,13 +290,13 @@ In the case of an article being entered, a click on ``Analyze!'' starts the foll
 	\item For all registered usernames in the author collection, a sub-routine is started to locate the users. 
 	\item \entity{query revisions} is being called to retrieve all revisions (excluding wikitext). 
 	\item The a subset of the revisions, the annotated wikitext is loaded using WikiTrust \ac{API}.
-	\item For each day of the article's existence, the page view statistics are loaded.
+	%\item For each day of the article's existence, the page view statistics are loaded.
 	\item For each language present in the language link collection, the first revision is loaded.
 	\item All loaded data is analyzed and the results are stored and rendered in the browser.
 \end{enumerate}
 
-Depending on the article's number of revisions, this process takes around one minute and involves 100--500 \ac{API} calls, most of which are done in parallel. 
-During this process, data is rendered whenever it has arrived and been processed.
+Depending on the article's number of contributors, this process takes a few minutes and involves 100--500 \ac{API} calls, most of which are done in parallel. 
+During this process, the browser shows the data whenever it has arrived and been processed.
 
 \subsection{Group analyzer}
 
@@ -301,14 +304,14 @@ When a category or template name has been entered, the application switches to \
 On a high level, the group analysis works as follows:
 
 \begin{enumerate}
-    \item Fetch a list of articles by calling \entity{query categorymembers} or \entity{query templateembedders}.
+    \item Fetch a list of articles by calling \entity{query categorymembers} or \entity{query embeddedin}.
     \item Run the article analyzer routine on all articles.
     \item Compute group results and show them in the browser.
 \end{enumerate}
 
 During the group analysis only the article overview will be rendered while all of the article analyzer's steps are being executed.
-While \entity{query templateembedders} returns a one-dimensional list, \entity{query categorymembers} can return sub-categories.
-For a category that has been entered into the input field, the pages of its first-level sub-categories will be retrieved as well.
+While \entity{query embeddedin} returns a one-dimensional list, \entity{query categorymembers} can return subcategories.
+For a category that has been entered into the input field, the pages of its first-level subcategories will be retrieved as well.
 
 
 \section{Algorithms}\label{sec:algorithms}
@@ -329,8 +332,6 @@ All of the following criteria have to be satisfied:
   \item The event (start) date is not before 2002, to make sure that Wikipedia was available as a medium. 
   \item The article does not use certain templates or is part of certain categories, e.g. \emph{Category:Living People}.
   This has been included for the purpose of filtering out articles that passed the previous tests but are clearly not treating an event. 
-  \item The article has at least 100 revisions.
-  \item The article has at least 100 unique authors.
   \item At least 25\% of authors can be located.
 \end{itemize}
 
@@ -395,8 +396,8 @@ When a date was extracted using my custom parser, its accuracy is also stored as
 \subsection{Location parsing}
 
 Like dates, locations and even coordinates can be codified in numerous ways. 
-Most of the coordinate templates used in the info boxes produce annotated markup, thereby making the coordinates machine-readable.
-I still wrote a custom parser for all the cases where the marker (\verb"geo") is not produced.
+Most of the templates for geographic coordinates used in the info boxes produce annotated markup.
+Although this makes the coordinates machine-readable, I still wrote a custom parser for all the cases where the coordinates marker (\verb"geo") is not produced.
 
 Some articles do not have coordinates, although they clearly describe an event, e.g. \emph{Maspero demonstrations}\footurl{http://en.wikipedia.org/wiki/Maspero_demonstrations}{2012}{01}{25}.
 From articles like these, location candidates are scraped and then resolved:
@@ -519,17 +520,20 @@ For a political analysis, however, it may be less important that all user that h
 
 \subsection{Signature distance}\label{sub:sigdist}
 
+Proximity metrics are a means to determine the localness of contributions.
+Therefore, they play a central part in the application's contribution analysis.
 In his dissertation, \textcite{hardy2011volunteered} developed a proximity metric called \emph{signature distance}.
 This calculates the ``average distance between an article and all its contributing authors, weighted by the relative work
 per author''\footnote{See p. 52 for the complete development of the formula. For clarity, this quotation has been stripped of mathematical symbols.}.
 
-\citeauthor{hardy2011volunteered} 's formula for the signature distance uses basic properties of articles and authors.
+\citeauthor{hardy2011volunteered}'s formula for the signature distance uses basic properties of articles and authors.
 Using the same notation, let $\rho$ be an author and $\alpha$ be an article.
 For a sample of articles $S$ let $A$ be the set all articles in the sample and $P$ be the set of all located authors in the sample:
 \begin{align*}
 A &= \{\alpha : \alpha \in S\} &P &= \{\rho : \rho \in S\}
 \end{align*}
-Then, $\eta(\rho,\alpha)$ are the contribution(s) of author $\rho$ to article $\alpha$ and $N(\alpha)$ are all contribution(s) to article $\alpha$:
+Further, let $\eta(\rho,\alpha)$ denote the contribution(s) of author $\rho$ to article $\alpha$---an author's ``direct work'' on an article\cite{kittur2007he}.
+Then, $N(\alpha)$ are all contribution(s) to article $\alpha$:
 \begin{align*}
 N(\alpha) &= \{\eta(\rho,\alpha) : \rho \in P\}
 \end{align*}
@@ -537,7 +541,7 @@ Conversely, $P(\alpha)$ are the author(s) who have made contributions to article
 \begin{align*}
 P(\alpha) &= \{\rho : \rho \in N(\alpha)\}
 \end{align*}
-To calculate the relative work, let $w(\rho,\alpha)$ be relative edit frequency for author $\rho$ on article $\alpha$:
+To calculate the ``relative work''\cite[52]{hardy2011volunteered}, let $w(\rho,\alpha)$ be relative edit frequency for author $\rho$ on article $\alpha$:
 \begin{align*}
 w(\rho,\alpha) &= \frac{|\eta(\rho,\alpha)|}{|N(\alpha)|}
 \end{align*}
@@ -552,7 +556,12 @@ D(\alpha) &= \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \
 
 \citeauthor{hardy2011volunteered} weighted the author distances by their edit frequency and thereby treated all contributions as equal.
 With more data available, namely the attribution of text to individual authors (see \nameref{sub:authorshipalgorithm}), I can provide two variations of the signature distance metric.
-Given a sequence of revisions, these metrics provide a proximity metric that was calculated using only those revisions that produced the text a visitor sees when reading the article.
+The two following metrics only take those revisions into account, that produced the text of the current revision.
+This is the same text someone reading the article on Wikipedia's website would see, at the moment of the analysis. 
+
+When compared to the original signature distance, the following two metrics indicate whether more local or more distant contributions prevailed.
+In the first variant, edits are still counted as a unit, reflecting the direct work on the article of which parts survived.
+The second variant looks at how big these parts are in analyzing remaining text lengths of the individual contributions.
 
 \subsubsection{Edit survival}
 
@@ -567,36 +576,48 @@ $E(\alpha,\pi)$ are all contribution(s) to article $\alpha$ that are still prese
 \begin{align*}
 E(\alpha,\pi) &= \{\epsilon(\rho,\alpha,\pi) : \rho \in P\}
 \end{align*}
-Thus the modified weight function $w_{\text{e.surv}}$: 
+The weight function $w_{\text{e.surv}}$ is then modified to reflect the relative work only of the surviving contributions: 
 \begin{align*}
 w_{\text{e.surv}}(\rho,\alpha,\pi) &= \frac{|\epsilon(\rho,\alpha,\pi)|}{|E(\alpha,\pi)|}
 \end{align*}
-This restriction on edit survival leads to the \term{e.surv signature distance}:
+This restriction on edit survival leads to the \term{e.surv signature distance} for revision $\pi$ of article $\alpha$:
 \begin{equation}\label{eqn:sigdistsurvival}
 \begin{split}
 D_{\text{e.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\epsilon(\rho,\alpha,\pi)| \cdot \delta(\rho,\alpha)}{|E(\alpha,\pi)|} \\
  & =  \sum_{\forall \rho \in P(\alpha)} \big(w_{\text{e.surv}}(\rho,\alpha,\pi) \cdot \delta(\rho,\alpha)\big)
  \end{split}
 \end{equation}
- 
+
+Depending on the spatial distribution of an article's authorship and nature of their edits, the values for $D$ and $D_{\text{e.surv}}$ can differ significantly.
+If, over time, distant contributions are replaced by local ones, $D_{\text{e.surv}}$ would be much lower than $D$. 
+If all edits survived, both values would be identical. 
+This very fact allows for the original signature distance to be used as a baseline for the \term{e.surv index}:
+
+\begin{align}
+ I_{\text{e.surv}} &= \frac{D_{\text{e.surv}}(\alpha,\pi)}{D(\alpha)} \cdot 100 & D(\alpha) &\neq 0
+\end{align}
+
+This normalizes the \term{e.surv signature distance} to a baseline of 100.
+Values of $I_{\text{e.surv}} < 100$ indicate that local contributions are overrepresented in the current revision, while values of $I_{\text{e.surv}} > 100$ indicate an overrepresentation of  distant contributions.
+In the extreme case of $I_{\text{e.surv}} = 0$ all surviving\footnote{This assumes that distant contributions were present in earlier revisions. This also guarantees that $D(\alpha) \neq 0$.} contributions came from the article location.
 
 \subsubsection{Text survival}
 
 The second variation, the \term{t.surv signature distance} metric, makes one further adjustment.
 It weighs the contributions by the length of their text that survived.
-For a given revision, it counts how much text can be attributed to which contribution.
+In other words, for a given revision, it counts how much text can be attributed to which contribution.
 
-Let $\tau(\rho,\alpha,\pi)$ denote the text of contribution(s) of located author $\rho$ to article $\alpha$ that are still present in revision $\pi$.
+To this end, let $\tau(\rho,\alpha,\pi)$ denote the text of contribution(s) of located author $\rho$ to article $\alpha$ that are still present in revision $\pi$.
 $T(\alpha,\pi)$ is all text from contribution(s) to article $\alpha$ that are still present in revision $\pi$:
 \begin{align*}
 T(\alpha,\pi) &= \{\tau(\rho,\alpha,\pi) : \rho \in P\}
 \end{align*}
-In other words, $T$ is the part of the text in a revision that could be located.
+In essence, $T$ is the part of the text in a revision that could be located.
 The modified weight function then determines an author's share of the located text $w_{\text{t.surv}}$: 
 \begin{align*}
 w_{\text{t.surv}}(\rho,\alpha,\pi) &= \frac{|\tau(\rho,\alpha,\pi)|}{|T(\alpha,\pi)|}
 \end{align*}
-This leads to the t.surv signature distance :
+This leads to the \term{t.surv signature distance} for revision $\pi$ of article $\alpha$:
 \begin{equation}\label{eqn:sigdistsurvivaltext}
 \begin{split}
 D_{\text{t.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\tau(\rho,\alpha,\pi)| \cdot \delta(\rho,\alpha)}{|T(\alpha,\pi)|} \\
@@ -604,6 +625,18 @@ D_{\text{t.surv}}(\alpha,\pi) & = \sum_{\forall \rho \in P(\alpha)} \frac{|\tau(
  \end{split}
 \end{equation}
 
+Compared with the original signature distance $D$, a lower value for $D_{\text{t.surv}}$ indicates that text from local contributions fared better than the average contribution.
+In cases where both values are equal, all text survived of previous revisions survived.\footnote{Or, very unlikely, was scaled in an exactly the same manner.}
+When comparing all three values, an order $D > D_{\text{e.surv}} > D_{\text{t.surv}}$ would suggest that local contributions were more likely to survive and were especially successful as a contribution.
+A more interesting order would be $D_{\text{e.surv}} > D > D_{\text{t.surv}}$, suggesting a lot of successful work by distant contributors while the text is still being dominated by text from local contributions.
+
+As in the previous section, I will introduce a new indicator for text survival, the \term{t.surv index}:
+
+\begin{align}
+ I_{\text{t.surv}} &= \frac{D_{\text{t.surv}}(\alpha,\pi)}{D(\alpha)} \cdot 100 & D(\alpha) &\neq 0
+\end{align}
+
+The baseline is again at 100, while values of $I_{\text{e.surv}} < 100$ indicate that text from local contributions is overrepresented in the current revision.
 
 \subsubsection{Implementation of the signature distance}
 

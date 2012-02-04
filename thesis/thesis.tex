@@ -182,8 +182,8 @@
 \newcommand{\subimage}[6]{
 \begin{figure}
 \centering
-%\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
-%\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
+\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
+\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
 \caption{#6}
 \label{fig:#5}
 \end{figure}
@@ -221,13 +221,13 @@
 \definecolor{smoke}{rgb}{0.98,0.98,0.98}
 \lstset{language=Python,
     keywordstyle=\color{RoyalBlue},%\bfseries,
-    basicstyle=\scriptsize\ttfamily,
+    basicstyle=\footnotesize\ttfamily,
     backgroundcolor=\color{smoke},
     %identifierstyle=\color{NavyBlue},
     commentstyle=\color{Green}\ttfamily,
     stringstyle=\color{gray}\ttfamily,
     numbers=none,%left,%
-    numberstyle=\color{gray}\tiny\ttfamily,
+    numberstyle=\color{gray}\scriptsize\ttfamily,
     tabsize=4,
     stepnumber=1,
     numbersep=-8pt,
