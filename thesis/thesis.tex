@@ -23,7 +23,7 @@
 		%openright,
 		titlepage,fleqn,numbers=noenddot,headinclude,%1headlines,% 
 		bibliography=totoc,
-                11pt,a4paper,BCOR5mm,footinclude,cleardoublepage=empty,abstractoff % <--- obsolete, remove (todo)
+                  10pt,a4paper,BCOR10mm,footinclude,cleardoublepage=empty,abstractoff % <--- obsolete, remove (todo)
        ]{scrreprt}
 
 % ********************************************************************
@@ -68,8 +68,8 @@
 % tocaligned eulerchapternumbers drafting linedheaders listsseparated 
 % subfig nochapters beramono eulermath parts minionpro pdfspacing 
 % listings dottedtoc minionprospacing manychapters
-\usepackage[eulerchapternumbers,
-		drafting,listsseparated,pdfspacing,%listings,
+\usepackage[eulerchapternumbers,drafting,
+		listsseparated,pdfspacing,listings,
 		subfig,beramono,eulermath,parts]{classicthesis}
 
 %*******************************************************
@@ -85,7 +85,7 @@
 %*******************************************************
 % Fine-tuning for the text area
 %*******************************************************
-%\linespread{1.05} % a bit more for Palatino
+\linespread{1.12} % a bit more for Palatino
 %\areaset[5mm]{312pt}{761pt} % 686 (factor 2.2) + 33 head + 42 head \the\footskip
 %\setlength{\marginparwidth}{7em}%
 %\setlength{\marginparsep}{2em}%
@@ -100,7 +100,7 @@
 \makeatother 
 
 %*******************************************************            
-%\usepackage[section,below]{placeins} <--- not everybody wants this
+%\usepackage[section,below]{placeins} %<--- not everybody wants this
 %\usepackage[all]{hypcap} <--- does not work with MiKTeX 2.6
 % ********************************************************************
 % Language/strings for backrefs (change here, thanks, Lorenzo)
@@ -140,9 +140,7 @@
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{ctable}
-\usepackage{subfig}
 
-%\newtheorem{hypothesis}{Hypothesis}
 \declaretheoremstyle[headfont=\normalfont\sc,headindent=-1em]{thesisstyle}
 
 \declaretheorem[style=thesisstyle,name=hypothesis]{thhypothesis}
@@ -157,9 +155,9 @@
 
 \newcommand{\cn}{[\todo{citation needed}]}
 
-\newcommand{\footurl}[4]{\footnote{\url{#1} (visited on \formatdate{#4}{#3}{#2})}}
-\newcommand{\weburl}[4]{\url{#1} (visited on \formatdate{#4}{#3}{#2})}
-\newcommand{\webhref}[5]{\href{#1}{#2} (visited on \formatdate{#5}{#4}{#3})}
+\newcommand{\footurl}[4]{\footnote{\url{#1} (visited on \protect\formatdate{#4}{#3}{#2})}}
+\newcommand{\weburl}[4]{\url{#1} (visited on \protect\formatdate{#4}{#3}{#2})}
+\newcommand{\webhref}[5]{\href{#1}{#2} (visited on \protect\formatdate{#5}{#4}{#3})}
 
 \newcommand{\image}[3]{
 \begin{figure}[htb]
@@ -184,8 +182,8 @@
 \newcommand{\subimage}[6]{
 \begin{figure}
 \centering
-\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
-\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
+%\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.45\textwidth]{images/#1}}
+%\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.45\textwidth]{images/#3}}
 \caption{#6}
 \label{fig:#5}
 \end{figure}
@@ -208,7 +206,7 @@
 
 
 \newcommand{\imgref}[1]{see figure~\ref{fig:#1}}
-\newcommand{\dformat}[3]{\formatdate{#3}{#2}{#1}}
+\newcommand{\dformat}[3]{\protect\formatdate{#3}{#2}{#1}}
 
 
 % ********************************************************************
@@ -302,35 +300,36 @@
 %\cleardoublepage\include{Publication}
 %\cleardoublepage\include{Acknowledgments}
 \pagestyle{scrheadings}
-\cleardoublepage\include{Contents}
+\cleardoubleoddemptypage\include{Contents}
 %********************************************************************
 % Mainmatter
 %*******************************************************
 \pagenumbering{arabic}
+%\newpage\thispagestyle{empty}\mbox{}
 % use \cleardoublepage here to avoid problems with pdfbookmark
-\cleardoublepage\part{Thoughts}
-\include{Introduction}
-\include{Foundation}
-\include{Hypotheses}
-\cleardoublepage\part{Methods}
-\include{Apparatus}
-\include{Experiment}
+\cleardoubleoddemptypage\part{Thoughts}
+\cleardoubleoddemptypage\include{Introduction}
+\cleardoubleoddemptypage\include{Foundation}
+\cleardoubleoddemptypage\include{Hypotheses}
+\cleardoubleoddemptypage\part{Methods}
+\cleardoubleoddemptypage\include{Apparatus}
+\cleardoubleoddemptypage\include{Experiment}
 %\addtocontents{toc}{\protect\clearpage} % <--- just debug stuff, ignore
-\cleardoublepage\part{Results}
-\include{Results}
-\include{Conclusion}
+\cleardoubleoddemptypage\part{Results}
+\cleardoubleoddemptypage\include{Results}
+\cleardoubleoddemptypage\include{Conclusion}
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
 % ********************************************************************
 % Backmatter
 %*******************************************************
 \appendix
-\cleardoublepage\part{Appendix}
+\cleardoubleoddemptypage\part{Appendix}
 %\include{Appendix}
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
 
-\cleardoublepage\include{Bibliography}
+\cleardoubleoddemptypage\include{Bibliography}
 %\cleardoublepage\include{Colophon}
 %\cleardoublepage\include{Declaration}
 % ********************************************************************

@@ -13,7 +13,7 @@ While Facebook played a part in organizing the protests, Twitter acted as an inf
 As the events unravelled, they were reflected by articles created on Wikipedia, an online encyclopedia.
 Updated by the minute, the articles covering the protests formed a well of news reports.\cite{wikiegypt}
 
-Wikipedia's free access, open editing policy, and high quality level---putting it ``head to head''\cite{giles2005internet} with Encyclopedia Britannica---turned it into a hugely popular website\cite{wikipv}.
+Wikipedia's free access, open editing policy, and high quality level---putting it ``head to head''\cite{giles2005internet} with Encyclopædia Britan\-nica---turned it into a hugely popular website\cite{wikipv}.
 The server software used for the website, MediaWiki\footurl{http://www.mediawiki.org}{2011}{10}{31}, ensures that the effort to change an article is minimal.
 Given an Internet connection and a web browser, anyone can add or edit an account of current events in a related article and publish it in a matter of seconds.
 
@@ -40,18 +40,28 @@ As later iterations of revisions turn these reports into historical accounts, ar
 And more generally, to what extent is a collection of these articles written by volunteers located at the respective location of the event?
 
 In this thesis I will propose a method to help answer these questions.
-By determining the geographic origin of each edit to an article, I will be able to calculate the geographic distribution of contributors.
-This distribution will then be used to answer the questions above for either a single article or a collection.
+First, I will present an improved technique for determining the geographic origin of contributions to an article.
+This georeferencing is a key step in the analysis of article revisions.
+Then, from the geographic distribution of contributors, local and distant participation will be determined for individual articles.
+I will also present two variations of a proximity metric that will allow to measure whether local contributions are more likely to prevail over time. 
+These metrics will also be applied in a quantitative analysis of a group or political articles.
 
-\todo{Include complete summary and key findings?}
+\todo{
+PENDING analysis: 
+ results show that for political event articles,
+ majority is not created by locals
+ local contributions are more likely to stick and their text more likely to prevail.
+}
 
 \section{Structure}
 
-\todo{complete over time, name the basic chapters and their function, one part = one paragraph} 
-
 The chapter \nameref{ch:foundation} provides background information about \nameref{sec:wikipedia}, article editing (\nameref{sec:contribution}), and the application of geographic data (\nameref{sec:georeference}).
-The first part ends with \nameref{ch:hypotheses} where I propose the research questions that this thesis hopes to answer.
+The first part ends with the \nameref{ch:hypotheses} where I propose the research questions that this thesis hopes to answer.
 
-In \nameref{ch:apparatus} I will describe the tools available to be used in the method that will be applied to a host of articles in \nameref{ch:experiment}.
-The findings will be presented in \nameref{ch:results}.
-Followed by a discussion of their feasibility in \nameref{ch:conclusion}.
+In \nameref{ch:apparatus} I will describe the data sources and tools that I used in the development of a web application to perform the revision analysis. 
+The chapter details the improved user-locating algorithm (\nameref{sub:locatingusers}) as well as the variations of the proximity metrics (\nameref{sub:sigdist}).
+In \nameref{ch:experiment}, I will present the results of an analysis for a few example articles.
+There, I will describe how the application's various types of visualization can used to interpret the results.
+
+Finally, in \nameref{ch:results} I will define the data set for the quantitive analysis and present the results of the application run.
+Their feasibility as well as the method's limitations will be discussed in \nameref{ch:conclusion}.
