@@ -11,23 +11,27 @@ For this thesis I will use the event definition proposed by \textcite[243]{lewis
 It follows that events must have clear spatial and temporal boundaries.
 The spatial boundaries give it a location, distinguishing the where.
 In addition to the innate temporal boundaries, namely the start and the end date\footnote{For ongoing events the end date will be the date of the analysis.}, I will further denote the \term{beginning} of an event as the first seven days of an event.\footnote{The interval was picked arbitrarily but acknowledges the fact that event dates in Wikipedia articles rarely carry a time attribute, therefor a shorter interval, say 24 hours, is less feasible.}
-The unbounded time interval after the beginning will be referred to as \term{later}, e.g. all \term{later} revisions denote the set of all article revisions created by contributors after the interval \term{beginning}.
+Contributions that occur in the beginning will be referred to as \term{early}.
+The rest of contributions appearing in the unbounded time interval after the beginning will be referred to as \term{late}.
 
-In conjunction with location this division into time intervals allows for a detailed look into \nameref{sec:articlecreation}, the level of \nameref{sec:participation}, as well as \nameref{sec:textsurvival}.
+Let me further denote authors in the event's proximity\footnote{\textcite[57]{hardy2011volunteered} defined proximity not in absolute terms, rather he considered the likeliness of authors being located less far than the average distance between an article and all its contributors. In the next chapter \nameref{ch:apparatus} I will describe the algorithm used to distinguish local from distant authors.} as \term{local}, while the opposite be referred to as \term{distant}.
+
+The observation of both the localness and the division into time intervals will allow for a detailed look into \nameref{sec:articlecreation}, the level of \nameref{sec:participation}, as well as \nameref{sec:textsurvival}.
 
 \section{Article creation}\label{sec:articlecreation}
 
 The use of Wikipedia during a political event starts with the creation of the article describing the event.
 How quickly a users create such articles is less clear.
-Wikipedia's popularity and global reach provide an incentive to publish without delay.
+Wikipedia's popularity and global reach provide an incentive to use it as a news channel and to publish without delay.
 This leads to the following hypothesis:
 
-\hypothesis{H1}{Articles are created instantly after the start of the event.}
+\hypothesis{h1}{Articles are created shortly after the start of the event.}
 
-Moreover, considering the rising year-on-year Wikipedia usage in numbers of pages viewed\cite{wikipv}, this effect should compound.
-The delay between should be become shorter and shorter suggesting an increased use of Wikipedia as a news channel, thus:
+Moreover, considering the rising year-on-year Wikipedia usage in numbers of pages viewed\cite{wikipv}, the incentive becomes greater.
+Consequently, for more recent events the delay between the start date and the creation of the article should become shorter.
+This would also suggest an increased use of Wikipedia as a news channel, thus:
 
-\hypothesis{H2}{The more recent an article, the shorter is the delay between the event start and article creation.}
+\hypothesis{h2}{The more recent an article, the shorter is the delay between the event start and article creation.}
 
 A user has the chance to create a new article in any of the 260-odd language editions of Wikipedia.
 Although the English version is by far the biggest and most visited, it would be interesting to see whether it is also the first choice to create an article covering a new event.
@@ -38,15 +42,16 @@ This means authors retain knowledge they consider important only to their compat
 For a citizen of a country where English is not an official language, creating an article becomes a political decision: should the author make the information available to fellow citizens or to a world-wide readership?
 The following hypothesis will be tested only for articles where the user faces that choice, i.e. for articles about events in countries where English is not an official language, thus:
 
-\hypothesis{H3}{Articles are being created first in the English Wikipedia.}
+\hypothesis{h3}{Articles are being created first in the English Wikipedia.}
 
 Regarding the localness of contributions, \textcite[57]{hardy2011volunteered} has established that Wikipedians write about places in their proximity more often than distant ones.
 His sample included only articles that have a geotag.
 Naturally, articles about geographic places like towns and sites\footnote{According to \textcite{kittur2009s} articles about ``geography and places'' are third biggest group.} will dominate this sample.
-Since my thesis is concerned with political events, I find this point to be worth revisiting\footnote{In addition, \textcite[61]{hardy2011volunteered} considered only anonymous users. Since creating an article is only allowed for registered users, his method has to be extended.}, as the people most affected should be the ones creating the article, thus:
+Since my thesis is concerned with political events, I find this point to be worth revisiting\footnote{In addition, \textcite[61]{hardy2011volunteered} considered only anonymous users. Since creating an article is only allowed for registered users, his method has to be extended.}.
+People in an event's proximity are probably more likely to be affected by it.
+The following hypothesis aims to find out whether they are the ones creating the article, thus:
 
-\hypothesis{H4}{Articles about political events are created by people in the events' proximity\footnote{\textcite[57]{hardy2011volunteered} defined proximity not in absolute terms, rather he considered the likeliness of authors being located less far than the average distance between an article and all its contributors.}.
-}
+\hypothesis{h4}{Articles about political events are created by local authors.}
 
 Hypotheses 1--4 will only be tested against articles that were created as a reaction to an event that has already started. 
 This excludes scheduled events like elections, e.g. \emph{Russian legislative election, 2011}\footurl{http://en.wikipedia.org/wiki/Russian_legislative_election,_2011}{2012}{1}{7} which was created 335 days before the election date, almost a year in advance.
@@ -62,37 +67,38 @@ This inconclusive result and the age of the sample\footnote{\textcite{viegas2004
 
 In 2007, \textcite{kittur2007power} found that a core of registered users is still doing the bulk of all edits.
 However, anonymous users contribute considerable amounts of text. 
-For accounts of political events, due to their dynamic nature, I expect a strong participation by unregistered users while the events are still unfolding:
+For accounts of political events, due to their dynamic nature, I expect a strong participation by unregistered users while events are still unfolding:
 
-\hypothesis{H5}{In the beginning of the event anonymous users contribute more than registered users.}
+\hypothesis{h5}{In the beginning most contributions are anonymous.}
 
-\hypothesis{H6}{For the duration of the event there are more local contributions than distant ones.}
+Furthermore, \textcite{viegas2004history} found that early contributions have a high survival rate.
+Recognizing this \term{first-mover advantage}, I suspect that accounts of political events show a strong localness in the beginning:
 
-When the political event is considered ``over'' its end date in the article changes from ``present'' to a calendar date.
-In this unbounded and final phase I would expect the flood of contributions to subside and the content to consolidate when editors tighten prose or remove text they believe to be irrelevant.
-Looking at the whole lifespan of an article I would also expect registered users to outnumber anonymous ones as suggested by \textcite{kittur2007power} and the spatial distribution of contributions to become less local.
-Thus the final hypotheses:
+\hypothesis{h6}{In the beginning most contributions are local.}
 
-\hypothesis{H7}{Articles of political events that have ended tend to shrink in size.}
+After the beginning, I expect these parameters to change.
+Looking at the whole lifespan of an article I would also expect registered users to outnumber anonymous ones as suggested by \textcite{kittur2007power}, thus:
 
-\hypothesis{H8}{After an event has ended, there will be more contributions from registered users than from anonymous ones.}
+\hypothesis{h7}{Later, the share of anonymous contributions decreases over time.}
 
-\hypothesis{H9}{After an event has ended, the spatial distribution of the contributors will become less local.}
+Similarly, I expect distant authors to participate more as the global readership joins the authors in contributing to the article.
+These additional contributions by distant authors lessening the proportion of local contributions:
 
-% only articles that have ended after article creation
+\hypothesis{h8}{Later, the share of local contributions decreases over time.}
+
 
 \section{Text survival}\label{sec:textsurvival}
 
-In \ref{sec:participation} the contributions are only treated in volume, giving credit to each contributor.
+In \nameref{sec:participation}, the edits are all treated as a single unit of contribution.
+This gives authors with a higher edit count more credit.
 However, when multiple authors write the same article, they do not only add text but also modify or even delete parts.
-A user who reads an article will only see the text that has survived all edits after it was added.
-\textcite{viegas2004history} found that early contributions have a high survival rate.
-Recognizing this \term{first-mover advantage}, I suspect that accounts of political events show a strong localness in the beginning.
-Thus the key hypotheses from \ref{sec:participation} have to be extended to reflect the spatial distributions of the contributions that make up the article:
+In some cases, contributions are reverted immediately, i.e. the contributed text is no longer part of the article.
+Recognizing this dynamic, the last two hypotheses are concerned with the relative performance of local contributions:
 
-\hypothesis{H10}{For the duration of the event the article text contains more local contributions than distant ones.}
+\hypothesis{h9}{Local contributions are more likely to survive.}
 
-\hypothesis{H11}{After an event has ended, the spatial distribution of the surviving contributions will become less local.}
+\hypothesis{h10}{Text from local contributions is more likely to survive.}
 
+If support for \abbr{h10} can be found, text written by locals will be overrepresented in an article.
 This concludes the statement of the hypotheses.
 The next chapter, \nameref{ch:apparatus}, describes an application designed to test these.
