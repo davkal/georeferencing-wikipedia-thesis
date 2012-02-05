@@ -44,7 +44,7 @@
 \newcommand{\myFaculty}{Institut f\"ur Informatik\xspace}
 \newcommand{\myDepartment}{\xspace}
 \newcommand{\myUni}{\protect{Freie Universit\"at Berlin}\xspace}
-\newcommand{\myLocation}{Berlin, Germany\xspace}
+\newcommand{\myLocation}{Written in the cafes of Berlin, Krakow, Paris, and Tallinn.\xspace}
 \newcommand{\myTime}{August 2011 -- February 2012\xspace}
 \newcommand{\myVersion}{Version 1.0\xspace}
 %*******************************************************
@@ -293,13 +293,12 @@
 %********************************************************************
 % Frontmatter
 %*******************************************************
-%\include{DirtyTitlepage}
-\include{Titlepage}
-\include{Titleback}
-%\cleardoublepage\include{Dedication}
-\cleardoublepage\include{Abstract}
+\include{DirtyTitlepage}
+\cleardoubleoddemptypage\include{Titlepage}\include{Titleback}
+\cleardoubleoddemptypage\cleardoubleoddemptypage\include{Dedication}
+\cleardoubleoddemptypage\include{Abstract}
 %\cleardoublepage\include{Publication}
-%\cleardoublepage\include{Acknowledgments}
+\cleardoubleoddemptypage\include{Acknowledgments}
 \pagestyle{scrheadings}
 \cleardoubleoddemptypage\include{Contents}
 %********************************************************************
@@ -332,7 +331,7 @@
 
 \cleardoubleoddemptypage\include{Bibliography}
 %\cleardoublepage\include{Colophon}
-%\cleardoublepage\include{Declaration}
+\cleardoublepage\include{Declaration}
 % ********************************************************************
 %*******************************************************
 \end{document}
