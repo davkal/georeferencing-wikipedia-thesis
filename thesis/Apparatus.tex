@@ -716,6 +716,8 @@ When the user's location could only be determined by parsing the user page, the 
 
 The algorithmic analyses of the articles are in fact measurements, i.e. multiple series of numbers, that can also be represented in graphical terms.
 Following the maxim ``The purpose of visualization is insight, not pictures.''\cite[6]{card1999readings}, the application's diagrams aim to support the presentation of results and to invite exploration.
+This section will only present the different types of diagrams as they are an integral part of the application. 
+The next chapter, \nameref{ch:experiment}, discusses how the shown results can be interpreted.
 
 %\begin{todos}
 %    \item \fullcite{kjellin2010evaluating}
@@ -743,12 +745,11 @@ For each country, the number of edits of its authors is counted, resulting in a 
 A choropleth map (see figure \imgref{origins}) is used to show how this measure varies over different countries.
 The darker a country is rendered, the higher is its edit count.
 
-\img{origins}{Geographic origins by country for located authors of \emph{2011--2012 Bahraini uprising}}
-
 However, this choropleth map only measures the edit counts and does not acknowledge the fact that contributions may disappear by edits in later revisions. 
 Therefore, a second choropleth map (\imgref{survival}) is shown below the first one, displaying text volume  based on text survival (see also \nameref{sec:contribution}).
 This allows for a direct comparison of contributor countries with a high activity (edit counts) versus contributor countries whose citizens write text that survives the scrutiny of other editors, e.g. Egypt gained intensity (darker green) in the second map.
 
+\img{origins}{Geographic origins by country for located authors of \emph{2011--2012 Bahraini uprising}}
 \img{survival}{Text survival in revision 471577075 grouped by country for located text of \emph{2011--2012 Bahraini uprising}}
 
 For the second choropleth map, the annotated markup provided by WikiTrust is parsed to extract the authors that introduced the text sequences that make up the final text.
@@ -770,12 +771,12 @@ This subset of revisions is again grouped by the country of its author (if locat
 	return edits
 \end{lstlisting}
 
-\subsection{Line charts}
+\subsection{Line charts, scatter charts and box plots}
 
-A timeline chart is used to display the evolution of the several metrics over time: the signature distance, the distance of single revision, and the number of page views for that day, \imgref{activity}.
-A peak in the orange line (page views) could signal elevated interest in the content while a tight zig-zag pattern in the red line (revision distance) could be an edit war between local and distant contributors.
+\imgwide{activity}{Localness chart for \emph{2011--2012 Bahraini uprising}}
 
-\imgwide{activity}{Activity chart for \emph{2011--2012 Bahraini uprising}}
+As part of the article analysis, a timeline chart shows the evolution of the three proximity metrics over time: the signature distance and the two new variants, \term{e.surv} and \term{t.surv}, \imgref{activity}.
+For the rendering of the hypotheses test results, also line charts as well as scatter charts and box plots are being used, see chapter \nameref{ch:results}.
 
 \subsection{Motion chart}
 
@@ -801,7 +802,7 @@ In addition to the basic requirements (see \nameref{sub:articlerequirements}) fo
 For hypotheses that rely on a correlation for their support, the Pearson product-moment correlation coefficient is used.
 \todo{outliers}
 
-\subsection*{H1: Articles are created with only a short delay after the start date of the event.}
+\subsection*{H1: Articles are created shortly after the start of the event.}
 
 When the date parsing algorithm finds a date, an article is assumed to treat an event.
 Moreover, the parser supports different time resolutions.
@@ -826,54 +827,43 @@ Then, articles lend support to the hypothesis if they have been created first in
 The language codes used to identify Wikipedia's language editions ``mostly correspond to the language codes defined by \ac{ISO} 639-1''.\cite{wplist} 
 This allows to test whether a language edition corresponds to one of a country's official languages (see \entity{official languages} in \nameref{sub:wpwebsite}).
 
-\subsection*{H4: Articles about political events are created by people in the events' proximity.}
+\subsection*{H4: Articles about political events are created by local authors.}
 
 Articles qualify if their creator has been located.
 An article lends support to the hypothesis if the creator is considered local, see \nameref{sub:localness}.
 
-\subsection*{H5: In the beginning of the event anonymous users contribute more than registered users.}
+\subsection*{H5: In the beginning most contributions are anonymous.}
 
 Articles qualify that have at least 10 revisions (excluding bots) in the time interval after creation.
 The interval for event articles with day resolution is 7 days; the limit for articles with a month resolution is 30 days.
 An article lends support to the hypothesis when the number of anonymous contribution is bigger than the number of contributions done by registered users.
 
-\subsection*{H6: For the duration of the event the majority of contributions are local.}
+\subsection*{H6: In the beginning most contributions are local.}
 
-Articles qualify when they have at least 10 revisions (where the author was located, excluding bots) for the duration of the event.
+Articles qualify when they have at least 10 revisions (where the author was located, excluding bots) in the time interval after creation.
 An article lends support to the hypothesis when the number of local contribution is bigger than the number of distant, i.e. non-local, contributions (see \nameref{sub:localness}).
 
-\subsection*{H7: Articles of a political event that has ended will continuously shrink in size.}
+\subsection*{H7: Later, the share of anonymous contributions decreases over time.}
 
-Articles qualify that have an event end date before the date they were analyzed and have at least 10 revisions after their end date.
-The hypothesis is supported if there is a linear dependence between the time passed after the end date and the article size, in the form of a negative correlation coefficient.
+Articles qualify that have at least 10 late revisions.
+The hypothesis is supported if there is a linear dependence between the article age and the share of anonymous contributions, in the form of a negative correlation coefficient.
 
-\subsection*{H8: After an event has ended, there will be more contributions from registered users than from anonymous ones.}
+\subsection*{H8: Later, the share of local contributions decreases over time.}
 
-Articles qualify that have an event end date before the date they were analyzed and at least 10 revisions (excluding bots) in the time after the event has ended.
-An article lends support to the hypothesis when the number of anonymous contribution is bigger than the number of contributions done by registered users.
+Articles qualify that have at least 10 late revisions that have been located.
+The hypothesis is supported if there is a linear dependence between the article age and the share of local contributions (see \nameref{sub:localness}), in the form of a negative correlation coefficient.
 
-\subsection*{H9: After an event has ended, the spatial distribution of the contributors will become less local.}
+\subsection*{H9: Local contributions are more likely to survive.}
 
-Articles qualify that have an event end date before the date they were analyzed and at least 10 located revisions (excluding bots) in the time after the event has ended.
-A shift in the spatial distribution from distant to local coincides with a decrease in signature distance.
-The hypothesis is supported if there is a linear dependence between the time passed after the end date and the signature distance.
-If overall the signature distance rises over time, the correlation coefficient will be positive.
+Articles qualify that have least 10 located revisions.
+Local contributions are more likely to survive when, on average, the \term{e.surv} signature distance is smaller than the original signature distance.
+Using the \term{e.surv index}, the hypothesis is supported if for all revisions the mean \term{e.surv index} is smaller than 100.
 
-\todo{correlation enough?}
+\subsection*{H10: Text from local contributions is more likely to survive.}
 
-\subsection*{H10: For the duration of the event the majority of located article content comes from local contributions.}
-
-Articles qualify that have at least 10 located revisions during the event interval.
-An article lends support to the hypothesis when local (see H6) contributions during the event interval outnumber the non-local ones (see \nameref{sub:localness}).
-
-
-\subsection*{H11: After an event has ended, the spatial distribution of the surviving contributions will become less local.}
-
-Articles qualify that have an event end date before the date they were analyzed and at least 10 revisions from after the time the event has ended and for which a text survival analysis has been done.
-Similar to H9, this hypothesis is supported if there is a linear dependence between the time passed after the end date and the revisions' signature distance.
-\todo{make this text ratio dependent}
-If overall the signature distance rises over time, the correlation coefficient will be positive.
-\todo{correlation enough?}
+Articles qualify that have least 10 located revisions.
+Text from local contributions is more likely to survive when, on average, the \term{t.surv} signature distance is smaller than the original signature distance.
+Using the \term{t.surv index}, the hypothesis is supported if for all revisions the mean \term{e.surv index} is smaller than 100.
 
 
 \section{Possible enhancements}

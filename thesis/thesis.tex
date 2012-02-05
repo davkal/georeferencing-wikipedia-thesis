@@ -140,6 +140,7 @@
 \usepackage{amsthm}
 \usepackage{thmtools}
 \usepackage{ctable}
+\usepackage{nth}
 
 \declaretheoremstyle[headfont=\normalfont\sc,notefont=\scshape,postheadspace=.5em,headindent=-1.5em,headpunct=]{thesisstyle}
 
@@ -160,7 +161,7 @@
 \newcommand{\webhref}[5]{\href{#1}{#2} (visited on \protect\formatdate{#5}{#4}{#3})}
 
 \newcommand{\image}[3]{
-\begin{figure}[htb]
+\begin{figure}[h!tb]
 \centering
 \includegraphics[width=#3\textwidth]{images/#1}
 \caption{#2}
@@ -170,7 +171,7 @@
 
 % apply same changes to \img
 \newcommand{\imagex}[3]{
-\begin{figure}[htb]
+\begin{figure}[h!tb]
 \centering
 \includegraphics[width=#3\textwidth]{images/#1}
 \caption{#2}
@@ -201,8 +202,8 @@
 
 \newcommand{\img}[2]{\image{#1}{#2}{0.8}}
 \newcommand{\imgx}[2]{\imagex{#1}{#2}{0.8}}
-\newcommand{\imgwide}[2]{\image{#1}{#2}{1.125}}
-\newcommand{\imgwidex}[2]{\imagex{#1}{#2}{1.125}}
+\newcommand{\imgwide}[2]{\image{#1}{#2}{1.12}}
+\newcommand{\imgwidex}[2]{\imagex{#1}{#2}{1.12}}
 
 
 \newcommand{\imgref}[1]{see figure~\ref{fig:#1}}

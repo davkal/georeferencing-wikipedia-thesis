@@ -28,32 +28,40 @@ The general metrics of the three runs are shown in table \ref{examplearticles}.
 The rows \emph{Located contributors} show the effectiveness of the georeferencing algorithm using different data sources.
 The combined techniques of using the Poor Man's Checkuser database and the parsing of user pages increase the share of located contributors by 20\% to around 60\%.
 
-\ctable[    caption = Example articles,    label   = examplearticles,pos=h,doinside=\small ]{Xrrr}{    \tnote{Contributors are all authors excluding bots.}    \tnote[b]{Poor man's checkuser} }{\toprule         \tableheadline{} 
+\ctable[
+    caption = Example articles,
+    label   = examplearticles,
+pos=h,doinside=\small ]{Xrrr}{
+    \tnote{Contributors are all authors excluding bots.}
+    \tnote[b]{Poor man's checkuser}
+ }{\toprule         \tableheadline{} 
     	& \tableheadline{Egypt-Rev} 
     				& \tableheadline{Orange-Rev} 
 							&  \tableheadline{NYC}\\ \midrule
-    Created 		& 2011-01-25 	&  2004-11-25 & 2001-03-27 \\
-    First in language 	& English 	&  Ukrainian & English \\
-    Latest revision		& 474305051 	&472144068& 474353739 \\
-    Size (\kb)			& 153.9 	&  42.6& 172.4 \\
-    Revisions 		& 7,039 	&  880 & 15,953 \\
-    Contributors\tmark		& 1,539 	&  382 & 5,125 \\
-     -- anonymous	& 748 	&  166 & 2,644 \\
+    Created 			& 2011-01-25 	&  2004-11-25 & 2001-03-27 \\
+    First in language 		& English 	&  Ukrainian & English \\
+    Latest revision		& 474830650 	&472144068& 474353739 \\
+    Size (\kb)			& 152.6 	&  42.6& 172.4 \\
+    Revisions 			& 7,045 	&  880 & 15,953 \\
+    Contributors\tmark		& 1,543 	&  382 & 5,125 \\
+     -- anonymous		& 751 	&  166 & 2,644 \\
     \midrule
-    Located contributors (\%) 	& 58.3 & 59.2 & 61.4 \\
-    -- anonymous (\%)		& 48.6 & 43.5 & 51.6 \\
+    Located contributors (\%) 	& 58.4 & 59.2 & 61.4 \\
+    -- anonymous (\%)		& 48.7 & 43.5 & 51.6 \\
     -- by \abbr{PMCU}\tmark[b]	(\%)		& 4.5 & 9.9 & 5.7 \\
-    -- by user page (\%)	& 5.1 & 5.8 & 4.1 \\
+    -- by user page (\%)	& 5.2 & 5.8 & 4.1 \\
     \midrule
     \emph{Cumulative} \\
-    Unique countries of origin	& 72 & 38 & 83 \\
+    Unique countries of origin	& 71 & 38 & 83 \\
     Signature distance (km) 	& 4,731.5 & 6,090.4 & 2,922.5 \\
     \midrule
     \emph{Present in latest revision} \\
-    Unique countries of origin 	& 36 & 24 & 23 \\
-    Signature dist. e.surv (km) 	& 3,109.4 & 6,226.3 & 1,242.6 \\
-    Signature dist. t.surv (km) 	& 367.9 & 3,825.9 & 721.8 \\
-    Located text (\%) 	& 17.1 & 17.6 & 15.1 \\
+    Unique countries of origin 	& 37 & 24 & 23 \\
+    Signature dist. e.surv (km) 	& 3,684.2 & 6656.7 & 1,242.6 \\
+    Signature dist. t.surv (km) 	& 2,705.0 & 7147.0 & 721.8 \\
+    e.surv index 				& 77.9 & 109.3 & 1,242.6 \\
+    t.surv index				& 57.2 & 117.3 & 721.8 \\
+    Located text (\%) 	& 23.8 & 23.7 & 15.1 \\
     \bottomrule
 }
 
@@ -65,7 +73,7 @@ For the second group of rows, only contributions were counted that provided text
 Over time, all three articles collected contributions from a number of countries. 
 However, during the collective editing process, up to two thirds of them were removed as can be observed in the \abbr{NYC} article. 
 
-The different signature distance variants can hint which countries' contributions did not survive.
+The signature distance variant \term{e.surv} can hint which countries' contributions did not survive.
 A lower \term{e.surv} value compared to the original signature distance suggests that contributions from distant countries did not survive as well as local contributions.
 For the \abbr{NYC} article, the \term{e.surv} distance is less than half the original signature distance, suggesting that a lot of distant contributions were either removed or replaced by local ones.
 Conversely, a relatively higher \term{e.surv} value suggests that local contributions did less well---the article \abbr{orange-rev} shows this behavior but the difference is negligible.
@@ -73,9 +81,9 @@ Conversely, a relatively higher \term{e.surv} value suggests that local contribu
 More strikingly, comparing the \term{t.surv} distance to the other distance metrics reveals how misleading metrics based on edit count can be.
 The \term{t.surv} distance weighs an author's distance to the article's location by the relative amount of text that survived.
 A low \term{t.surv} distance means that texts from local contributions dominate the article---despite the other metrics suggesting numerous contributions from more distant countries.
-This behavior is at its starkest in the \abbr{egypt-rev} article where the signature distance shrank from 4,731.5km to 367.9km when weighed by survival of text from located contributions. 
+The \abbr{egypt-rev} article shows this behavior where the signature distance shrank by 43\% to 2,705km when weighed by survival of text from located contributions. 
 This last qualification is important, however.
-If only few of the surviving contributions can be located, the \term{t.surv} distance becomes less representative---for the example articles only around 17\% of the text passages could be located.
+If only few of the surviving contributions can be located, the \term{t.surv} distance becomes less representative---for the example articles only around 24\% of the text passages could be located.
 
 
 \section{Distribution of edit counts vs text survival}
@@ -94,10 +102,11 @@ However, the United States pale in the text survival map as the located text see
 This suggests, the article was equally ``worked on'' by authors from both countries, but contributions from one country were more likely to prevail.
 It should be noted again, as only 17\% of the text could be located, no firm conclusions can be drawn.
 
-For the article \abbr{orange-rev}, the differences in shading are less noticeable, see figures \ref{fig:orange-rev-origins} and \ref{fig:orange-rev-text}.
-However, placed 2nd by edit counts, Ukraine ranks 5th in text survival.
 \img{orange-rev-origins}{Distribution of origins by cumulative edit count for article \abbr{orange-rev}.}
 \img{orange-rev-text}{Distribution of origins by text survival for article \abbr{orange-rev}.}
+
+For the article \abbr{orange-rev}, the differences in shading are less noticeable, see figures \ref{fig:orange-rev-origins} and \ref{fig:orange-rev-text}.
+However, placed \nth{2} by edit counts, Ukraine ranks \nth{5} in text survival.
 
 The maps for the article \abbr{NYC} are even less suggestive, as the United States dominate both distributions, \imgref{nyc-maps}.
 
@@ -105,28 +114,57 @@ The maps for the article \abbr{NYC} are even less suggestive, as the United Stat
 
 %for all three articles, here are the biggest changes in share of edit count vs share of survived text.
 
+%\clearpage
 \section{Temporal development}
 
-\todo{
-motion chart offers to see the evolution of key metrics over time. 
-cumulative edit count, survived edits, share of survived text, all be plotted against distance to article or against each other.
-plotted against distance, cumulative edits rise over time, upper right means lots of edits from afar. 
+In the application's section \term{Localness}, a timeline chart displays the evolution of the signature distance and its two variations over time, \imgref{egypt-rev-localness}.
+There, the blue line is the original signature distance.
+An $x-y-$point on that line reflects the average distance $y$ of all located contributions before the date $x$ weighed by their relative work.
 
-changing axis to text survival against cumulative edits, upper right means hard earned, upper left: most efficient.
-lower right is where you don't want to be, a lot of effort, nothing is sticking.
+The orange line is the \term{t.surv} signature distance, that weighs the contributions by text survival.
+When the orange line is above the blue line, text from distant contributions is overrepresented\footnote{The baseline is the original signature distance (blue line).} in the current revision.
+Whenever the orange or red (\term{e.surv}) lines cross the blue line from above, this overrepresentation changes from distant to local.
 
-strong western culture bias means USA is usually one of the big ones.
-text survival metric needs log view, the chart axis scale according to max value, that was 100 \% at some point usually early in age, or later done by vandalism (blanking)
-}
+\imgwide{egypt-rev-localness}{Timeline chart for the signature distance of article \abbr{egypt-rev}.}
 
+As a second visualization of the temporal development, is in the section \term{Evolution}.
+There, a motion chart presents the evolution of key metrics over time.
+For this, all located contributors were grouped by country and are represented by a bubble. 
+The cumulative edit count, the number of survived edits, or the share of survived text can all be plotted against the distance to article or against each other.
+
+\img{egypt-rev-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{egypt-rev}.}
+
+By default, the cumulative edit count (y-axis) is plotted again the distance (x-axis), \imgref{egypt-rev-motion-edit}.
+An increase in edit count is represented in two ways, a bubble's vertical location as well as the bubble's size.
+When the motion chart is played, countries with very active contributors move up faster and grow in size. 
+The locality of a bubble and its size make it easy to spot the biggest contributors and their spatial relationship to the article's location, e.g. a big bubble in the upper right represents a distant country with lots of contributions. 
+
+When changing the y-axis to text survival\footnote{The text survival metric is best viewed in a logarithmic scale because the chart axis is scaled according to a country's maximum share. A country's share is usually between 1 and 15\% but  can potentially be 100 \% at some point in time---usually in an early stage of the article, or later as a result of vandalism.}, the bubbles shift to reflect the countries' share of the text in the latest revision.
+Here, the biggest move downwards suggests a lot that country's contributions did not survive.
+
+\img{egypt-rev-motion-survival}{Evolution of text survival vs cumulative edit count for article \abbr{egypt-rev}.}
+
+Another interesting plot can be achieved by leaving the y-axis on text survival while setting the x-axis to cumulative edits, \imgref{egypt-rev-motion-survival}.
+This plot reflects the efficiency of edits. 
+Bubbles in the upper right represent hard earned text survival by lots of edits.
+Conversely, a bubble in the lower right suggests contributors of a country producing a lot of edits that do not survive.
+%It should be noted that the strong culture bias of the English Wikipedia means that the USA is likely to have a high cumulative edit count, represented by a big bubble.
 
 \section{Hypotheses analysis}
 
 The two political articles \abbr{egypt-rev} and \abbr{orange-rev} were checked for hypothesis support.
 The results are in table \ref{exampleresults}.
 
-\ctable[    caption = Hypothesis support of example articles \\ \HT article lends support; \HF  article does not lend support,
-	cap = Hypothesis support of example articles,    label   = exampleresults,pos=h,doinside=\small ]{Xll}{    \tnote{Only applicable to a group of articles.}    \tnote[b]{Unable to locate creator.}    \tnote[c]{Share of located contributions.}    \tnote[d]{No revisions after event, still ongoing.} }{\toprule         \tableheadline{Hypothesis} 
+\ctable[
+    caption = Hypothesis support of example articles \\ \HT article lends support; \HF  article does not lend support,
+	cap = Hypothesis support of example articles,
+    label   = exampleresults,
+pos=h,doinside=\small ]{Xll}{
+    \tnote{Only applicable to a group of articles.}
+    \tnote[b]{Unable to locate creator.}
+    \tnote[c]{Share of located contributions.}
+    \tnote[d]{No revisions after event, still ongoing.}
+ }{\toprule         \tableheadline{Hypothesis} 
     			& \tableheadline{Egypt-Rev} 
     					& \tableheadline{Orange-Rev}\\ \midrule
     H1 Created after short time		& \HT 1d	&  \HF 25d   \\
