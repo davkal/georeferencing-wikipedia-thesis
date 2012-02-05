@@ -3,7 +3,7 @@
 %************************************************
 
 The application described in \nameref{ch:apparatus} will now be fed with articles. 
-This chapter will demonstrate results for individual articles and give pointers to how they can be interpreted.
+This chapter will demonstrate results for individual articles and give pointers on how they can be interpreted.
 For a quantitative analysis testing the hypotheses on a set of articles, see the next chapter \nameref{ch:results}.
 \vspace{2em}
 \imgwide{egypt-rev}{Sample run for article \term{2011 Egyptian revolution}}
@@ -14,7 +14,7 @@ The experimental runs will be done on the following articles:
 
 \begin{description}
   \item[Egypt-Rev] The article \term{2011 Egyptian revolution}\footurl{http://en.wikipedia.org/wiki/2011_Egyptian_revolution}{2012}{02}{04} details the protests leading to the overthrow of the government.
-  \item[Libyia-war] The \term{Libyan civil war}\footurl{http://en.wikipedia.org/wiki/Libyan_civil_war}{2012}{02}{04} refers to the country-wide rebellion that turned into a civil war during the Arab Spring.
+  \item[Libya-war] The \term{Libyan civil war}\footurl{http://en.wikipedia.org/wiki/Libyan_civil_war}{2012}{02}{04} refers to the country-wide rebellion that turned into a civil war during the Arab Spring.
   \item[Bahrain-up] The \term{2011--2012 Bahraini uprising}\footurl{http://en.wikipedia.org/wiki/2011-2012_Bahraini_uprising}{2012}{02}{04} refers to the events surrounding a series of demonstrations in the Gulf state during the Arab Spring.
 %	\item[Orange-Rev] The \term{Orange Revolution}\footurl{http://en.wikipedia.org/wiki/Orange_Revolution}{2012}{02}{04} refers to the events surrounding the flawed Ukrainian presidential election in 2004. 
 	%\item[Berlin] This article about the German capital\footurl{}{2012}{02}{04} was included to represent articles that simply treat a place---with a lesser political dimension.
@@ -26,7 +26,7 @@ The application analyzes the articles' contributions and presents the results in
 
 Some metrics of the three runs are shown in table \ref{examplearticles}.
 The rows \emph{Located contributors} show the effectiveness of the georeferencing algorithm using different data sources.
-The combined techniques of using the Poor Man's Checkuser database and the parsing of user pages increase the share of located contributors by more than 20\%.
+Using the combined techniques of the Poor Man's Checkuser database and the parsing of user pages increases the share of located contributors by more than 20\%.
 
 \ctable[
     caption = Example articles,
@@ -72,7 +72,7 @@ It is also worth comparing the proximity metrics in the lower two groups of rows
 The values from the \emph{cumulative} group are based on the edit counts of all contributions.
 For the second group of rows, only contributions were counted that provided text still \term{present in the latest revision}.
 Over time, all three articles collected contributions from a number of countries. 
-However, during the collective editing process, up to two thirds of them were removed as can be observed in the \abbr{bahrain-up} article. 
+However, during the collective editing process, up to two thirds of them were removed, as can be observed in the \abbr{bahrain-up} article. 
 
 The signature distance variant \term{e.surv} can hint whether local contributions are more likely to survive.
 A lower \term{e.surv} value compared to the original signature distance suggests that contributions from distant countries did not survive as well as local contributions.
@@ -83,7 +83,7 @@ More strikingly, comparing the \term{t.surv} distance to the other distance metr
 The \term{t.surv} distance weighs an author's distance to the article's location by the relative amount of text that survived.
 A low \term{t.surv} distance means that texts from local contributions dominate the article---despite the other metrics suggesting numerous contributions from more distant countries.
 The \abbr{egypt-rev} article shows this behavior where the signature distance shrank by 43\% to 2,705km when weighed by survival of text from located contributions. 
-This last qualification is important, however.
+This last qualification is important.
 If only few of the surviving contributions can be located, the \term{t.surv} distance becomes less representative---for the example articles only 23.8\% of the text passages could be located.
 
 
@@ -97,10 +97,10 @@ The number of edits per country is used to determine the intensity of the shade,
 \img{egypt-rev-text}{Distribution of origins by text survival for article \abbr{egypt-rev}.}
 Figure \ref{fig:egypt-rev-text} shows the map for text survival; the shader value is the number of characters originating from a country, e.g. of all located survived text, 20,367 characters could be attributed to Egypt.
 
-Differences in shade when comparing both maps, can be revealing.
+Differences in shade when comparing both maps can be revealing.
 Both the United States and Egypt have a similar cumulative edit count, 993 and 925, respectively.
 However, the United States pale in the text survival map as the located text seems to be clearly dominated by Egypt, with 6,628 and 20,367 characters, respectively.
-This suggests, the article was equally ``worked on'' by authors from both countries, but contributions from one country were more likely to prevail.
+This suggests the article was equally ``worked on'' by authors from both countries, but contributions from one country were more likely to prevail.
 It should be noted again, as only 23.8\% of the text could be located, no firm conclusions can be drawn.
 
 \subimage{libya-war-origins}{By edit count}{libya-war-text}{By text survival}{libya-war-maps}{Distribution of origins for article \abbr{libya-war}.}
@@ -111,7 +111,7 @@ This effect can also be noticed for the article \abbr{bahrain-up} where the Unit
 Although 21\% of located contributions originated in the United States, only 12\% of located text can be attributed to the US; Bahrain contributed 58\% of located text.
 
 The maps for the article \abbr{Libya-war} are less suggestive, as the United States dominate both distributions, \imgref{libya-war-maps}.
-This is also reflected by the similarity of the different signature distance metrics, the values for \term{e.surv} and \term{t.surv} differ only by 1\% from the original signature distance.
+This is also reflected by the similarity of the different signature distance metrics: the values for \term{e.surv} and \term{t.surv} differ only by 1\% from the original signature distance.
 Remarkably, less than 1\% of contributions could be attributed to Libya, hinting at massive lack of participation.
 
 %\img{orange-rev-origins}{Distribution of origins by cumulative edit count for article \abbr{orange-rev}.}
@@ -140,7 +140,7 @@ Whenever the orange or red (\term{e.surv}) lines cross the blue line from above,
 Both \abbr{egypt-rev} and \abbr{bahrain-up} show this behavior,  \imgref{egypt-rev-localness} and  \imgref{bahrain-up-localness}.
 For \abbr{libya-war} the lines are always close together, as suggested by their similar signature metrics, \imgref{libya-war-localness} 
 
-As a second visualization of the temporal development, is in the section \term{Evolution}.
+A second visualization of the temporal development is in the section \term{Evolution}.
 There, a motion chart presents the evolution of key metrics over time.
 For this, all located contributors were grouped by country and are represented by a bubble. 
 The cumulative edit count, the number of survived edits, or the share of survived text can all be plotted against the distance to the article's event location or against each other.
@@ -148,7 +148,7 @@ The cumulative edit count, the number of survived edits, or the share of survive
 \img{egypt-rev-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{egypt-rev}.}
 
 By default, the cumulative edit count (y-axis) is plotted again the distance (x-axis), \imgref{egypt-rev-motion-edit}.
-An increase in edit count is represented in two ways, a bubble's vertical location as well as the bubble's size.
+An increase in edit count is represented in two ways: a bubble's vertical location, as well as the bubble's size.
 When the motion chart is played, countries with very active contributors move up faster and grow in size. 
 The locality of a bubble and its size make it easy to spot the biggest contributors and their spatial relationship to the article's location, e.g. a big bubble in the upper right represents a distant country with lots of contributions. 
 
@@ -163,12 +163,12 @@ The motion chart for \abbr{bahrain-up} also benefits from this charts' independe
 \img{bahrain-up-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{bahrain-up}.}
 
 When changing the y-axis to text survival\footnote{The text survival metric is best viewed in a logarithmic scale because the chart axis is scaled according to a country's maximum share. A country's share is usually between 1 and 15\% but  can potentially be 100 \% at some point in time---usually in an early stage of the article, or later as a result of vandalism.}, the bubbles shift to reflect the countries' share of the text in the latest revision.
-Here, the biggest move downwards suggests a lot that country's contributions did not survive.
+Here, the biggest move downwards suggests that a lot of a country's contributions did not survive.
 
 \img{egypt-rev-motion-survival}{Evolution of text survival vs cumulative edit count for article \abbr{egypt-rev}.}
 
 Another interesting plot can be achieved by leaving the y-axis on text survival while setting the x-axis to cumulative edits, \imgref{egypt-rev-motion-survival}.
-This plot reflects the efficiency of edits. 
+This plot reflects the effectiveness of edits. 
 Bubbles in the upper right represent hard earned text survival by lots of edits.
 Conversely, a bubble in the lower right suggests contributors of a country produce a lot of edits that do not survive.
 %It should be noted that the strong culture bias of the English Wikipedia means that the USA is likely to have a high cumulative edit count, represented by a big bubble.
@@ -213,7 +213,7 @@ pos=h,doinside=\small ]{Xlll}{
 }
 
 Although all three articles could be tested properly, each test for hypothesis support seems to be accompanied by its own set of problems.
-The test for \abbr{h1} seems to be susceptible to article merges. 
+The test for \abbr{h1} is susceptible to article merges. 
 When an article is not deemed important enough to exist on its own, it will be merged into a related article by the community.\footnote{Reasons for a merge include ``significant content overlap'' and lack of context covered by a broader topic. See \weburl{http://en.wikipedia.org/wiki/Wikipedia:Merging}{2012}{02}{04}}
 The merged article is replaced by a redirect that forwards visitors to the parent article. 
 When this parent article is older than the event date, it results in a negative delay, e.g. --14 days for \abbr{libya-war}.
@@ -237,10 +237,11 @@ However, the mean over all revisions was $\overline{I_{\text{e.surv}}} = 71.5$ a
 This suggests the overrepresentation of local text was not always present, as the charts of the two indexes attest, see figures \ref{fig:egypt-rev-indexes} and \ref{fig:bahrain-up-indexes}.
 As expected, \abbr{libya-war} does not show such a shift, \imgref{libya-war-indexes}.
 
+The next chapter \nameref{ch:results} conducts a quantitative analysis on a set of articles and tests them for hypothesis support.
+\clearpage 
+
 \img{egypt-rev-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{egypt-rev}.}
 \img{bahrain-up-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{bahrain-up}.}
 \img{libya-war-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{libya-war}.}
-
-The next chapter \nameref{ch:results} conducts a quantitative analysis on a set of articles and tests them for hypothesis support.
 
  
