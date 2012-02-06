@@ -72,29 +72,29 @@ It is also worth comparing the proximity metrics in the lower two groups of rows
 The values from the \emph{cumulative} group are based on the edit counts of all contributions.
 For the second group of rows, only contributions were counted that provided text still \term{present in the latest revision}.
 Over time, all three articles collected contributions from a number of countries. 
-However, during the collective editing process, up to two thirds of them were removed, as can be observed in the \abbr{bahrain-up} article. 
+However, during the collective editing process, up to two thirds of them were removed, as can be observed for  \abbr{bahrain-up}. 
 
 The signature distance variant \term{e.surv} can hint whether local contributions are more likely to survive.
 A lower \term{e.surv} value compared to the original signature distance suggests that contributions from distant countries did not survive as well as local contributions.
-For the \abbr{egypt-rev} article, the \term{e.surv} distance is 28\% lower than  the original signature distance, suggesting that distant contributions were more likely to be removed or replaced by local ones.
+For \abbr{egypt-rev}, the \term{e.surv} distance is 28\% lower than  the original signature distance, suggesting that distant contributions were more likely to be removed or replaced by local ones.
 %Conversely, a relatively higher \term{e.surv} value suggests that local contributions did less well---the article \abbr{orange-rev} shows this behavior but the difference is negligible.
 
 More strikingly, comparing the \term{t.surv} distance to the other distance metrics reveals how misleading metrics based on edit count can be.
 The \term{t.surv} distance weighs an author's distance to the article's location by the relative amount of text that survived.
 A low \term{t.surv} distance means that texts from local contributions dominate the article---despite the other metrics suggesting numerous contributions from more distant countries.
-The \abbr{egypt-rev} article shows this behavior where the signature distance shrank by 43\% to 2,705km when weighed by survival of text from located contributions. 
+ \abbr{egypt-rev} shows this behavior where the signature distance shrank by 43\% to 2,705km when weighed by survival of text from located contributions. 
 This last qualification is important.
 If only few of the surviving contributions can be located, the \term{t.surv} distance becomes less representative---for the example articles only 23.8\% of the text passages could be located.
 
 
 \section{Distribution of edit counts vs text survival}\label{sec:editcountvstextsurvival}
 
-\img{egypt-rev-origins}{Distribution of origins by cumulative edit count for article \abbr{egypt-rev}.}
+\img{egypt-rev-origins}{Distribution of origins by cumulative edit count for \abbr{egypt-rev}.}
 The change in the distribution of countries can also be observed in the choropleth maps. 
-Figure \ref{fig:egypt-rev-origins} shows the map for the cumulative edit count for the article \abbr{egypt-rev}.
+Figure \ref{fig:egypt-rev-origins} shows the map for the cumulative edit count for \abbr{egypt-rev}.
 The number of edits per country is used to determine the intensity of the shade, e.g. 993 edits could be attributed to the United States. 
 
-\img{egypt-rev-text}{Distribution of origins by text survival for article \abbr{egypt-rev}.}
+\img{egypt-rev-text}{Distribution of origins by text survival for \abbr{egypt-rev}.}
 Figure \ref{fig:egypt-rev-text} shows the map for text survival; the shader value is the number of characters originating from a country, e.g. of all located survived text, 20,367 characters could be attributed to Egypt.
 
 Differences in shade when comparing both maps can be revealing.
@@ -103,14 +103,14 @@ However, the United States pale in the text survival map as the located text see
 This suggests the article was equally ``worked on'' by authors from both countries, but contributions from one country were more likely to prevail.
 It should be noted again, as only 23.8\% of the text could be located, no firm conclusions can be drawn.
 
-\subimage{libya-war-origins}{By edit count}{libya-war-text}{By text survival}{libya-war-maps}{Distribution of origins for article \abbr{libya-war}.}
+\subimage{libya-war-origins}{By edit count}{libya-war-text}{By text survival}{libya-war-maps}{Distribution of origins for \abbr{libya-war}.}
 
-\subimage{bahrain-up-origins}{By edit count}{bahrain-up-text}{By text survival}{bahrain-up}{Distribution of origins for article \abbr{bahrain-up}.}
+\subimage{bahrain-up-origins}{By edit count}{bahrain-up-text}{By text survival}{bahrain-up}{Distribution of origins for \abbr{bahrain-up}.}
 
-This effect can also be noticed for the article \abbr{bahrain-up} where the United States pale in the text survival map, see figures \ref{fig:bahrain-up-origins} and \ref{fig:bahrain-up-text}.\footnote{Although it should be shaded darkest, tiny Bahrain cannot be seen in the application's choropleth maps.}
+This effect can also be noticed for \abbr{bahrain-up} where the United States pale in the text survival map, see figures \ref{fig:bahrain-up-origins} and \ref{fig:bahrain-up-text}.\footnote{Although it should be shaded darkest, tiny Bahrain cannot be seen in the application's choropleth maps.}
 Although 21\% of located contributions originated in the United States, only 12\% of located text can be attributed to the US; Bahrain contributed 58\% of located text.
 
-The maps for the article \abbr{Libya-war} are less suggestive, as the United States dominate both distributions, \imgref{libya-war-maps}.
+The maps for \abbr{Libya-war} are less suggestive, as the United States dominate both distributions, \imgref{libya-war-maps}.
 This is also reflected by the similarity of the different signature distance metrics: the values for \term{e.surv} and \term{t.surv} differ only by 1\% from the original signature distance.
 Remarkably, less than 1\% of contributions could be attributed to Libya, hinting at massive lack of participation.
 
@@ -124,15 +124,15 @@ Remarkably, less than 1\% of contributions could be attributed to Libya, hinting
 %\clearpage
 \section{Temporal development}
 
-\imgwide{egypt-rev-localness}{Timeline chart for the signature distance of article \abbr{egypt-rev}.}
+\imgwide{egypt-rev-localness}{Timeline chart for the signature distance of  \abbr{egypt-rev}.}
 
 In the application's section \term{Localness}, a timeline chart displays the evolution of the signature distance and its two variations over time, \imgref{egypt-rev-localness}.
 There, the blue line is the original signature distance.
 An $x-y-$point on that line reflects the average distance $y$ of all located contributions before the date $x$ weighed by their relative work.
 
-\imgwide{libya-war-localness}{Timeline chart for the signature distance of article \abbr{libya-war}.}
+\imgwide{libya-war-localness}{Timeline chart for the signature distance of \abbr{libya-war}.}
 
-\imgwide{bahrain-up-localness}{Timeline chart for the signature distance of article \abbr{bahrain-up}.}
+\imgwide{bahrain-up-localness}{Timeline chart for the signature distance of \abbr{bahrain-up}.}
 
 The orange line is the \term{t.surv} signature distance, that weighs the contributions by text survival.
 When the orange line is above the blue line, text from distant contributions is overrepresented\footnote{The baseline is the original signature distance (blue line).} in the current revision.
@@ -145,14 +145,14 @@ There, a motion chart presents the evolution of key metrics over time.
 For this, all located contributors were grouped by country and are represented by a bubble. 
 The cumulative edit count, the number of survived edits, or the share of survived text can all be plotted against the distance to the article's event location or against each other.
 
-\img{egypt-rev-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{egypt-rev}.}
+\img{egypt-rev-motion-edit}{Evolution of cumulative edit count vs. distance for \abbr{egypt-rev}.}
 
-By default, the cumulative edit count (y-axis) is plotted again the distance (x-axis), \imgref{egypt-rev-motion-edit}.
+By default, the cumulative edit count (y-axis) is plotted against the distance (x-axis), \imgref{egypt-rev-motion-edit}.
 An increase in edit count is represented in two ways: a bubble's vertical location, as well as the bubble's size.
 When the motion chart is played, countries with very active contributors move up faster and grow in size. 
 The locality of a bubble and its size make it easy to spot the biggest contributors and their spatial relationship to the article's location, e.g. a big bubble in the upper right represents a distant country with lots of contributions. 
 
-\img{libya-war-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{libya-war}.}
+\img{libya-war-motion-edit}{Evolution of cumulative edit count vs. distance for \abbr{libya-war}.}
 
 When comparing the charts for the cumulative edit count vs. distance of all three articles, see figures \ref{fig:egypt-rev-motion-edit}, \ref{fig:libya-war-motion-edit}, and \ref{fig:bahrain-up-motion-edit}, \abbr{libya-war} stands out.
 Libya, the country treated in the article, is not among the top ten contributors, \imgref{libya-war-motion-edit}.
@@ -160,12 +160,12 @@ Although already noted in the previous section \nameref{sec:editcountvstextsurvi
 
 The motion chart for \abbr{bahrain-up} also benefits from this charts' independence of country size, showing Bahrain's comfortable lead in cumulative edits, \imgref{bahrain-up-motion-edit}.
 
-\img{bahrain-up-motion-edit}{Evolution of cumulative edit count vs. distance for article \abbr{bahrain-up}.}
+\img{bahrain-up-motion-edit}{Evolution of cumulative edit count vs. distance for \abbr{bahrain-up}.}
 
 When changing the y-axis to text survival\footnote{The text survival metric is best viewed in a logarithmic scale because the chart axis is scaled according to a country's maximum share. A country's share is usually between 1 and 15\% but  can potentially be 100 \% at some point in time---usually in an early stage of the article, or later as a result of vandalism.}, the bubbles shift to reflect the countries' share of the text in the latest revision.
 Here, the biggest move downwards suggests that a lot of a country's contributions did not survive.
 
-\img{egypt-rev-motion-survival}{Evolution of text survival vs cumulative edit count for article \abbr{egypt-rev}.}
+\img{egypt-rev-motion-survival}{Evolution of text survival vs cumulative edit count for \abbr{egypt-rev}.}
 
 Another interesting plot can be achieved by leaving the y-axis on text survival while setting the x-axis to cumulative edits, \imgref{egypt-rev-motion-survival}.
 This plot reflects the effectiveness of edits. 
@@ -188,7 +188,7 @@ pos=h,doinside=\small ]{Xlll}{
     \tnote[c]{Share of located contributions.}
     \tnote[d]{No correlation found.}
     \tnote[e]{A negative date is the result of an article being merged with another article treating earlier events.}
-        \tnote[f]{In the Galician Wikipedia the article \abbr{libya-war} was merged into the article \term{Libya} which was created in 2005, thereby preceding the civil war articles in other language editions.}
+        \tnote[f]{In the Galician Wikipedia, \abbr{libya-war} was merged into the article \term{Libya} which was created in 2005, thereby preceding the civil war articles in other language editions.}
 
  }{\toprule 
  \tableheadline{Hypothesis} 
@@ -218,7 +218,7 @@ When an article is not deemed important enough to exist on its own, it will be m
 The merged article is replaced by a redirect that forwards visitors to the parent article. 
 When this parent article is older than the event date, it results in a negative delay, e.g. --14 days for \abbr{libya-war}.
 
-The merging problem also seems to affect \abbr{h3} for the article \abbr{libya-war}.
+The merging problem also seems to affect \abbr{h3} for \abbr{libya-war}.
 There, the event article was merged into the article for Libya\footurl{http://gl.wikipedia.org/wiki/Libia}{2012}{02}{04} which was created in 2005.
 The hypothesis test orders the articles from different language editions by creation date.
 Therefore, articles merged into old parent articles are in effect shifting their creation date into the past, allowing them to rank first.
@@ -229,7 +229,7 @@ Support for \abbr{h7} and  \abbr{h8} seem to be equally hard to come by.
 Only \abbr{bahrain-up} shows a slight correlation between article age and share of local contributions.
 Unfortunately, a positive correlation coefficient indicates a rising share, \imgref{bahrain-up-localvsdistant}.
 
-\img{bahrain-up-localvsdistant}{ Share of local users (1.0 = 100\%) for article \abbr{bahrain-up}.}
+\img{bahrain-up-localvsdistant}{ Share of local users (1.0 = 100\%) for \abbr{bahrain-up}.}
 
 Regarding \abbr{h9} and \abbr{h10}, the articles  \abbr{egypt-rev} and \abbr{bahrain-up} would lend some support.
 \abbr{egypt-rev} and \abbr{bahrain-up} displayed a strong overrepresentation of local text ($I_{\text{t.surv}} = 57.2$ and $I_{\text{t.surv}} = 52.8$, respectively) in the latest revision, see table \ref{examplearticles}.
@@ -240,8 +240,8 @@ As expected, \abbr{libya-war} does not show such a shift, \imgref{libya-war-inde
 The next chapter \nameref{ch:results} conducts a quantitative analysis on a set of articles and tests them for hypothesis support.
 \clearpage 
 
-\img{egypt-rev-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{egypt-rev}.}
-\img{bahrain-up-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{bahrain-up}.}
-\img{libya-war-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for article \abbr{libya-war}.}
+\img{egypt-rev-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for \abbr{egypt-rev}.}
+\img{bahrain-up-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for \abbr{bahrain-up}.}
+\img{libya-war-indexes}{ \term{e.surv} and \term{t.surv} indexes (1.0 = 100\%) for \abbr{libya-war}.}
 
  

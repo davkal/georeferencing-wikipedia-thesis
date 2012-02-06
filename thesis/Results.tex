@@ -76,27 +76,82 @@ All articles that fulfill the requirements are included in the data set \entity{
 
 \section{Characteristics of the set}
 
-The analysis of the set yielded some general metrics to characterize the set:
+Each article in the set has a location attribute. 
+Therefore the spatial distribution of these articles can be plotted on a map.
 
+\imgwide{group-map}{Spatial distribution of articles in data set \entity{conflicts}.}
 
-\todo{
-geographic distribution
-avg size 
-avg contributions
-avg contribs
+\todo{timeline}
 
-georeferencing performance
+During the data set analysis I measured the similar metrics as in the \nameref{ch:experiment}.
+The results are in table \ref{groupmetrics}.
 
-qualification for each hypothesis
+\ctable[
+    caption = Metrics for articles in \entity{conflicts},
+    	label   = groupmetrics,
+pos=h,doinside=\small ]{Xlll}{
+%    \tnote{Only applicable to a group of articles.}
+%    \tnote[b]{Unable to locate creator.}
+%    \tnote[c]{Share of located contributions.}
+%    \tnote[d]{No correlation found.}
+%    \tnote[e]{A negative date is the result of an article being merged with another article treating earlier events.}
+ }{\toprule 
+%    						& \tableheadline{Egypt-Rev} 
+%    								& \tableheadline{Libya-war} 
+%											& \tableheadline{Bahrain-up}\\ \midrule
+    Age 				&  \\
+    Size (\kb)			&  \\
+    Revisions 			&  \\
+    Contributors\tmark		&  \\
+     -- anonymous		&  \\
+    \midrule
+    Located contributors (\%) &  \\
+    -- anonymous (\%)		&  \\
+    -- by \abbr{PMCU}	(\%) &  \\
+    -- by user page (\%)	&  \\
+    \midrule
+    \emph{Cumulative} \\
+    Unique countries of origin	&  \\
+    Signature distance (km) 	&  \\
+    \midrule
+    \emph{Present in latest revision} \\
+    Unique countries of origin 	&  \\
+    Signature dist. e.surv (km) 	& \\
+    Signature dist. t.surv (km) 	& \\
+     e.surv index 				&  \\
+     t.surv index		&  \\
+    Located text (\%) 	&  \\
+    \bottomrule
 }
 
+\todo{Compared to the example articles \abbr{egypt-rev}}
 
-\section{H1 - H4 Article creation}
+
+For each of the hypotheses the articles in the set are tested whether they qualify, i.e. have enough data for an analysis, \imgref{group-qualifications}. 
+The requirements for each hypothesis are defined in \nameref{hypothesesanalysis}.
+The test for \hyp{3} to the requirement is the most restrictive as it rules out events from countries with English as an official language.
+
+\img{group-qualifications}{Article qualification for each hypothesis}
+
+\section{H1 -- H4: Article creation}
+
+\img{group-h1}{Distribution of creation delays in days}
+\img{group-h2}{Creation delays over time}
+\img{group-h3}{Language editions chosen for first article}
+\img{group-h4}{Creator localness}
+
 % H1 susceptible to outliers
 
 
-\section{H5 - H8 Participation}
+\section{H5 -- H8: Participation}
+
+\boximg{group-h5}{ Anon. }{group-h6}{Locals}{group-h56}{Distribution of contributor ratios in early revisions}
+\boximg{group-h7}{Anon.}{group-h8}{Local}{group-h78}{Distribution of correlation coefficients for the share of anonymous and local authors, respectively}
+
 
 \section{H9/H10 Survival}
+
+\boximg{group-h9}{$\overline{I_{\text{e.surv}}}$}{group-h10}{$\overline{I_{\text{t.surv}}}$}{group-h910}{Distribution of means of localness indexes}
+
 
 % H10 when locals low in the beginning but high text survival, its not first mover advantage, but better text quality.

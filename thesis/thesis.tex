@@ -135,6 +135,7 @@
 \newcommand{\kb}{k\sc{B}}
 \newcommand{\HT}{\ensuremath{\bullet}\,\,}
 \newcommand{\HF}{\ensuremath{\circ}\,\,}
+\newcommand{\hyp}[1]{{\scshape h#1}}
 
 
 \usepackage{amsthm}
@@ -200,6 +201,17 @@
 \label{fig:#5}
 \end{figure}
 }
+
+\newcommand{\boximg}[6]{
+\begin{figure}
+\centering
+\subfloat[#2]{\label{fig:#1}\includegraphics[width=0.18\textwidth]{images/#1}}
+\subfloat[#4]{\label{fig:#3}\includegraphics[width=0.18\textwidth]{images/#3}}
+\caption{#6}
+\label{fig:#5}
+\end{figure}
+}
+
 
 \newcommand{\img}[2]{\image{#1}{#2}{0.8}}
 \newcommand{\imgx}[2]{\imagex{#1}{#2}{0.8}}

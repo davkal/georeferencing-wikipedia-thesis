@@ -9,7 +9,7 @@ In \nameref{sec:application}, I will give an overview of the application's archi
 The section \nameref{sec:algorithms} describes the article requirements to qualify for an analysis. 
 More importantly, the same section features the algorithms for the proximity metric, locating users, and information extraction, e.g. date and location parsing.
 
-In \nameref{sec:visualization} I give an quick introduction into the charts being used to present the data, and that will be featured more prominently in the following chapter \nameref{ch:experiment}. 
+In \nameref{sec:visualization} I give a quick introduction into the charts being used to present the data, and that will be featured more prominently in the following chapter \nameref{ch:experiment}. 
 
 
 \section{Data sources}\label{sec:datasources}
@@ -27,7 +27,7 @@ This makes it worth writing a specific parser for a technique known as \emph{scr
 On a high level, it involves the following steps:
 
 \begin{enumerate}
-  \item Looking at the \ac{HTML} source of the page and identifying how the \ac{HTML} tags and attributes that are used to structure the information.
+  \item Looking at the \ac{HTML} source of the page and identifying how the \ac{HTML} tags and attributes are used to structure the information.
   \item Writing a parser that addresses the identifying tags and thereby tokenizes the data.
   \item Converting the found tokens into an output format, e.g. \ac{JSON}.
 \end{enumerate}
@@ -42,11 +42,11 @@ There are unregistered bots, however, which do not appear on the list.
 For a lack of automated distinction, these are counted as normal authors.\footnote{A simple heuristic employed by other software to analyze MediaWiki content is treating all contributors whose username contains or whose comments start with ``bot'' as a bot, e.g. pymwdat, see \weburl{http://code.google.com/p/pymwdat/source/browse/trunk/toolkit.py?spec=svn13&r=13}{2012}{01}{24}. This has a potential for false positives and is not used.}
 \item[countries] A list of countries was extracted from the article \emph{ISO\_3166-1}\footurl{http://en.wikipedia.org/wiki/ISO_3166-1}{2012}{01}{2}. 
 It provides a list of standardized country names that is also respected by Wikipedia's authors when referring to a country by name.
-In a second pass, the Wikipedia article of each country was retrieved to extract the country's for geographic coordinates\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates.}.
+In a second pass, the Wikipedia article of each country was retrieved to extract the country's  geographic coordinates\footnote{For some countries, coordinates were not present on the page, e.g. \weburl{http://en.wikipedia.org/wiki/Australia}{2012}{01}{24}. In that case, they were manually added by using that country capital's coordinates.}.
 For a discussion on countries and coordinates, see \nameref{sub:resolution}.
 \item[official languages] For each entry in the list of countries, the country's official languages were added.
 From the \term{List of ISO 639-1 codes}\footurl{http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes}{2012}{01}{29}, all languages including their two-letter codes were extracted.
-In a second step, the \term{List of official languages by state}\footurl{http://en.wikipedia.org/wiki/List_of_official_languages_by_state}{2012}{01}{29} was scraped and merged with first list by matching the language name.\footnote{Not all countries have official languages---including the United States of America. In that case, the \term{de facto} official languages were used, e.g. English and Spanish for the United States of America.}
+In a second step, the \term{List of official languages by state}\footurl{http://en.wikipedia.org/wiki/List_of_official_languages_by_state}{2012}{01}{29} was scraped and merged with the first list by matching the language name.\footnote{Not all countries have official languages---including the United States of America. In that case, the \term{de facto} official languages were used, e.g. English and Spanish for the United States of America.}
 The result is a mapping from a country's name to a list of two-letter codes of that country's official languages.
 \end{description}
 
@@ -107,9 +107,9 @@ When there are more results, the response contains a \emph{query-continue} attri
 The following \ac{API} calls will be important for this thesis:
 
 \begin{description}
-    \item[query info] This basic query is returns essential information like the article \abbr{ID}, the last revision \abbr{ID}, but also the full wikitext of the last revision.
-    \item[query revisions] Lists all revisions for an article and for each includes a timestamp and the user as well as the comment for the text change.
-    \item[query categorymembers] For a given category, this query lists the articles and subcategories belong to it.
+    \item[query info] This basic query returns essential information like the article \abbr{ID}, the last revision \abbr{ID}, but also the full wikitext of the last revision.
+    \item[query revisions] Lists all revisions for an article and for each includes a timestamp, and the user, as well as the comment for the text change.
+    \item[query categorymembers] For a given category, this query lists the articles and subcategories that belong to it.
     This query can be used to construct groups of articles for analysis in this thesis.
     \item[query embeddedin] For a given template name, this query lists all pages that embed it.
     This query can also be used to build a group of articles. 
@@ -164,8 +164,8 @@ The returned data object has the following structure:
 This high density of preprocessed information shows the power of the Toolserver and its direct access to the database.
 The property \emph{editors} lists all unique authors of an article and their edit count (property \emph{all}).
 The second exhaustive collection is under the property \emph{anons}. 
-There, all anonymous contributors are listed with their \ac{IP} address, as well as their geographic region and coordinates.
-The geographic lookup is uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
+There, all anonymous contributors are listed with their \ac{IP} addresses, as well as their geographic regions and coordinates.
+The geographic lookup uses\footurl{https://github.com/volpino/toolserver-scripts/blob/master/\ac{PHP}/api.\ac{PHP}}{2012}{01}{24} the GeoCityLite database from Maxmind (see \nameref{sub:iplookup} for a discussion).
 
 \subsection{Third-party sources/web services}\label{sub:webservices}
 
@@ -185,7 +185,7 @@ For the purpose of this thesis, I screen-scraped the entire table and condensed\
 \item[Quova] This geo-location web service maps an \ac{IP} address to a geographic location, see \nameref{sec:georeference}.
 \item[WikiTrust] Based on \textcite{adler2008assigning} an open source online reputation system\footurl{http://www.wikitrust.net/vandalism-api}{2011}{10}{31} was set up by the University of California, Santa Cruz, to allow for easy vandalism detection (see \nameref{sec:contribution}).
 Given an article \abbr{ID} and a revision \abbr{ID}, the \ac{API} method \emph{wikimarkup} returns an annotated version of the wikitext of that revision.
-An annotation consists of a trust value, the revision \abbr{ID} the text got introduced into the article as well as the authors user name or \ac{IP} address, e.g. revision 473029564 of the article \emph{2011-2012 Bahraini uprising}\footurl{http://en.collaborativetrust.com/WikiTrust/RemoteAPI?method=wikimarkup&pageid=30876395&revid=473029564}{2012}{01}{23}:
+An annotation consists of a trust value, the revision \abbr{ID} by which the text got introduced into the article as well as the authors user name or \ac{IP} address, e.g. revision 473029564 of the article \emph{2011-2012 Bahraini uprising}\footurl{http://en.collaborativetrust.com/WikiTrust/RemoteAPI?method=wikimarkup&pageid=30876395&revid=473029564}{2012}{01}{23}:
 \lstset{language=HTML,caption={Excerpt of the annotated markup for the revision \\473029564 of the article \emph{2011-2012 Bahraini uprising}},label=wikitrustapicall}
 \begin{lstlisting}
 	{{#t:7,468889105,Kudzu1}}The 
@@ -289,7 +289,7 @@ In the case of an article being entered, a click on ``Analyze!'' starts the foll
 	\item The SoNet Toolserver script is called to retrieve all authors of the article.
 	\item For all registered usernames in the author collection, a sub-routine is started to locate the users. 
 	\item \entity{query revisions} is being called to retrieve all revisions (excluding wikitext). 
-	\item The a subset of the revisions, the annotated wikitext is loaded using WikiTrust \ac{API}.
+	\item For a subset of the revisions, the annotated wikitext is loaded using WikiTrust \ac{API}.
 	%\item For each day of the article's existence, the page view statistics are loaded.
 	\item For each language present in the language link collection, the first revision is loaded.
 	\item All loaded data is analyzed and the results are stored and rendered in the browser.
@@ -342,7 +342,8 @@ They will however be included in the computations for which results are present,
 
 The way dates are mentioned in articles are as diverse as the people that write them.
 And when it comes to date intervals, e.g. May 8--12 2007, even a specialized date parsing library like \entity{date.js} can only be of limited use.
-I wrote a custom parser that for a given text returns first occurrence of an interval or a single date, i.e. if no interval could be found, the parsing is repeated for a single date.
+I wrote a custom parser that returns first occurrence of an interval from a text.
+If no interval was found, the parsing is repeated for a single date.
 
 Some articles embed info box templates (see \nameref{sub:templates}) that produce annotated markup using the \entity{hcard}\footurl{http://en.wikipedia.org/wiki/HCard}{2012}{01}{25} microformat.
 The annotations can be easily addressed with \ac{CSS} selectors\footnote{This requires the template to be properly used by the authors, e.g. \weburl{http://en.wikipedia.org/wiki/Eastern_Front_(World_War_II)}{2012}{01}{29} where  the template \term{Start date} is used for the start and the end date, producing the two dates with the same annotation: \verb"dtstart". Another source of error is the order of year, month, and date, e.g. ``Municipal Library Elevator Coup'' happened on 28 January 1908 which was added as  \verb"Start date|1908|28|01" to the info box but unpredictably rendered as April 1, 1908, see \weburl{http://en.wikipedia.org/wiki/Municipal_Library_Elevator_Coup}{2012}{01}{25}.} and the values conform to the standard for the representation of date and time, \ac{ISO} 8601\footurl{http://en.wikipedia.org/wiki/ISO_8601}{2012}{01}{25}.
@@ -511,12 +512,12 @@ Both the article location and the user page parsing algorithms are searching for
 The location for a country is looked up in the application's country list (see \entity{countries} in \nameref{sub:wpwebsite}).
 There, each country name is mapped to the geographic coordinates present in its Wikipedia article.
 For bigger countries, the coordinates refer to the location of the capital, e.g. \emph{United States}\footurl{http://en.wikipedia.org/wiki/United_States}{2012}{01}{25} while for smaller ones a central point is denominated, e.g. Bahrain\footurl{http://en.wikipedia.org/wiki/Bahrain}{2012}{01}{25}.
-An any case, the coordinates still refer to a point on the globe and, by definition, cannot describe an area.
+In any case, the coordinates still refer to a point on the globe and, by definition, cannot describe an area.
 Despite this shortcoming, coordinates are the primary means to reference places in Wikipedia.
 
 As a result, all users that were located by user page parsing, are referenced with coordinates of a country.
 This has the potential to grossly bias seemingly accurate metrics like the signature distance, described in the next section.
-For a political analysis, however, it may be less important that all user that have been located in the US by user page parsing, share the same coordinates.
+For a political analysis, however, it may be less important that all users that have been located in the US by user page parsing, share the same coordinates.
 
 \subsection{Signature distance}\label{sub:sigdist}
 
@@ -857,13 +858,13 @@ The hypothesis is supported if there is a linear dependence between the article 
 
 \subsection*{H9: Local contributions are more likely to survive.}
 
-Articles qualify that have least 10 located revisions.
+Articles qualify that have at least 10 located revisions.
 Local contributions are more likely to survive when, on average, the \term{e.surv} signature distance is smaller than the original signature distance.
 Using the \term{e.surv index}, the hypothesis is supported if for all revisions the mean \term{e.surv index} is smaller than 100.
 
 \subsection*{H10: Text from local contributions is more likely to survive.}
 
-Articles qualify that have least 10 located revisions.
+Articles qualify that have at least 10 located revisions.
 Text from local contributions is more likely to survive when, on average, the \term{t.surv} signature distance is smaller than the original signature distance.
 Using the \term{t.surv index}, the hypothesis is supported if for all revisions the mean \term{e.surv index} is smaller than 100.
 
