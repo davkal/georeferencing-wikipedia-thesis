@@ -11,6 +11,8 @@ More importantly, the same section features the algorithms for the proximity met
 
 In \nameref{sec:visualization} I give a quick introduction into the charts being used to present the data, and that will be featured more prominently in the following chapter \nameref{ch:experiment}. 
 
+The application is can be accessed over the internet\footurl{http://davkal.github.com/WP-contributions/}{2012}{02}{04}.
+Its source code is hosted on GitHub\footurl{https://github.com/davkal/WP-contributions}{2012}{02}{04}.
 
 \section{Data sources}\label{sec:datasources}
 
@@ -259,7 +261,7 @@ It uses a range of open-source toolkits and libraries for a variety of purposes:
 
 \subsection{Models}
 
-Treating Wikipedia's website as a system of pages, authors, and revisions, I modeled these as classes of objects using \entity{Backbone} (for a complete overview of  all models, see \todo{model chart in appendix}).
+Treating Wikipedia's website as a system of pages, authors, and revisions, I modeled these as classes of objects using \entity{Backbone}.
 
 When a model is instantiated, it knows where to retrieve the data that will populate its attributes, e.g. a revision collection knows that it can get all revisions of an article's history using the query \emph{revisions} from the  \nameref{sub:mediawikiapi}.
 Once the data is retrieved, the attributes of each individual revision object are set, which in turn triggers an event telling a single revision model fetch the annotated wikitext from the WikiTrust \ac{API} (see \nameref{sub:webservices}).
@@ -801,7 +803,6 @@ The data gathered in the article analysis will be used to test the hypotheses.
 In addition to the basic requirements (see \nameref{sub:articlerequirements}) for each article to qualify, the following sections describe for each hypothesis which data from the content analysis is used in testing support for it.
 
 For hypotheses that rely on a correlation for their support, the Pearson product-moment correlation coefficient is used.
-\todo{outliers}
 
 \subsection*{H1: Articles are created shortly after the start of the event.}
 
