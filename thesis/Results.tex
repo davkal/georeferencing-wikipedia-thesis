@@ -2,81 +2,101 @@
 \chapter{Results}\label{ch:results}
 %************************************************
 
-\todo{
-difficulties in picking data sets
-performance results on locating algorithm
-}
+This chapter present the quantitative analysis of a set of articles of political events from the English Wikipedia.
+First, I will describe the \nameref{sec:datasets} and the difficulties in picking the ``right'' category of articles.
+\todo{whats happening here}
 
-\section{Data sets}
+\section{Data set}\label{sec:datasets}
 
 Unfortunately, \term{political events} are a rather vague concept judging by the contents of the Wikipedia category of the same name\footurl{http://en.wikipedia.org/wiki/Category:Political_events}{2012}{02}{01}.
-It includes only one page, \term{No Berlusconi day}, but a numerous sub-categories ranging from \term{Political riots} and \term{Protests} to \term{Political party assemblies}.
+It includes only one page at the top-level, \term{No Berlusconi day}.
+It contains numerous subcategories, however, ranging from \term{Political riots} and \term{Protests} to \term{Political party assemblies}.
+
+In contrast to the categories system, templates offer a way to identify more homogenous groups of articles.\footnote{See also \nameref{sub:templates}.}
+Articles that embed a template, e.g. \term{Infobox civil conflict}, can be identified and grouped, resulting in a set of articles that are very likely to treat civil conflicts. 
+
+In order to find a suitable set of articles, I will combine both approaches.
+From the English Wikipedia I will handpick categories and templates and combine their articles into one data set.
+
+Since this process involves a manual selection, articles are not selected at random.
+As a result, statistics derived from the analysis cannot be representative of all articles treating political events---let alone the complete corpus of the English Wikipedia.
+On the bright side, the handpicked categories contain articles that were themselves manually chosen by the community to be included those categories.
+
+\subsection{Selected categories and templates}
+
+Wikipedia's category system suffers from several forms of overcategorization.\footnote{For an overview of issues see \weburl{http://en.wikipedia.org/wiki/Wikipedia:OCAT}{2012}{02}{04}} 
+Some category sub-trees are too fine-grained and have numerous  levels with only a small number articles.
+When moving along the tree in search for articles of political conflicts, the potential to go astray is rather high, e.g. the category \term{Protest}\footurl{http://en.wikipedia.org/wiki/Category:Protests}{2012}{02}{04} has the subcategory \term{Protest songs}.
+There is also considerable overlap between sub-trees, e.g. \term{Protests by country} and \term{Protests by year}.
+As a compromise, the category traversal will only yield the pages of a given category and all pages of its subcategories.
+
+\term{Protests} and its subcategories are exhaustive and produce a handful of candidates.
+To these I will add the category \term{Arab Spring} and the template \term{Infobox civil conflict}\footnote{This template is also the preferred infobox template of the Occupy movement. \weburl{http://en.wikipedia.org/wiki/Occupy_movement}{2012}{02}{04}} to assert that the articles detailed in \nameref{ch:experiment} are part of the data set.
+The final data set \entity{conflictsraw} combines articles from the following categories and templates:
+
+\begin{itemize}
+  \item Protests by year % good, 45.5 % of 143
+  \item Protests by country
+  \item 2000s riots by year
+  \item 2010s riots by year
+  \item Arab Spring
+  \item Infobox civil conflict (template)
+\end{itemize}
+
+Other notable categories that I investigated but not included, are 
+\term{21st-century conflicts}\footnote{Only 10\% of the 833 articles would have qualified. \weburl{http://en.wikipedia.org/wiki/Category:21st-century_conflicts}{2012}{02}{04}}, 
+\term{Revolutions categories}\footnote{This category and its subcategories contain too many articles about people. \weburl{http://en.wikipedia.org/wiki/Category:Revolutions_by_country}{2012}{02}{04}}, as well as the templates 
+\term{Infobox military conflict}\footnote{A huge set of 10290 articles that is dominated by historic battles. Less than 6\% of these articles would have qualified. \weburl{http://en.wikipedia.org/wiki/Template:Infobox_military_conflict}{2012}{02}{04}} and 
+\term{Infobox election}\footnote{These articles are usually created long before the election date, as elections tend to be scheduled. \weburl{http://en.wikipedia.org/wiki/Template:Infobox_election}{2012}{02}{04}}.
+
+
+\subsection{Data set preparation}
+
+When articles for \entity{conflictsraw} are retrieved, they are only added if they are not already in the set. 
+Therefore, all articles in the set are unique.
+The titles of all articles in \entity{conflictsraw} are listed in the appendix, see \nameref{sec:conflictsraw}.
+
+Then, the all articles in \entity{conflictsraw} are tested whether they fulfill the \nameref{sub:articlerequirements} for an analysis.
+Of the 742 articles in \entity{conflictsraw} XXX passed this first test.
+The main reason for rejection was an event date before 2002. 
+For the distribution of failed requirements \imgref{group-requirements}.
+All articles that fulfill the requirements are included in the data set \entity{conflicts}, see \nameref{sec:conflicts} in the appendix for a list of titles.
+
+\img{group-requirements}{Distribution of failed article requirements}
+
+
+%\subsection{Political article vs. place article}
+%
+%\todo{
+%To compare the date with spatial articles preferred in previous studies, a reference group is introduced
+%template info box settlement is used by towns all over the world
+%population is big 261,000+ articles, pick a random sample
+%compare locating performance, sd metrics.
+%}
+
+\section{Characteristics of the set}
+
+The analysis of the set yielded some general metrics to characterize the set:
+
 
 \todo{
-english wikipedia
-more homogenous are article groups formed by template embedders,
-like Infobox civil conflict.
+geographic distribution
+avg size 
+avg contributions
+avg contribs
+
+georeferencing performance
+
+qualification for each hypothesis
 }
 
-\todo{
-acknowledging that there is no ``right'' categorry or template
-goal is to find a group of articles
-using event definition, together with handpicked categories and templateembedders in the English Wikipedia.
-categories contain articles that are handpickked by wikipedians
-}
 
-\todo{
-shortcomings, not random, statistics derived cannot be representative to all articles treating political events   let alone the all of wikipedia
-misses arcticles that are not part of category, template embedders
-}
-% Military conflict 606/10290
-
-
-\subsection{By category}
-
-\todo{
-categories can go deep pretty quickly (over-categorition) but also have to potential to lead astray (Protest Songs in Protest)
-sub-categories the same pages in different tree structure, e.g. protests by country and protests by year.
-the same article appears in different depths of the resulting sub-tree.
-category list will go only one level deep
-Protests and its sub-categories are exhaustive and prime candidate.
-they yield: (and combine)
-Protests by year % good, 45.5 % of 143
-Protests by country
-21st-century conflicts % bad, only 10% of 833 articles qualified
-2000s riots by year
-2010s riots by year
-footnote Revolutions categories, e.g. Revolutions by country, contain too many articles about individuals and not events
-}
-\todo{link to appendix with complete list}
-
-
-\subsection{By template}
-
-\todo{
-info box civil conflict as a reference, arab springs as well as the occupy movement favorite. 
-numbers by filtering
-second set: info box election, big set 4485 articles
-}
-\todo{link to appendix with complete list}
-
-
-\subsection{Political article vs. place article}
-
-\todo{
-To compare the date with spatial articles preferred in previous studies, a reference group is introduced
-template info box settlement is used by towns all over the world
-population is big 261,000+ articles, pick a random sample
-compare locating performance, sd metrics.
-}
-\todo{link to appendix with complete list}
-
-
-
-\begin{todos}
-    \item for each set, show hypothesis results, values
-    \item box charts
-\end{todos}
-
+\section{H1 - H4 Article creation}
 % H1 susceptible to outliers
+
+
+\section{H5 - H8 Participation}
+
+\section{H9/H10 Survival}
+
 % H10 when locals low in the beginning but high text survival, its not first mover advantage, but better text quality.
