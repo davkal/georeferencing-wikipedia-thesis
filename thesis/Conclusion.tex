@@ -2,41 +2,52 @@
 \chapter{Conclusion}\label{ch:conclusion}
 %************************************************
 
-\begin{todos}
-	\item summarize method
-	\item summarize results
-	\item which hypotheses got confirmed? 
-    \item wikipedia as news medium vs history book
-\end{todos}
+In this thesis, I set out to determine whether articles of political events were written by the people most affected, i.e. in the event's proximity.
+To investigate, I developed a web application that georeferenced contributions to those articles and analyzed them.
+For the analysis, I presented a locating algorithm that can also locate a part of the registered users.
+
+Then, I combined the georeferenced contributions with a source for text attribution. 
+This allowed an article's content to be split into passages written by different located authors. 
+In effect, this put a distance on a passage of text written by a located author.
+
+The attribution of text to authors also allowed me to address the issue of text survival.
+With this in mind, I devised two variants of a proximity metric, the signature distance, that are sensitive to edit survival.
+The final variant, \term{t.surv}, calculated the signature distance of the text that survived to the current revision.
+
+For three exemplary articles I showed how theses metrics can be used to analyze the localness of an article.
+Then, I applied the same method on a set of articles about political conflicts.
+Across the set, the results were mostly inconclusive.
+Weak support was found for Wikipedia's role as a news medium while studying article creation.
+
+But, as the experiments have shown, there is merit in an individual article analysis.
+The difference in participation was starkest between the articles of the Bahraini uprising and the Libyan civil war.
+Contributions from Libya to the article treating its current event, were almost absent.
+On the other hand, tiny Bahrain contributed the bulk of the content to its article, truly writing its own history.
 
 
-\section{Limitations}
+\section{Further research}
 
-\begin{todos}
-    \item Mobile contributions, smartphones
-    \item Privacy
-    \item Active prevention by proxies and anonymizers: 
-    \\ \fullcite{muir2006internet} 
-    \\ \fullcite{muir2009internet}
-    \\ \fullcite{duckham2005formal}
-    % user pages
-        \item IE approach with Machine Learning \fullcite{xiao2004information}
-    \item unsupervised IE: \fullcite{etzioni2005unsupervised}
+%\begin{todos}
+%    \item Mobile contributions, smartphones
+%    \item Privacy
+%    \item Active prevention by proxies and anonymizers: 
+%    \\ \fullcite{muir2006internet} 
+%    \\ \fullcite{muir2009internet}
+%    \\ \fullcite{duckham2005formal}
+%    % user pages
+%        \item IE approach with Machine Learning \fullcite{xiao2004information}
+%    \item unsupervised IE: \fullcite{etzioni2005unsupervised}
+%
+%\end{todos}
+Future research can build on the application and tweak it from the technology side, as suggested in \nameref{sec:enhancements}.
+There is also the possibility to analyze the data already gathered in more refined ways.
 
-\end{todos}
-
-
-
-\subsection{Political events}
 The same hypotheses may be applicable to other types of articles than political ones.
 The key requirements are that they have a location attribute and a time interval.
 This is easily fulfilled by disaster articles, e.g. Fukushima Daiichi nuclear disaster\footurl{http://en.wikipedia.org/wiki/Fukushima_Daiichi_nuclear_disaster}{2011}{10}{31}.
 
-\subsection{Article location}
 Although \emph{location} is central to more abstract concepts like \term{Culture}\footurl{http://en.wikipedia.org/wiki/Culture}{2011}{10}{31} these subjects clearly defy being attributed with \emph{a} location.
 Nevertheless, an analysis of the spatial distribution of contributors could be interesting. 
 
-\subsection{Cross-language article growth}
-The growth rates of articles covering the same topic across various language editions could be analyzed to further investigate issues like language barrier---locals contributing only in their language---and information arbitrage as suggested by \textcite{adar2009information}.
+Finally, articles covering the same topic across various language editions could be analyzed to further investigate issues like language barrier---locals contributing only in their language---and information arbitrage as suggested by \textcite{adar2009information}.
 
-\section{Further Research}

@@ -4,7 +4,7 @@
 
 This chapter present the quantitative analysis of a set of articles of political events from the English Wikipedia.
 First, I will describe the \nameref{sec:datasets} and the difficulties in picking the ``right'' category of articles.
-\todo{whats happening here}
+Then, I will explain the results of the application's analysis of the data set and their relevance for the hypotheses.
 
 \section{Data set}\label{sec:datasets}
 
@@ -129,27 +129,65 @@ pos=h,doinside=\small ]{Xlll}{
 
 For each of the hypotheses the articles in the set are tested whether they qualify, i.e. have enough data for an analysis, \imgref{group-qualifications}. 
 The requirements for each hypothesis are defined in \nameref{hypothesesanalysis}.
-The test for \hyp{3} to the requirement is the most restrictive as it rules out events from countries with English as an official language.
+%The test for \hyp{3} to the requirement is the most restrictive as it rules out events from countries with English as an official language.
+The tests to qualify for \hyp{5} and \hyp{6} are the most restrictive as they require a certain number of revisions in the early interval of the event.
+Also, the test for \hyp{3} to the requirement is quite restrictive as it rules out events from countries with English as an official language.
+The qualification for \hyp{4} requires the article creator to be located, that seems to be also rarely the case.
 
 \img{group-qualifications}{Article qualification for each hypothesis}
 
 \section{H1 -- H4: Article creation}
 
+On average, event articles are created 33.1 days after the start date of the event.
+For articles that only have a month resolution, the average  is 223.3 days.
+These average delays are longer than the stated limit of 7 days and 30 days, respectively.
+However, the frequency distribution of delays shows a high number of articles publish with only a short delay, \imgref{group-h1}. 
+
 \img{group-h1}{Distribution of creation delays in days}
+
+There is only a slight correlation between recentness and creation delay ($R = -0.07$), suggesting that the delay after which an article is created is indeed more likely to be smaller the more recent an article is.
+For a scatter plot of  creation delay against creation date, \imgref{group-h2}.
+
 \img{group-h2}{Creation delays over time}
+
+Of the 43 articles qualified for \hyp{3}, 58\% (25) were created first in the English Wikipedia.  
+The second most popular language in the set to first publish an article in, was Arabic, \imgref{group-h3}
+For \hyp{3}, only articles qualified that treat events in countries that do not have English as an official language. 
+The fact that the majority of these articles is published in English, suggests that article creators may prefer a global reach over sharing information with fellow citizen.
+
 \img{group-h3}{Language editions chosen for first article}
+
+\hyp{4}, namely, that articles about an event in a country are created by a resident, cannot be confirmed. 
+The creator of an article could only be located for 46 articles (15\%) in the set. 
+Among those, 85\% came from a different country, \imgref{group-h4}.
+
 \img{group-h4}{Creator localness}
-
-% H1 susceptible to outliers
-
 
 \section{H5 -- H8: Participation}
 
+Of the 36 articles that qualified for \hyp{5}, the average share of anonymous contributions in the beginning is 20\%.
+Therefore, \hyp{5} cannot be confirmed.
+The highest share in the set was 60\%, see figure \ref{fig:group-h5}.
+
+For \hyp{6}, even fewer articles qualified (18).
+The mean share of local contributions in the beginning is 10\%, thereby rejecting \hyp{6}.
+See figure \ref{fig:group-h6} for the distribution.
+
 \boximg{group-h5}{ Anon. }{group-h6}{Locals}{group-h56}{Distribution of contributor ratios in early revisions}
+
+Over time, the divisions anonymous vs registered and local vs distant do not seem to matter much as the correlation coefficient is 0 for both cases, \imgref{group-h78}.
+Therefore, \hyp{7} and \hyp{8} cannot be confirmed.
+
 \boximg{group-h7}{Anon.}{group-h8}{Local}{group-h78}{Distribution of correlation coefficients for the share of anonymous and local authors, respectively}
 
 
-\section{H9/H10 Survival}
+\section{H9 -- H10: Text survival}
+
+Across the set, there is only a slight tendency for local content to be overrepresented. 
+The mean \term{e.surv index} is 95; the mean \term{t.surv index} is 98.
+These index values a only slightly smaller than the baseline of 100.
+Therefore, \hyp{9} and \hyp{10} cannot be confirmed.
+The distribution shows a number of outliers, suggesting that there are articles that are dominated by local text, see figure \ref{fig:group-h910}.
 
 \boximg{group-h9}{$\overline{I_{\text{e.surv}}}$}{group-h10}{$\overline{I_{\text{t.surv}}}$}{group-h910}{Distribution of means of localness indexes}
 
