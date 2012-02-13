@@ -1,0 +1,254 @@
+%********************************************************************
+% Errata
+%*******************************************************
+\chapter{Errata}
+
+The following mistakes need to be corrected from the version that I submitted as my diploma thesis:
+
+\section{Minor}
+
+In \nameref{ch:apparatus} (ch. \ref{ch:apparatus}), the \nth{4} paragraph should read: ``The application can be accessed over the internet.''
+
+In \nameref{sub:proximitymetrics} (subsec. \ref{sub:proximitymetrics}), in the last paragraph, the mean share of the located text is actually 26.2\%, instead of 23.8\%.
+
+In \nameref{sec:characteristics} (sec. \ref{sec:characteristics}), in table \ref{groupmetrics}, the footnote $^{a}$ is missing and should read ``Excluding bots.''.
+
+\todo{s/mean/median/ in 6.4 and 6.5}
+
+\section{Omissions}
+
+In \nameref{sub:sigdistimpl} (subsec. \ref{sub:sigdistimpl}), listing \ref{signaturedistanceall} presents an algorithm to efficiently calculate the signature distance for all revisions of an article.
+It uses an optimization called memoization for which a recursive formula is being used. 
+The step of converting the iterative declaration of the signature distance $D(\alpha)$ into a recursive declaration was omitted and is added here for completion.
+
+Using the same notation, let $\alpha$ be an article, $\rho$ be an author, and $\pi$ be a revision.
+For a sample of articles $S$ let $A$ be the set all articles in the sample, $P$ be the set of all located authors in the sample, and $\Pi$ the set of all revisions in the sample.
+\begin{align*}
+A &= \{\alpha : \alpha \in S\} &P &= \{\rho : \rho \in S\} & \Pi &= \{\pi : \pi \in S\}
+\end{align*}
+Further, let $\eta(\rho,\alpha)$ denote the contribution(s) of author $\rho$ to article $\alpha$.
+Then, $N(\alpha)$ are all contribution(s) to article $\alpha$ while $P(\alpha)$ are the author(s) who have made contributions to article $\alpha$:
+\begin{align*}
+N(\alpha) &= \{\eta(\rho,\alpha) : \rho \in P\} & P(\alpha) &= \{\rho : \rho \in N(\alpha)\}
+\end{align*}
+
+In addition, let $\gamma(\pi,\alpha)$ denote whether $\pi$ is a revision of article $\alpha$.
+Then, $\Gamma(\alpha)$ are all revisions to article $\alpha$:
+
+\begin{align*}
+\Gamma(\alpha) &= \{\gamma(\pi,\alpha) : \pi \in \Pi\}
+\end{align*}
+
+Since a contribution creates a revision, the total number $n$ of contributions equals the number of revisions to article $\alpha$:
+
+\begin{align*}
+ n = |\Gamma(\alpha)| = |N(\alpha)|
+\end{align*}
+
+Let further $\delta(\rho,\alpha)$ be the geodesic distance between author $\rho$ and article $\alpha$.
+Additionally, let $\zeta(\pi)$ denote  the author $\rho$ of revision $\pi$ to article $\alpha$.
+It follows that the distance of a revision to the article is the same as the distance between the article and that revision's author:
+
+\begin{align*}
+\rho &= \zeta(\pi) \, \RA \,   \delta(\zeta(\pi),\alpha) = \delta(\rho,\alpha) 
+\end{align*}
+
+In the original signature distance $D(\alpha)$, all contributions by an author were summed up by $\eta(\rho,\alpha)$.
+Considering each of these contributions as a single revision $\pi$, the signature distance can also be  expressed as follows:
+\begin{align*}
+D(\alpha) &= \sum_{\forall \rho \in P(\alpha)} \frac{|\eta(\rho,\alpha)| \cdot \delta(\rho,\alpha)}{|N(\alpha)|} \\
+ &=  \sum_{\forall \pi \in \Gamma(\alpha)} \frac{\delta(\zeta(\pi),\alpha)}{|\Gamma(\alpha)|}
+ \end{align*}
+
+When expanded, it becomes obvious that the signature distance for $n = |\Gamma(\alpha)|$ revisions contains the signature distance for the previous $n-1$ revisions:
+ 
+\begin{align*}
+D(\alpha) &=  \frac{\delta(\zeta(\pi_{1}),\alpha)  + \ldots + \delta(\zeta(\pi_{n-1}),\alpha) + \delta(\zeta(\pi_{n}),\alpha)}{n} \\
+ &=  \frac{\delta(\zeta(\pi_{1}),\alpha)  + \ldots + \delta(\zeta(\pi_{n-1}),\alpha)}{n} + \frac{\delta(\zeta(\pi_{n}),\alpha)}{n} \\
+ &=  \frac{(\delta(\zeta(\pi_{1}),\alpha)  + \ldots + \delta(\zeta(\pi_{n-1}),\alpha))(n-1)}{n(n-1)} + \frac{\delta(\zeta(\pi_{n}),\alpha)}{n} \\
+ &=  \frac{n-1}{n} \cdot \frac{\delta(\zeta(\pi_{1}),\alpha)  + \ldots + \delta(\zeta(\pi_{n-1}),\alpha)}{n-1} + \frac{\delta(\zeta(\pi_{n}),\alpha)}{n} 
+\end{align*}
+
+Hence, the signature distance can be restated recursively:
+
+\begin{align}
+D(\alpha, \pi_{1}) &= \delta(\zeta(\pi_{1}),\alpha)\label{eqn:sigdistrecursive1}\\
+D(\alpha, \pi_{n}) &=  D(\alpha, \pi_{n-1}) \cdot \frac{n-1}{n} + \frac{\delta(\zeta(\pi_{n}),\alpha)}{n} \label{eqn:sigdistrecursive2}
+\end{align}
+
+The distance for the first revision, \ref{eqn:sigdistrecursive1}, is the base case where the signature distance of the article is only the distance between the author $\rho$ of revision $\pi_{1}$ and the article $\alpha$.
+For subsequent revisions, the signature distance can be calculated by using the result for the previous revisions, \ref{eqn:sigdistrecursive2}.
+
+
+\section{Quantitative analysis}
+
+A postmortem of the quantitative analysis data, used in \nameref{ch:results} (ch. \ref{ch:results}), revealed that around 15\% of articles were illegitimately rejected\footnote{These articles passed most of the initial \nameref{sub:articlerequirements} (subsec. \ref{sub:articlerequirements}). But then, due to a Toolserver unavailability, the authorship could not be determined and the article was rejected.}
+
+A re-run of the analysis was done on \dformat{2012}{02}{07}\footnote{The final run for the thesis was done on \dformat{2012}{02}{05}.}.
+There, a net\footnote{Two old articles, \term{Homs Bombardment (2012)} and \term{Homs massacre} were merged into \term{February 2012 bombardment of Homs}.} five articles were added to the categories and templates that made up the set \entity{conflictsraw}:
+
+\begin{multicols}{2}\scriptsize
+\setlength{\parindent}{0pt}
+1981 General strike in Bielsko-Biała\\
+2011-2012 Syrian civil war\\
+Castellammarese War\\
+February 2012 bombardment of Homs\\
+Great Nordic Biker War\\
+Masrena
+\end{multicols}
+
+The new raw set \entity{confictsraw-b} consists of 746 articles. 
+I denote these new articles together with the previously rejected articles as \entity{skipped}.
+The resulting set for analysis \entity{conflicts-b} thus contains the articles of \entity{conflicts} plus the articles of \entity{skipped}.
+The  articles in \entity{skipped} are:
+
+\begin{multicols}{3}\tiny
+\setlength{\parindent}{0pt}
+2006 Dalit protests in Maharashtra\\
+2006 Indian anti-reservation protests\\
+2006 Islamist demonstration outside the Embassy of Denmark in London\\
+2006 Oaxaca protests\\
+2006 protests in Hungary\\
+2006 student protests in Chile\\
+2006 youth protests in France\\
+2007 Bersih rally\\
+2007 Burmese anti-government protests\\
+2007 HINDRAF rally\\
+2007 MacArthur Park rallies\\
+2007 Macau labour protest\\
+2007 Macau transfer of sovereignty anniversary protest\\
+2007 Russian protests\\
+2008 Armenian presidential election protests\\
+2008 Cameroonian anti-government protests\\
+2008 Icelandic lorry driver protests\\
+2008 Otago NORML protests\\
+2008–2010 Thai political crisis\\
+2009 Ashura protests\\
+2009 G-20 London summit protests\\
+2009 Georgian demonstrations\\
+2009 Guinea protest\\
+2009 Luquan protest\\
+2009 May Day protests\\
+2009 Tamil diaspora protests in Canada\\
+2009 student protests in Austria\\
+2009 student protests in Croatia\\
+2009–2010 Iranian election protests\\
+2010 Air Untuk Rakyat rally\\
+2010 Canada anti-prorogation protests\\
+2010 Catalan autonomy protest\\
+2010 G-20 Toronto summit protests\\
+2010 Macau labour protest\\
+2010 Macau transfer of sovereignty anniversary protest\\
+2010 Thai political protests\\
+2010 Xinfa aluminum plant protest\\
+2010–2011 Greek protests\\
+2010–2011 Senegalese protests\\
+2010–2012 Algerian protests\\
+2011 Albanian opposition demonstrations\\
+2011 Armenian protests\\
+2011 Chilean protests\\
+2011 Chinese pro-democracy protests\\
+2011 Djiboutian protests\\
+2011 Indian anti-corruption movement\\
+2011 Iranian protests\\
+2011 Iraqi protests\\
+2011 Israeli social justice protests\\
+2011 Kurdish protests in Turkey\\
+2011 Lebanese protests\\
+2011 London anti-cuts protest\\
+2011 Malawian protests\\
+2011 Maldivian protests\\
+2011 Mexican protests\\
+2011 Nanchang mass suicide protest\\
+2011 Omani protests\\
+2011 Rome demonstration\\
+2011 Spanish protests\\
+2011 Sudanese protests\\
+2011 United Kingdom anti-austerity protests\\
+2011 United States public employee protests\\
+2011 Western Saharan protests\\
+2011 Wisconsin protests\\
+2011 Yunnan protest\\
+2011–2012 Jordanian protests\\
+2011–2012 Kuwaiti protests\\
+2011–2012 Moroccan protests\\
+2011–2012 Saudi Arabian protests\\
+2011–2012 Yemeni uprising\\
+2012 Romanian protests\\
+517 Protest\\
+Aboriginal Day of Action\\
+Anti-Roma protests in Bulgaria 2011\\
+Arab Spring\\
+Berkeley Marine Corps Recruiting Center protests\\
+Cottage cheese boycott\\
+Cow head protests\\
+Crimean anti-NATO protests of 2006\\
+Dazhou protests of 2007\\
+December 2005 protest for democracy in Hong Kong\\
+Dongzhou protests\\
+February 2012 bombardment of Homs\\
+Glasgow school closures protest, 2009\\
+January 27, 2007 anti-war protest\\
+March 19, 2008 anti-war protest\\
+May 2007 RCTV protests\\
+Mid 2011 Telangana protests\\
+November 15, 2008 anti-Proposition 8 protests\\
+Occupy Charlottesville\\
+Occupy Nigeria\\
+Occupy movement\\
+Port of Tacoma protests, March 2007\\
+Protests following the 2011 Russian elections\\
+Protests regarding 2008 South Ossetia war\\
+Republic Protests\\
+September 15, 2007 anti-war protest\\
+Sharad Pawar slapping incident\\
+SlutWalk\\
+Taxpayer March on Washington\\
+Tea Party protests\\
+Tripoli protests and clashes (February 2011)\\
+Zakariya Rashid Hassan al-Ashiri\\
+Zhejiang solar panel plant protest
+\end{multicols}
+
+The new set \entity{conflicts-b} contains 380 articles.
+Although bigger in size, the new set's effect on the outcome of the quantitative analysis is negligible.
+This is due to the fact that articles are shuffled within the set after retrieval.\footnote{As a result, the run on \entity{conflicts} was done, in effect,  on a random sample.}
+The same metrics as in table \ref{groupmetrics} have been measured for \entity{conflicts-b}.
+For a comparison, the mean values for both sets are shown in table \ref{groupmetricsE}.
+
+\ctable[
+    caption = Metrics (mean) for articles in \entity{conflicts} and \entity{conflicts-b},
+    	label   = groupmetricsE,
+pos=h,doinside=\small ]{Xrr}{
+    \tnote{Excluding bots.}
+ }{\toprule 
+ 					& \tableheadline{conflicts} 
+									& \tableheadline{conflicts-b}\\ \midrule
+    Age 						&  693.6d 		& 728.2d\\
+    Size (\kb)					&  26.3 		& 28.9\\
+    Revisions 					&  303.5 		& 357.7 \\
+    Contributors\tmark				&  81.8		& 95.9 \\
+     -- anonymous				&  37.3		& 44.2 \\
+    \midrule
+    Located contributors (\%) 		& 49.8 		& 48.7 \\
+    -- anonymous (\%)				& 40.0 		& 41.5 \\
+    -- by \abbr{PMCU}	(\%) 			&  5.2 		& 4.2 \\
+    -- by user page (\%)			& 4.6 		& 3.0 \\
+    \midrule
+    \emph{Cumulative} \\
+    Unique countries of origin		& 8.8 		& 9.6 \\
+    Signature distance (km) 		& 4,271.3		& 4,252.7\\
+    \midrule
+    \emph{Present in latest revision} \\
+    Unique countries of origin 		& 5.4 		& 5.9 \\
+    Signature dist. e.surv (km) 		& 4,465.1		& 4,330.4\\
+    Signature dist. t.surv (km) 		& 4374.6 		& 4,256.4\\
+     e.surv index 					& 105.6 		& 101.7\\
+     t.surv index					&  106.3		& 103.8 \\
+    Located text (\%) 				& 33.9 		& 33.3 \\
+    \bottomrule
+}
+
+At first glance, the articles in \entity{skipped} seem to contribute especially old articles to \entity{conflicts-b}.
+These older articles tend to have a higher number of revisions as well as contributors, raising the mean values for age, revisions, and contributors.
+The differences for the proximity metrics are minor.
