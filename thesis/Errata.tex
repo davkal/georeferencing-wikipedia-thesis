@@ -7,13 +7,15 @@ The following mistakes need to be corrected from the version that I submitted as
 
 \section{Minor}
 
-In \nameref{ch:apparatus} (ch. \ref{ch:apparatus}), the \nth{4} paragraph should read: ``The application can be accessed over the internet.''
+\begin{itemize}
+  \item In \nameref{ch:apparatus} (ch. \ref{ch:apparatus}), the \nth{4} paragraph should read: ``The application can be accessed over the internet.''
+  \item In \nameref{sub:proximitymetrics} (subsec. \ref{sub:proximitymetrics}), in the last paragraph, the mean share of the located text is actually 26.2\%, instead of 23.8\%.
+  \item In \nameref{ch:results} (ch. \ref{ch:results}), the first sentence should read: ``This chapter presents the quantitative analysis of a set of articles of political events from the English Wikipedia.''
+  \item In \nameref{sub:setpreparation} (subsec. \ref{sub:setpreparation}), the first sentence of the second paragraph should read: ``Then, all articles in \entity{conflictsraw} are tested whether they fulfill the \nameref{sub:articlerequirements} for an analysis.''
+  \item In \nameref{sec:characteristics} (sec. \ref{sec:characteristics}), in table \ref{groupmetrics}, the footnote $^{a}$ is missing and should read: ``Excluding bots.''
+  \item In \nameref{sec:h5h8} (sec. \ref{sec:h5h8}) and \nameref{sec:h9h10} (sec. \ref{sec:h9h10}), all mentions of \emph{mean} or \term{average} should read ``median'' as they refer to the box plots' middle lines, see figures \ref{fig:group-h56} and \ref{fig:group-h78}.
+\end{itemize}
 
-In \nameref{sub:proximitymetrics} (subsec. \ref{sub:proximitymetrics}), in the last paragraph, the mean share of the located text is actually 26.2\%, instead of 23.8\%.
-
-In \nameref{sec:characteristics} (sec. \ref{sec:characteristics}), in table \ref{groupmetrics}, the footnote $^{a}$ is missing and should read ``Excluding bots.''.
-
-\todo{s/mean/median/ in 6.4 and 6.5}
 
 \section{Omissions}
 
@@ -76,13 +78,13 @@ D(\alpha, \pi_{1}) &= \delta(\zeta(\pi_{1}),\alpha)\label{eqn:sigdistrecursive1}
 D(\alpha, \pi_{n}) &=  D(\alpha, \pi_{n-1}) \cdot \frac{n-1}{n} + \frac{\delta(\zeta(\pi_{n}),\alpha)}{n} \label{eqn:sigdistrecursive2}
 \end{align}
 
-The distance for the first revision, \ref{eqn:sigdistrecursive1}, is the base case where the signature distance of the article is only the distance between the author $\rho$ of revision $\pi_{1}$ and the article $\alpha$.
-For subsequent revisions, the signature distance can be calculated by using the result for the previous revisions, \ref{eqn:sigdistrecursive2}.
+The distance for the first revision, \ref{eqn:sigdistrecursive1}, is the base case for which the signature distance of the article is the distance between the author $\rho$ of revision $\pi_{1}$ and the article $\alpha$.
+For subsequent revisions, the signature distance is calculated using the result for the previous revision, \ref{eqn:sigdistrecursive2}.
 
 
 \section{Quantitative analysis}
 
-A postmortem of the quantitative analysis data, used in \nameref{ch:results} (ch. \ref{ch:results}), revealed that around 15\% of articles were illegitimately rejected\footnote{These articles passed most of the initial \nameref{sub:articlerequirements} (subsec. \ref{sub:articlerequirements}). But then, due to a Toolserver unavailability, the authorship could not be determined and the article was rejected.}
+A postmortem of the quantitative analysis data, used in \nameref{ch:results} (ch. \ref{ch:results}), revealed that around 15\% of articles were illegitimately rejected\footnote{These articles passed most of the initial \nameref{sub:articlerequirements} (subsec. \ref{sub:articlerequirements}). But then, due to a Toolserver unavailability, the authorship could not be determined and the article was rejected.}.
 
 A re-run of the analysis was done on \dformat{2012}{02}{07}\footnote{The final run for the thesis was done on \dformat{2012}{02}{05}.}.
 There, a net\footnote{Two old articles, \term{Homs Bombardment (2012)} and \term{Homs massacre} were merged into \term{February 2012 bombardment of Homs}.} five articles were added to the categories and templates that made up the set \entity{conflictsraw}:
@@ -251,4 +253,18 @@ pos=h,doinside=\small ]{Xrr}{
 
 At first glance, the articles in \entity{skipped} seem to contribute especially old articles to \entity{conflicts-b}.
 These older articles tend to have a higher number of revisions as well as contributors, raising the mean values for age, revisions, and contributors.
-The differences for the proximity metrics are minor.
+
+Regarding the hypothesis tests, the results for \entity{conflicts-b} differ only for \hyp{3}, \hyp{9}, and \hyp{10}.
+Of the 106 articles qualified for \hyp{3}, 53\% (previously 64\%) were created first in the English Wikipedia.  
+A number of languages editions for first article creation were added by \entity{skipped}.
+For non-native English authors, Arabic remained the second most popular language edition to publish an article in, \imgref{group-h3b}.
+
+\imgwide{group-h3b}{Language editions chosen for first article in \entity{conflicts-b}}
+
+In table \ref{groupmetricsE}, the means of the proximity metrics for all last revisions of the set show a slight decrease.
+Therefore, a bigger proportion of content in the articles in \entity{skipped} is local when compared to \entity{conflicts}.  
+Figure \ref{fig:group-h910b} shows the distribution of the means of the localness indexes for all articles.
+The distribution of means displays slightly lower values than the same distributions for \entity{conflicts}, \imgref{group-h910}.
+
+\boximg{group-h9b}{$\overline{I_{\text{e.surv}}}$}{group-h10b}{$\overline{I_{\text{t.surv}}}$}{group-h910b}{Distribution of means of localness indexes in \entity{conflicts-b}}
+
