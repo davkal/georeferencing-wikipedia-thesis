@@ -50,14 +50,14 @@ Other notable categories that I investigated but not included, are
 \term{Infobox election}\footnote{These articles are usually created long before the election date, as elections tend to be scheduled. \weburl{http://en.wikipedia.org/wiki/Template:Infobox_election}{2012}{02}{04}}.
 
 
-\subsection{Data set preparation}
+\subsection{Data set preparation}\label{sub:setpreparation}
 
 When articles for \entity{conflictsraw} are retrieved, they are only added if they are not already in the set. 
 Therefore, all articles in the set are unique.
 The titles of all articles in \entity{conflictsraw} are listed in the appendix, see \nameref{sec:conflictsraw}.
 
 Then, the all articles in \entity{conflictsraw} are tested whether they fulfill the \nameref{sub:articlerequirements} for an analysis.
-Of the 742 articles in \entity{conflictsraw} 334 passed this first test.
+Of the 742 articles in \entity{conflictsraw}, 334 passed this first test.
 The main reason for rejection was an event date before 2002. 
 For the distribution of failed requirements \imgref{group-requirements}.
 All articles that fulfill the requirements are included in the data set \entity{conflicts}, see \nameref{sec:conflicts} in the appendix for a list of titles.
@@ -74,7 +74,7 @@ All articles that fulfill the requirements are included in the data set \entity{
 %compare locating performance, sd metrics.
 %}
 
-\section{Characteristics of the set}
+\section{Characteristics of the set}\label{sec:characteristics}
 
 Each article in the set has a location attribute. 
 Therefore the spatial distribution of these articles can be plotted on a map.
@@ -87,7 +87,7 @@ Their means across all articles are shown in table \ref{groupmetrics}.
 \ctable[
     caption = Metrics (mean) for articles in \entity{conflicts},
     	label   = groupmetrics,
-pos=h,doinside=\small ]{Xlll}{
+	doinside=\small ]{Xlll}{
 %    \tnote{Only applicable to a group of articles.}
 %    \tnote[b]{Unable to locate creator.}
 %    \tnote[c]{Share of located contributions.}
@@ -161,7 +161,7 @@ Among those, 89\% came from a different country, \imgref{group-h4}.
 
 \img{group-h4}{Creator localness}
 
-\section{H5 -- H8: Participation}
+\section{H5 -- H8: Participation}\label{sec:h5h8}
 
 Of the 71 articles that qualified for \hyp{5}, the average share of anonymous contributions in the beginning is 20\%.
 Therefore, \hyp{5} cannot be confirmed.
@@ -179,7 +179,7 @@ Therefore, \hyp{7} and \hyp{8} cannot be confirmed (n = 119).
 \boximg{group-h7}{Anon.}{group-h8}{Local}{group-h78}{Distribution of correlation coefficients for the share of anonymous and local authors, respectively}
 
 
-\section{H9 -- H10: Text survival}
+\section{H9 -- H10: Text survival}\label{sec:h9h10}
 
 Across the set, there is only a slight tendency for local content to be overrepresented. 
 The mean \term{e.surv index} is 97; the mean \term{t.surv index} is 98.

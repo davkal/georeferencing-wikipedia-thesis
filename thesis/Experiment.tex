@@ -31,7 +31,7 @@ Using the combined techniques of the Poor Man's Checkuser database and the parsi
 \ctable[
     caption = Example articles,
     label   = examplearticles,
-pos=h,doinside=\small ]{Xrrr}{
+doinside=\small ]{Xrrr}{
     \tnote{Contributors are all authors excluding bots.}
     \tnote[b]{Poor man's checkuser}
     \tnote[c]{The result was Galician. However, the article \abbr{libya-war} was merged into the article \term{Libya} which was created in 2005, thereby preceding the civil war articles in other language editions.}
@@ -66,7 +66,7 @@ pos=h,doinside=\small ]{Xrrr}{
     \bottomrule
 }
 
-\subsection{Proximity metrics}
+\subsection{Proximity metrics}\label{sub:proximitymetrics}
 
 It is also worth comparing the proximity metrics in the lower two groups of rows in table \ref{examplearticles}.
 The values from the \emph{cumulative} group are based on the edit counts of all contributions.
@@ -173,7 +173,7 @@ Bubbles in the upper right represent hard earned text survival by lots of edits.
 Conversely, a bubble in the lower right suggests contributors of a country produce a lot of edits that do not survive.
 %It should be noted that the strong culture bias of the English Wikipedia means that the USA is likely to have a high cumulative edit count, represented by a big bubble.
 
-\section{Hypotheses analysis}
+\section{Hypotheses analysis}\label{sec:hypothesisanalysis}
 
 In a final experiment, I tested the three articles for their hypotheses support.
 The results are in table \ref{exampleresults}.
@@ -182,7 +182,7 @@ The results are in table \ref{exampleresults}.
     caption = Hypothesis support of example articles \\ \HT article lends support; \HF  article does not lend support,
 	cap = Hypothesis support of example articles,
     label   = exampleresults,
-pos=h,doinside=\small ]{Xlll}{
+doinside=\small ]{Xlll}{
     \tnote{Only applicable to a group of articles.}
     \tnote[b]{Unable to locate creator.}
     \tnote[c]{Share of located contributions.}

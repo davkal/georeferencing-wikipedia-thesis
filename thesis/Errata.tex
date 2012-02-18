@@ -10,6 +10,7 @@ The following mistakes need to be corrected from the version that I submitted as
 \begin{itemize}
   \item In \nameref{ch:apparatus} (ch. \ref{ch:apparatus}), the \nth{4} paragraph should read: ``The application can be accessed over the internet.''
   \item In \nameref{sub:proximitymetrics} (subsec. \ref{sub:proximitymetrics}), in the last paragraph, the mean share of the located text is actually 26.2\%, instead of 23.8\%.
+  \item In \nameref{sec:hypothesisanalysis} (sec. \ref{sec:hypothesisanalysis}), the captions for figures \ref{fig:egypt-rev-indexes}, \ref{fig:bahrain-up-indexes}, and \ref{fig:libya-war-indexes} should all contain ``(1.0 = 100)'', without the percent sign, since the values represent index numbers.
   \item In \nameref{ch:results} (ch. \ref{ch:results}), the first sentence should read: ``This chapter presents the quantitative analysis of a set of articles of political events from the English Wikipedia.''
   \item In \nameref{sub:setpreparation} (subsec. \ref{sub:setpreparation}), the first sentence of the second paragraph should read: ``Then, all articles in \entity{conflictsraw} are tested whether they fulfill the \nameref{sub:articlerequirements} for an analysis.''
   \item In \nameref{sec:characteristics} (sec. \ref{sec:characteristics}), in table \ref{groupmetrics}, the footnote $^{a}$ is missing and should read: ``Excluding bots.''
@@ -221,7 +222,7 @@ For a comparison, the mean values for both sets are shown in table \ref{groupmet
 \ctable[
     caption = Metrics (mean) for articles in \entity{conflicts} and \entity{conflicts-b},
     	label   = groupmetricsE,
-pos=h,doinside=\small ]{Xrr}{
+	doinside=\small ]{Xrr}{
     \tnote{Excluding bots.}
  }{\toprule 
  					& \tableheadline{conflicts} 
@@ -255,7 +256,7 @@ At first glance, the articles in \entity{skipped} seem to contribute especially 
 These older articles tend to have a higher number of revisions as well as contributors, raising the mean values for age, revisions, and contributors.
 
 Regarding the hypothesis tests, the results for \entity{conflicts-b} differ only for \hyp{3}, \hyp{9}, and \hyp{10}.
-Of the 106 articles qualified for \hyp{3}, 53\% (previously 64\%) were created first in the English Wikipedia.  
+Of the 106 articles that qualified for \hyp{3}, 53\% (previously 64\%) were created first in the English Wikipedia.  
 A number of languages editions for first article creation were added by \entity{skipped}.
 For non-native English authors, Arabic remained the second most popular language edition to publish an article in, \imgref{group-h3b}.
 
